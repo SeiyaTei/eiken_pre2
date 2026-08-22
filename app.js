@@ -1,6 +1,6 @@
 // ==========================================
 // 英検準2級 マジカルクエスト 〜星詠みの魔法学園〜
-// ゲーム進行・ロジックファイル (app.js) - スマホ完全最適化版
+// ゲーム進行・ロジックファイル (app.js) - 完全修正版
 // ==========================================
 
 // ==================== 音声読み上げエンジン ====================
@@ -220,7 +220,7 @@ function playSE(type) {
   } catch(e) {}
 }
 
-// ==================== ユーザーデータ管理（準2級専用キー） ====================
+// ==================== ユーザーデータ管理 ====================
 const STORAGE_KEY = 'eiken_pre2_data_v1';
 let userData = {
   level: 1,
@@ -443,8 +443,9 @@ function updateUiState() {
     setText('equipAuraIcon', auraEquip ? auraEquip.icon : '');
   }
 
+  // 🎯 2026年10月4日 試験日カウントダウン
   try {
-    const examDate = new Date(2026, 9, 4);
+    const examDate = new Date(2026, 9, 4); // 月は0始まり(9 = 10月)
     const today = new Date();
     today.setHours(0,0,0,0);
     examDate.setHours(0,0,0,0);
@@ -713,7 +714,7 @@ function showBossDialogueModal(title, icon, text, onConfirm) {
   };
 }
 
-// ==================== ボス選択 & バトル開始 ====================
+// ==================== ボス選択 & バトル開始（不具合修正版） ====================
 function openBossSelectModal() {
   initAudio();
   stopBattleTimers();
@@ -818,6 +819,7 @@ function startBossBattleWithStage(lv) {
     };
   });
 
+  // 初回エンカウント時の演出ダイアログ
   if (!userData.bossSeenIntros.includes(stage.lv) && stage.introMsg) {
     userData.bossSeenIntros.push(stage.lv);
     saveData();
@@ -1126,6 +1128,7 @@ function startSession() {
     enemyCurHp = enemyMaxHp;
   }
 
+  // 画面の確実な切り替え（不具合防止）
   hideAllViews();
   document.getElementById('viewQuiz').classList.remove('hidden');
 
@@ -1538,7 +1541,7 @@ function proceedFinishSession() {
     document.getElementById('resultEmoji').innerText = '🏆🌸';
     document.getElementById('resultTitle').innerText = 'デイリー修練クリア！';
     document.getElementById('resultModeBadge').innerText = '🌸 デイリー限定ボーナス獲得！';
-    document.getElementById('resultModeBadge').className = 'text-[9px] font-black bg-gradient-to-r from-pink-500 to-purple-500 text-white px-2 py-0.5 rounded-full inline-block mb-1 shadow';
+    document.getElementById('resultModeBadge').className = 'text-[9px] font-black bg-gradient-to-r from-pink-500 to-purple-500 text-white px-2.5 py-0.5 rounded-full inline-block mb-1 shadow';
 
     if (currentMode === 'vocab') {
       userData.dailyDone.vocab = true;
@@ -1557,7 +1560,7 @@ function proceedFinishSession() {
     document.getElementById('resultEmoji').innerText = '🎯✨';
     document.getElementById('resultTitle').innerText = '一撃粉砕！特訓クリア！';
     document.getElementById('resultModeBadge').innerText = '✨ 苦手特訓 討伐成功！';
-    document.getElementById('resultModeBadge').className = 'text-[9px] font-black bg-pink-500 text-white px-2 py-0.5 rounded-full inline-block mb-1 shadow';
+    document.getElementById('resultModeBadge').className = 'text-[9px] font-black bg-pink-500 text-white px-2.5 py-0.5 rounded-full inline-block mb-1 shadow';
     document.getElementById('resultComment').innerText = '見事に一撃で正解！完全に覚えたら「覚えた」ボタンで削除できます。';
     
     const targetId = currentQueue[0]?.id;
@@ -1574,7 +1577,7 @@ function proceedFinishSession() {
     document.getElementById('resultEmoji').innerText = '🎉🌸';
     document.getElementById('resultTitle').innerText = 'にがて討伐完了！';
     document.getElementById('resultModeBadge').innerText = '🔄 通常特訓サイクルがリセット！';
-    document.getElementById('resultModeBadge').className = 'text-[9px] font-black bg-pink-500 text-white px-2 py-0.5 rounded-full inline-block mb-1 shadow';
+    document.getElementById('resultModeBadge').className = 'text-[9px] font-black bg-pink-500 text-white px-2.5 py-0.5 rounded-full inline-block mb-1 shadow';
     document.getElementById('resultComment').innerText = '見事に苦手を克服しました！通常特訓に再び挑戦できます！';
     userData.questRotation = { vocab: false, grammar: false, listening: false };
     earnedExp = 100;
@@ -1660,7 +1663,7 @@ function finishEndingSequence() {
   showHome();
 }
 
-// ==================== 🌌 真・完結エンディング（裏ボス撃破時） ====================
+// ==================== 🌌 真・完結エンディング ====================
 function showTrueEndingModal() {
   hideAllViews();
   playBGM('trueEnding');
@@ -1688,7 +1691,6 @@ function showTrueEndingModal() {
         <p class="text-pink-300 font-bold">ルナ：「信じられないよ……！あなたは全700語、全高校英文法、リスニングの全てを極めた、本物の【英語の女神】になったんだね！！」</p>
       </div>
 
-      <!-- 殿堂入りマスタープレート -->
       <div class="bg-gradient-to-r from-pink-950 via-purple-950 to-indigo-950 border-2 border-pink-400 p-2.5 rounded-2xl text-center space-y-1 shadow-2xl">
         <div class="text-[10px] font-black text-pink-300">📜 殿堂入りマスタープレート</div>
         <div class="grid grid-cols-3 gap-1 text-[8.5px] bg-black/60 p-1.5 rounded-xl border border-pink-500/40 text-purple-200">
@@ -1701,7 +1703,6 @@ function showTrueEndingModal() {
         </div>
       </div>
 
-      <!-- 👑 スタッフロール（鄭 聖也（パパ）） -->
       <div class="bg-[#110a24]/90 border border-purple-500/40 p-2.5 rounded-2xl text-[9px] space-y-0.5 text-center font-bold">
         <div class="text-pink-400 tracking-widest text-[8px] uppercase border-b border-purple-800 pb-0.5">★ SPECIAL STAFF CREDITS ★</div>
         <div class="text-purple-200">エグゼクティブ・プロデューサー：<span class="text-white font-black">鄭 聖也（パパ）</span></div>
@@ -1725,7 +1726,7 @@ function closeTrueEndingModal() {
   showHome();
 }
 
-// ==================== ショップ ＆ 装備（スマホ2列完全フィット） ====================
+// ==================== ショップ ＆ 装備 ====================
 function switchEquipTab(tab) {
   currentShopTab = tab;
   const tHat = document.getElementById('tabEquipHat');
