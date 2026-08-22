@@ -1,281 +1,1242 @@
 // ==========================================
-// 英検準2級 合格クエスト 〜高校英語の覇者〜
-// データベースファイル (data.js)
+// 英検準2級 マジカルクエスト 〜星詠みの魔法学園〜
+// マスターデータベースファイル (data.js) - パート1
 // ==========================================
 
-// ==================== 1. 勇者アバター進化体系 ====================
+// ==================== 1. レベル10ごとの相棒進化ツリー ====================
 const AVATARS = [
-  { minLv: 1, name: "見習いチャレンジャー", rank: "高校英語初学者", emoji: "🧑‍🎓" },
-  { minLv: 10, name: "知識の探求者", rank: "語彙の習得者", emoji: "🧙‍♂️" },
-  { minLv: 25, name: "構文の魔導士", rank: "文法マスター", emoji: "🧝" },
-  { minLv: 45, name: "神速の言語騎士", rank: "リスニング覇者", emoji: "🤺" },
-  { minLv: 70, name: "英知の神官", rank: "準2級マスター", emoji: "👑" },
-  { minLv: 100, name: "全次元制覇神", rank: "高校英語の頂点", emoji: "🌌" }
+  { minLv: 1, emoji: '🐱✨', rank: '星詠みの見習い生', name: 'ルナ・ステラ' },
+  { minLv: 10, emoji: '🐰🌸', rank: '魔法学園の初等生', name: 'リリィ・メイプル' },
+  { minLv: 20, emoji: '🦉🔮', rank: '星詠みの案内役', name: 'コレット・ノワール' },
+  { minLv: 30, emoji: '🦊🪄', rank: '魔導の探求者', name: 'ミルフィー・フォックス' },
+  { minLv: 40, emoji: '🦄✨', rank: '天星のユニコーン', name: 'ステラ・ペガサス' },
+  { minLv: 50, emoji: '🧝‍♀️🌿', rank: '精霊の聖乙女', name: 'エルフィ・フローラ' },
+  { minLv: 60, emoji: '🧚‍♀️💖', rank: '星華の妖精姫', name: 'ティターニア' },
+  { minLv: 70, emoji: '👸💫', rank: '星穹の魔導姫', name: 'プリンセス・アストラ' },
+  { minLv: 80, emoji: '👑🦚', rank: '天光の聖大公', name: 'セレスティア' },
+  { minLv: 90, emoji: '🌌🕊️', rank: '銀河の守護女神', name: 'ルミナス・アイリス' },
+  { minLv: 100, emoji: '👑🌌✨', rank: '全次元の星詠み神', name: 'ステラ・マリス' }
 ];
 
-// ==================== 2. ギルドショップ 装備データ ====================
+// ==================== 2. マジカルブティック 装備データベース ====================
 const SHOP_EQUIP_DATA = [
-  // --- 頭防具 (HP強化) ---
-  { id: 'hat_leather', type: 'hat', name: '学徒のベレー帽', icon: '🎓', val: 50, price: 15, rank: '初級', desc: 'HP +50' },
-  { id: 'hat_iron', type: 'hat', name: '魔導のサークレット', icon: '👑', val: 120, price: 40, rank: '中級', desc: 'HP +120' },
-  { id: 'hat_mithril', type: 'hat', name: '賢者のフード', icon: '🧙', val: 300, price: 90, rank: '上級', desc: 'HP +300' },
-  { id: 'hat_dragon', type: 'hat', name: '神龍の兜', icon: '🐲', val: 800, price: 200, rank: '超級', desc: 'HP +800' },
-  { id: 'hat_god', type: 'hat', name: '創世神の王冠', icon: '👑✨', val: 35000, price: 99999, rank: '神話', desc: 'HP +35,000 (Lv.10撃破報酬)', isSecret: true },
+  // --- 頭防具・ティアラ (HP強化) ---
+  { id: 'hat_ribbon_pink', name: 'ピンクリボン', type: 'hat', icon: '🎀', price: 25, rank: '🌟 ノーマル', val: 50, desc: 'HP +50 / かわいい魔法の第一歩' },
+  { id: 'hat_cat_ears', name: 'にゃんこカチューシャ', type: 'hat', icon: '🐱', price: 45, rank: '🌟 ノーマル', val: 120, desc: 'HP +120 / 直感力UP' },
+  { id: 'hat_witch_hat', name: '見習い魔女のハット', type: 'hat', icon: '🧙‍♀️', price: 80, rank: '🔵 レア', val: 300, desc: 'HP +300 / 魔法の集中力UP' },
+  { id: 'hat_star_barrette', name: '星屑のバレッタ', type: 'hat', icon: '⭐', price: 130, rank: '🔵 レア', val: 600, desc: 'HP +600 / きらめく知性' },
+  { id: 'hat_flower_crown', name: '妖精の花冠', type: 'hat', icon: '🌸', price: 220, rank: '🟣 スーパーレア', val: 1200, desc: 'HP +1200 / 自然の祝福' },
+  { id: 'hat_moon_tiara', name: '月影のティアラ', type: 'hat', icon: '🌙', price: 320, rank: '🟣 スーパーレア', val: 2000, desc: 'HP +2000 / 静かな精神集中' },
+  { id: 'hat_starlight_crown', name: '星詠みのプリンセス冠', type: 'hat', icon: '👑', price: 550, rank: '🟡 レジェンド', val: 3500, desc: 'HP +3500 / 学園の優等生' },
+  { id: 'hat_aurora_veil', name: '極光のヴェール', type: 'hat', icon: '🧕', price: 800, rank: '🟡 レジェンド', val: 5000, desc: 'HP +5000 / 天空の守護' },
+  { id: 'hat_crystal_tiara', name: '神話のダイヤティアラ', type: 'hat', icon: '💎', price: 1200, rank: '🌈 ゴッド', val: 8000, desc: 'HP +8000 / 準2級完全制覇' },
+  { id: 'hat_star_ribbon', name: '星光の聖冠', type: 'hat', icon: '🦄👑', price: 9999, rank: '🎁 ボス限定ドロップ', val: 12000, desc: 'HP +12000 / 神獣の加護 (Lv.60以上)', reqLv: 60 },
+  // 👑 完全隠し最強頭装備
+  { id: 'hat_genesis_crown', name: '創世神の王冠', type: 'hat', icon: '👑✨🌌', price: 99999, rank: '🌌 創世神話級', val: 25000, desc: 'HP +25000 / 全次元を統べる神の王冠 (Lv.60以上)', reqLv: 60, isSecret: true },
 
-  // --- 武器 (攻撃力強化) ---
-  { id: 'wp_wood', type: 'weapon', name: '初心のペン', icon: '✒️', val: 15, price: 15, rank: '初級', desc: '攻 +15' },
-  { id: 'wp_iron', type: 'weapon', name: '知識のレイピア', icon: '🗡️', val: 40, price: 40, rank: '中級', desc: '攻 +40' },
-  { id: 'wp_silver', type: 'weapon', name: '魔導の銀杖', icon: '🪄', val: 100, price: 90, rank: '上級', desc: '攻 +100' },
-  { id: 'wp_legend', type: 'weapon', name: '覇王の神剣', icon: '⚔️', val: 260, price: 200, rank: '超級', desc: '攻 +260' },
-  { id: 'wp_god', type: 'weapon', name: '創世神の聖剣', icon: '🌟🗡️', val: 6000, price: 99999, rank: '神話', desc: '攻 +6,000 (Lv.10撃破報酬)', isSecret: true },
+  // --- 武器・ロッド (攻撃力強化) ---
+  { id: 'wp_quill', name: '星のフェザーペン', type: 'weapon', icon: '✒️', price: 20, rank: '🌟 ノーマル', val: 20, desc: '攻撃 +20 / 単語を記すペン' },
+  { id: 'wp_wand_apprentice', name: '見習いのマジカルワンド', type: 'weapon', icon: '🪄', price: 50, rank: '🌟 ノーマル', val: 45, desc: '攻撃 +45 / 小さな魔法弾' },
+  { id: 'wp_ribbon_wand', name: 'リボンステッキ', type: 'weapon', icon: '🎀🪄', price: 90, rank: '🔵 レア', val: 100, desc: '攻撃 +100 / 正解を華麗に射抜く' },
+  { id: 'wp_moon_rod', name: 'ムーンライトロッド', type: 'weapon', icon: '🌙杖', price: 150, rank: '🔵 レア', val: 180, desc: '攻撃 +180 / 月光の魔力' },
+  { id: 'wp_starlight_wand', name: '星屑のステッキ', type: 'weapon', icon: '⭐🪄', price: 240, rank: '🟣 スーパーレア', val: 300, desc: '攻撃 +300 / リズムよく詠唱' },
+  { id: 'wp_crystal_sword', name: '水晶のレイピア', type: 'weapon', icon: '🗡️✨', price: 350, rank: '🟣 スーパーレア', val: 480, desc: '攻撃 +480 / 難問を一閃' },
+  { id: 'wp_pegasus_bow', name: '天馬のルミナスボウ', type: 'weapon', icon: '🏹', price: 600, rank: '🟡 レジェンド', val: 750, desc: '攻撃 +750 / 光の矢で射抜く' },
+  { id: 'wp_galaxy_rod', name: '銀河のセレスティアルロッド', type: 'weapon', icon: '🌌杖', price: 850, rank: '🟡 レジェンド', val: 1100, desc: '攻撃 +1100 / 星々の輝き' },
+  { id: 'wp_holy_wand', name: '聖女のスターライトロッド', type: 'weapon', icon: '⚜️✨', price: 1500, rank: '🌈 ゴッド', val: 1700, desc: '攻撃 +1700 / 絶対合格の聖杖' },
+  { id: 'wp_dark_blade', name: '宵闇の魔導杖', type: 'weapon', icon: '🔮🖤', price: 9999, rank: '🎁 ボス限定ドロップ', val: 2400, desc: '攻撃 +2400 / ボス討伐の覇気 (Lv.60以上)', reqLv: 60 },
+  // 👑 完全隠し最強武器
+  { id: 'wp_genesis_blade', name: '創世神の聖剣', type: 'weapon', icon: '⚔️🌟🔥', price: 99999, rank: '🌌 創世神話級', val: 4000, desc: '攻撃 +4000 / 万物を創造し消滅させる究極剣 (Lv.60以上)', reqLv: 60, isSecret: true },
 
-  // --- オーラ (素早さ・会心強化) ---
-  { id: 'aura_wind', type: 'aura', name: '疾風の息吹', icon: '🍃', val: 10, price: 20, rank: '初級', desc: '速 +10' },
-  { id: 'aura_thunder', type: 'aura', name: '迅雷のオーラ', icon: '⚡', val: 25, price: 50, rank: '中級', desc: '速 +25' },
-  { id: 'aura_light', type: 'aura', name: '天光の輝き', icon: '✨', val: 60, price: 100, rank: '上級', desc: '速 +60' },
-  { id: 'aura_god', type: 'aura', name: '創世神の極光', icon: '🌌✨', val: 600, price: 99999, rank: '神話', desc: '速 +600 / クリティカル100%確定 (Lv.10撃破報酬)', isSecret: true }
+  // --- オーラ (すばやさ・会心強化) ---
+  { id: 'aura_sparkle', name: 'きらめく星屑', type: 'aura', icon: '✨', price: 30, rank: '🌟 ノーマル', val: 5, desc: '速さ +5 / ささやかな輝き' },
+  { id: 'aura_sakura', name: '桜の花吹雪', type: 'aura', icon: '🌸', price: 80, rank: '🔵 レア', val: 15, desc: '速さ +15 / 合格の桜吹雪' },
+  { id: 'aura_fairy_wings', name: '妖精の羽', type: 'aura', icon: '🧚‍♀️', price: 180, rank: '🔵 レア', val: 30, desc: '速さ +30 / 軽やかに舞う' },
+  { id: 'aura_butterfly', name: '幻光のパピヨン', type: 'aura', icon: '🦋', price: 280, rank: '🟣 スーパーレア', val: 55, desc: '速さ +55 / 華麗な直感' },
+  { id: 'aura_rainbow', name: '虹色の星雲', type: 'aura', icon: '🌈', price: 450, rank: '🟣 スーパーレア', val: 85, desc: '速さ +85 / 電光石火の閃き' },
+  { id: 'aura_starlight', name: '星詠みのオーラ', type: 'aura', icon: '💫', price: 700, rank: '🟡 レジェンド', val: 120, desc: '速さ +120 / 純粋な情熱' },
+  { id: 'aura_aurora', name: '奇跡のオーロラ', type: 'aura', icon: '🌌', price: 950, rank: '🟡 レジェンド', val: 180, desc: '速さ +180 / 満点の架け橋' },
+  { id: 'aura_cosmic', name: 'コズミックステラ', type: 'aura', icon: '🌟', price: 1500, rank: '🌈 ゴッド', val: 260, desc: '速さ +260 / 宇宙の叡智' },
+  { id: 'aura_dragon_light', name: '神龍の天光', type: 'aura', icon: '🦄✨', price: 9999, rank: '🎁 ボス限定ドロップ', val: 365, desc: '速さ +365 / 神獣の加護。極限の素早さを宿す光 (Lv.60以上)', reqLv: 60 },
+  // 👑 完全隠し最強オーラ
+  { id: 'aura_genesis_light', name: '創世神の神光', type: 'aura', icon: '🌌✨👑', price: 99999, rank: '🌌 創世神話級', val: 515, desc: '速さ +515 / 時空を超越する絶対神の輝き (Lv.60以上)', reqLv: 60, isSecret: true }
 ];
 
-// ==================== 3. 準2級 コア頻出単語 データベース ====================
+// ==================== 3. 過去問ボスステージ (全11段階) ====================
+const BOSS_STAGES = [
+  { 
+    lv: 1, 
+    name: "森の案内妖精・ピピ", 
+    icon: "🧚‍♀️", 
+    hp: 1200, 
+    atk: 25, 
+    exp: 60, 
+    gems: 15, 
+    desc: "魔法の森で迷い人を試す妖精。基礎単語で突破しよう！",
+    introMsg: "Welcome to the magic forest! (魔法の森へようこそ！あなたの英語の力、見せてみてね！)",
+    defeatMsg: "You did it! (すごい！次の試練は月夜の白狐が待っているわ...！)"
+  },
+  { 
+    lv: 2, 
+    name: "月光の白狐・ツクヨミ", 
+    icon: "🦊🌙", 
+    hp: 3500, 
+    atk: 50, 
+    exp: 90, 
+    gems: 20, 
+    desc: "月明かりに舞う幻影の狐。3秒以内クリティカルで仕留めよう！",
+    introMsg: "Can you see through my illusion? (月夜の幻影を見破れるかしら？)",
+    defeatMsg: "My moonlight faded... (月光が晴れていく...！次は天を駆けるペガサスよ！)"
+  },
+  { 
+    lv: 3, 
+    name: "星屑のペガサス", 
+    icon: "🦄⭐", 
+    hp: 7000, 
+    atk: 85, 
+    exp: 130, 
+    gems: 28, 
+    desc: "星の海を駆ける聖獣。Lv.20以上＆上位ロッドを装備して挑もう。",
+    introMsg: "Ride on the starlight! (星屑のスピードについてこられるかな！)",
+    defeatMsg: "Splendid light... (美しい光だ...！だが虹の彼方のグリフォンは手強いぞ！)"
+  },
+  { 
+    lv: 4, 
+    name: "虹彩のグリフォン", 
+    icon: "🦅🌈", 
+    hp: 12000, 
+    atk: 120, 
+    exp: 180, 
+    gems: 35, 
+    desc: "七色の翼を持つ怪鳥。高校文法の知識で風を切り裂こう！",
+    introMsg: "Feel the colorful storm! (虹色の嵐に耐えられるかな！)",
+    defeatMsg: "The sky cleared... (嵐が晴れた...！次は冷気漂う氷龍の神殿だ！)"
+  },
+  { 
+    lv: 5, 
+    name: "水晶の氷龍・グラシア", 
+    icon: "🐲❄️", 
+    hp: 18000, 
+    atk: 165, 
+    exp: 240, 
+    gems: 45, 
+    desc: "【中ボス】美しく凍てつく氷龍。ミスを減らして挑もう！",
+    introMsg: "Freeze in my crystal sanctuary! (水晶の冷気に耐えきれるかしら！)",
+    defeatMsg: "My ice is melting... (氷が溶けていく...！だが宵闇の魔導姫はお前を惑わすぞ！)"
+  },
+  { 
+    lv: 6, 
+    name: "宵闇の魔導姫・リリス", 
+    icon: "🧝‍♀️🔮", 
+    hp: 26000, 
+    atk: 210, 
+    exp: 310, 
+    gems: 55, 
+    desc: "夜を司る妖艶な魔導士。装備を整えて挑もう。",
+    introMsg: "Welcome to the eternal night. (永遠の夜へようこそ。あなたの魔法を見せてちょうだい。)",
+    defeatMsg: "Such bright light... (なんて眩しい光...！鳳凰の炎がお前を試すわ！)"
+  },
+  { 
+    lv: 7, 
+    name: "烈火の鳳凰・フェニックス", 
+    icon: "🔥🦅", 
+    hp: 36000, 
+    atk: 265, 
+    exp: 400, 
+    gems: 68, 
+    desc: "不滅の炎を纏う神鳥。素早さと会心が勝利の鍵！",
+    introMsg: "My flame burns forever! (我が不滅の炎、知識の力で鎮めてみせよ！)",
+    defeatMsg: "Extinguished... (炎が鎮まった...！妖精王タイタニアが待っているぞ！)"
+  },
+  { 
+    lv: 8, 
+    name: "聖霊王・タイタニア", 
+    icon: "👑🌸✨", 
+    hp: 48000, 
+    atk: 330, 
+    exp: 500, 
+    gems: 80, 
+    desc: "妖精界の支配者。上級ティアラとロッドが必須！",
+    introMsg: "Show me the true harmony of words! (言葉の真なる調和を示してみせなさい！)",
+    defeatMsg: "Truly magnificent... (見事です...！天星龍の試練を超えてゆきなさい！)"
+  },
+  { 
+    lv: 9, 
+    name: "銀河の天星龍・アストライア", 
+    icon: "🐉🌌", 
+    hp: 62000, 
+    atk: 400, 
+    exp: 650, 
+    gems: 100, 
+    desc: "星穹を支配する巨大龍。最高峰のステータスが必要！",
+    introMsg: "Gaze upon the galaxy! (銀河の星々を統べる我が力を超えられるか！)",
+    defeatMsg: "The stars align for you... (星々がお前を導いている...！エターナル・ユニコーン様の元へ！)"
+  },
+  { 
+    lv: 10, 
+    name: "創世神獣・エターナル・ユニコーン", 
+    icon: "👑🦄💖✨", 
+    hp: 80000, 
+    atk: 500, 
+    exp: 850, 
+    gems: 150, 
+    desc: "【表ラスボス】準2級の頂点に君臨する純白の創世神獣！",
+    introMsg: "I am the light of all dreams! (我が名はエターナル・ユニコーン！あなたの全知全能の英語力を解き放ちなさい！)",
+    defeatMsg: "Incredible... You are the true grand master! (素晴らしい...！あなたこそが真の英語の覇者です！)"
+  },
+  { 
+    lv: 11, 
+    name: "虚空の創造主・クロノス・ステラ", 
+    icon: "🌌👁️⌛✨", 
+    hp: 160000, 
+    atk: 9999, 
+    exp: 2000, 
+    gems: 300, 
+    desc: "【真・隠し裏ボス】Lv.100＆創世神装備＆全問クリティカルでのみ勝てる究極神！", 
+    isSecret: true,
+    introMsg: "Time and space bow before me... (時空の果てへようこそ。神話の装備を纏いし乙女よ、限界を超えてみせよ！)",
+    defeatMsg: "Eternal starlight shines forever... (永遠の星光が満ちた...。全次元の覇者よ、その栄光は不滅なり...！)"
+  }
+];
+
+// ==================== 4. 準2級 必須単語・熟語 (厳選700語 Part 1) ====================
 const RAW_VOCAB_DATA = [
-  ["achieve", "〜を達成する・成し遂げる"],
-  ["advantage", "有利・利点"],
-  ["allow", "〜を許可する・可能にする"],
-  ["ancient", "古代の・大昔の"],
-  ["appearance", "外見・様子・出現"],
-  ["attitude", "態度・心構え"],
-  ["attract", "〜を引きつける・魅了する"],
-  ["available", "利用できる・手に入る"],
-  ["benefit", "利益・恩恵"],
-  ["celebrate", "〜を祝う"],
-  ["certain", "確信して・一定の"],
-  ["challenge", "試練・挑戦・課題"],
-  ["comfortable", "心地よい・快適な"],
-  ["community", "地域社会・共同体"],
-  ["condition", "状態・条件"],
-  ["confident", "自信に満ちた・確信して"],
-  ["convenient", "便利な・都合の良い"],
-  ["culture", "文化・教養"],
-  ["decade", "10年間"],
-  ["decision", "決断・決定"],
-  ["decrease", "減少する・減らす"],
-  ["delicious", "とてもおいしい"],
-  ["demand", "需要・要求"],
-  ["disappoint", "〜を失望させる・がっかりさせる"],
-  ["discover", "〜を発見する・見つける"],
-  ["effective", "効果的な・有効な"],
-  ["effort", "努力・奮闘"],
-  ["encourage", "〜を励ます・勇気づける"],
-  ["environment", "自然環境・周囲の状況"],
-  ["essential", "不可欠な・極めて重要な"],
-  ["experience", "経験・体験"],
-  ["express", "〜を表現する・述べる"],
-  ["familiar", "よく知られた・馴染みのある"],
-  ["frequently", "頻繁に・しばしば"],
-  ["gradually", "徐々に・だんだんと"],
-  ["improve", "〜を向上させる・改善する"],
-  ["increase", "増加する・増やす"],
-  ["influence", "影響・影響を与える"],
-  ["ingredient", "材料・成分"],
-  ["opportunity", "機会・チャンス"],
-  ["pollution", "汚染・公害"],
-  ["population", "人口・住民"],
-  ["protect", "〜を保護する・守る"],
-  ["provide", "〜を提供する・供給する"],
-  ["relationship", "関係・結びつき"],
-  ["require", "〜を必要とする・要求する"],
-  ["responsible", "責任がある・原因である"],
-  ["situation", "状況・立場"],
-  ["traditional", "伝統的な・昔ながらの"],
-  ["valuable", "貴重な・価値の高い"]
-];
+  // --- 準2級 頻出重要熟語・連語 (70語) ---
+  ["according to ~", "〜によれば・〜に従って"], ["as a result", "結果として"], ["as well as ~", "〜だけでなく…も"],
+  ["at the same time", "同時に"], ["be based on ~", "〜に基づいている"], ["be capable of ~", "〜する能力がある"],
+  ["be familiar with ~", "〜をよく知っている"], ["be likely to ~", "〜しそうである"], ["be responsible for ~", "〜に対して責任がある"],
+  ["by accident", "偶然に・誤って"], ["by chance", "偶然に"], ["catch up with ~", "〜に追いつく"],
+  ["come up with ~", "（アイデアなどを）思いつく"], ["deal with ~", "〜を扱う・処理する"], ["depend on ~", "〜に頼る・〜次第である"],
+  ["due to ~", "〜が原因で・〜のために"], ["feel like ~ing", "〜したい気がする"], ["figure out ~", "〜を理解する・解決する"],
+  ["for instance", "たとえば"], ["from time to time", "時々"], ["get along with ~", "〜と仲良くやっていく"],
+  ["get rid of ~", "〜を取り除く・処分する"], ["get used to ~", "〜に慣れる"], ["give up ~ing", "〜するのをあきらめる"],
+  ["have ~ in common", "〜を共通点として持つ"], ["in addition to ~", "〜に加えて・おまけに"], ["in case of ~", "〜の場合には・万一〜なら"],
+  ["in order to ~", "〜するために"], ["in terms of ~", "〜の観点から・〜に関して"], ["instead of ~", "〜の代わりに"],
+  ["keep in touch with ~", "〜と連絡を取り合う"], ["look after ~", "〜の世話をする"], ["look forward to ~", "〜を楽しみに待つ"],
+  ["look up to ~", "〜を尊敬する"], ["make an effort", "努力する"], ["make sure that ~", "〜を確かめる・確実に〜する"],
+  ["make use of ~", "〜を利用する・活用する"], ["no longer", "もはや〜ない"], ["not only A but also B", "AだけでなくBも"],
+  ["on purpose", "わざと・故意に"], ["out of order", "故障して"], ["participate in ~", "〜に参加する"],
+  ["pay attention to ~", "〜に注意を払う"], ["point out ~", "〜を指摘する"], ["put off ~", "〜を延期する"],
+  ["rely on ~", "〜を信頼する・〜に頼る"], ["run out of ~", "〜を使い果たす・切らす"], ["set up ~", "〜を設立する・準備する"],
+  ["so that ~", "〜するために・とても…なので〜"], ["spend A on B", "A（お金や時間）をBに費やす"], ["stand for ~", "〜を表す・象徴する"],
+  ["take advantage of ~", "〜を利用する"], ["take part in ~", "〜に参加する"], ["take place", "（行事などが）行われる・開催される"],
+  ["turn out to be ~", "〜であることが判明する"], ["used to ~", "かつては〜だった"], ["with regard to ~", "〜に関して"],
+  ["without doubt", "疑いなく・確かに"], ["work out", "うまくいく・運動する"], ["as long as ~", "〜である限り・〜の間は"],
+  ["as soon as ~", "〜するとすぐに"], ["be aware of ~", "〜に気づいている・知っている"], ["be proud of ~", "〜を誇りに思っている"],
+  ["by the way", "ところで"], ["carry out ~", "〜を実行する・果たす"], ["in public", "人前で・公の場で"],
+  ["in the end", "結局・最後には"], ["on the other hand", "一方で・他方では"], ["up to ~", "〜に至るまで・〜次第で"],
+  ["upside down", "上下逆さまに"],
 
-// ==================== 4. 準2級 頻出文法・語法 データベース ====================
+  // --- 準2級 頻出動詞 (50語) ---
+  ["accept", "〜を受け入れる・承諾する"], ["achieve", "〜を達成する・成し遂げる"], ["admire", "〜を称賛する・感心する"],
+  ["admit", "〜を認める・入場を許可する"], ["affect", "〜に影響を及ぼす"], ["afford", "〜する余裕がある"],
+  ["agree", "同意する・賛成する"], ["allow", "〜を許可する・可能にする"], ["announce", "〜を発表する・告知する"],
+  ["apologize", "謝罪する・お詫びする"], ["appear", "現れる・〜のように見える"], ["apply", "申し込む・適用する"],
+  ["appreciate", "〜に感謝する・正しく評価する"], ["approach", "〜に近づく・接近する"], ["argue", "議論する・主張する"],
+  ["arrange", "〜を手配する・整える"], ["attract", "〜を引きつける・魅了する"], ["avoid", "〜を避ける・回避する"],
+  ["belong", "所属している"], ["blame", "〜を責める・非難する"], ["bother", "〜を困らせる・気にする"],
+  ["cancel", "〜を取り消す・中止する"], ["cause", "〜を引き起こす・原因となる"], ["celebrate", "〜を祝う"],
+  ["charge", "〜を請求する・充電する"], ["claim", "〜を主張する・要求する"], ["combine", "〜を組み合わせる・結合する"],
+  ["communicate", "意思疎通する・伝える"], ["compare", "〜を比較する"], ["compete", "競争する・競い合う"],
+  ["complain", "不平を言う・文句を言う"], ["confirm", "〜を確認する・確証する"], ["connect", "〜を接続する・繋ぐ"],
+  ["consider", "〜をじっくり考える・検討する"], ["contain", "〜を含んでいる・収容する"], ["continue", "続く・続ける"],
+  ["convince", "〜を納得させる・確信させる"], ["create", "〜を創造する・作り出す"], ["damage", "〜に損害を与える"],
+  ["decide", "〜を決める・決心する"], ["decrease", "減少する・減らす"], ["deliver", "〜を配達する・届ける"],
+  ["demand", "〜を要求する"], ["deny", "〜を否定する・拒む"], ["describe", "〜を描写する・説明する"],
+  ["destroy", "〜を破壊する"], ["develop", "発展する・開発する"], ["disappear", "消える・見えなくなる"],
+  ["discover", "〜を発見する"], ["discuss", "〜について話し合う"],
+  // --- 準2級 頻出動詞 Part 2 (No.121 〜 No.180) ---
+  ["encourage", "〜を励ます・勇気づける"], ["entertain", "〜を楽しませる・もてなす"], ["establish", "〜を設立する・確立する"],
+  ["estimate", "〜を見積もる・推定する"], ["exist", "存在する・実在する"], ["expand", "拡大する・広げる"],
+  ["expect", "〜を予期する・期待する"], ["explain", "〜を説明する"], ["explore", "〜を探検する・探求する"],
+  ["express", "〜を表現する"], ["extend", "〜を延長する・伸ばす"], ["fail", "失敗する・落ちる"],
+  ["feature", "〜を呼び物にする・特徴とする"], ["feed", "〜に餌をやる・養う"], ["figure", "考える・計算する"],
+  ["focus", "集中する・焦点を合わせる"], ["forbid", "〜を禁止する"], ["force", "〜を強制する・強いる"],
+  ["forgive", "〜を許す"], ["freeze", "凍る・凍らせる"], ["frighten", "〜を怖がらせる"],
+  ["gather", "集まる・集める"], ["generate", "〜を生み出す・発生させる"], ["graduate", "卒業する"],
+  ["greet", "〜に挨拶する・出迎える"], ["guarantee", "〜を保証する"], ["guard", "〜を守る・警備する"],
+  ["guide", "〜を案内する・指導する"], ["handle", "〜を扱う・処理する"], ["hesitate", "ためらう・躊躇する"],
+  ["hire", "〜を雇う"], ["hurt", "〜を傷つける・痛む"], ["ignore", "〜を無視する"],
+  ["imagine", "〜を想像する"], ["impress", "〜に感銘を与える"], ["improve", "〜を向上させる・改善する"],
+  ["include", "〜を含む"], ["increase", "増加する・増やす"], ["indicate", "〜を示す・指し示す"],
+  ["influence", "〜に影響を与える"], ["inform", "〜に知らせる・通知する"], ["injure", "〜を傷つける・怪我をさせる"],
+  ["insist", "〜を強く主張する・要求する"], ["inspire", "〜を鼓舞する・インスピレーションを与える"], ["install", "〜を設置する・導入する"],
+  ["intend", "〜する意図がある・つもりである"], ["interrupt", "〜を中断させる・邪魔する"], ["introduce", "〜を紹介する・導入する"],
+  ["invent", "〜を発明する"], ["invest", "〜を投資する"], ["invite", "〜を招待する"],
+  ["judge", "〜を判断する・裁判する"], ["lack", "〜を欠いている・不足している"], ["locate", "〜の場所を突き止める・位置する"],
+  ["maintain", "〜を維持する・主張する"], ["manage", "どうにか〜し遂げる・管理する"], ["measure", "〜を測定する・測る"],
+  ["mention", "〜について言及する・口にする"], ["misunderstand", "〜を誤解する"], ["notice", "〜に気づく"],
+
+  // --- 準2級 頻出名詞 (No.181 〜 No.240) ---
+  ["ability", "能力・才能"], ["achievement", "達成・業績"], ["activity", "活動"],
+  ["advantage", "有利・利点"], ["advice", "助言・アドバイス"], ["amount", "量・総額"],
+  ["announcement", "発表・告知"], ["appearance", "外見・様子・出現"], ["appointment", "（面会の）約束・予約"],
+  ["arrangement", "手配・配置・準備"], ["attitude", "態度・心構え"], ["audience", "聴衆・観客"],
+  ["author", "著者・作家"], ["background", "背景・経歴"], ["behavior", "行動・振る舞い"],
+  ["benefit", "利益・恩恵"], ["boundary", "境界・限界"], ["budget", "予算"],
+  ["career", "経歴・職業"], ["cause", "原因・理由"], ["celebrity", "有名人・著名人"],
+  ["ceremony", "儀式・式典"], ["challenge", "挑戦・試練・課題"], ["characteristic", "特徴・特質"],
+  ["charity", "慈善団体・思いやり"], ["citizen", "市民・国民"], ["climate", "気候"],
+  ["community", "地域社会・共同体"], ["companion", "仲間・同行者"], ["condition", "状態・条件"],
+  ["confidence", "自信・信頼"], ["consequence", "結果・影響"], ["consumer", "消費者"],
+  ["continent", "大陸"], ["convenience", "便利さ・都合"], ["costume", "衣装・コスチューム"],
+  ["creature", "生き物・動物"], ["crime", "犯罪"], ["crowd", "群衆・人混み"],
+  ["culture", "文化・教養"], ["customer", "客・顧客"], ["decade", "10年間"],
+  ["decision", "決断・決定"], ["degree", "程度・学位・度"], ["demand", "需要・要求"],
+  ["destination", "目的地・行先"], ["detail", "詳細・細部"], ["device", "装置・機器"],
+  ["direction", "方角・方向・指示"], ["disaster", "災害・惨事"], ["discount", "割引"],
+  ["disease", "病気・疾患"], ["distance", "距離"], ["duty", "義務・職務"],
+  ["economy", "経済・節約"], ["education", "教育"], ["effect", "効果・影響"],
+  ["effort", "努力・奮闘"], ["electricity", "電気・電力"], ["emergency", "緊急事態・非常時"],
+
+  // --- 準2級 頻出形容詞・副詞 (No.241 〜 No.280) ---
+  ["accurate", "正確な・精密な"], ["active", "活発な・積極的な"], ["additional", "追加の・付加的な"],
+  ["adequate", "十分な・適切な"], ["advanced", "進歩した・上級の"], ["ancient", "古代の・大昔の"],
+  ["anxious", "心配して・切望して"], ["apparent", "明白な・一見〜らしい"], ["appropriate", "適切な・ふさわしい"],
+  ["artificial", "人工の・不自然な"], ["attractive", "魅力的な"], ["automatic", "自動の"],
+  ["available", "利用できる・入手可能な"], ["aware", "気づいている・知っている"], ["basic", "基本的な・初歩的な"],
+  ["beneficial", "有益な・ためになる"], ["brilliant", "輝かしい・極めて優秀な"], ["calm", "穏やかな・落ち着いた"],
+  ["casual", "気楽な・形式ばらない"], ["cautious", "用心深い・慎重な"], ["central", "中心の・主要な"],
+  ["chemical", "化学の・化学物質"], ["classic", "古典的な・傑作の"], ["comfortable", "心地よい・快適な"],
+  ["commercial", "商業の・営利目的の"], ["common", "共通の・一般的な"], ["competitive", "競争の激しい・競争力のある"],
+  ["complex", "複雑な・複合の"], ["confident", "自信に満ちた・確信して"], ["conscious", "意識している・自覚して"],
+  ["convenient", "便利な・都合の良い"], ["creative", "創造的な・独創的な"], ["critical", "極めて重要な・批判的な"],
+  ["crucial", "決定的な・極めて重要な"], ["cultural", "文化的な"], ["curious", "好奇心の強い・奇妙な"],
+  ["current", "現在の・流行の"], ["delicate", "繊細な・壊れやすい"], ["demanding", "過酷な・要求の厳しい"],
+  ["desirable", "望ましい・魅力的な"],
+  // --- 準2級 頻出動詞 Part 3 (No.281 〜 No.330) ---
+  ["disappoint", "〜を失望させる・がっかりさせる"], ["distribute", "〜を分配する・配る"], ["disturb", "〜を邪魔する・妨げる"],
+  ["dominate", "〜を支配する・優位に立つ"], ["earn", "〜を稼ぐ・獲得する"], ["educate", "〜を教育する"],
+  ["employ", "〜を雇う・用いる"], ["enable", "〜を可能にする"], ["encounter", "〜に遭遇する・出くわす"],
+  ["entertain", "〜を楽しませる・もてなす"], ["envy", "〜をうらやむ・嫉妬する"], ["escape", "逃げる・脱出する"],
+  ["evaluate", "〜を評価する・査定する"], ["examine", "〜を調査する・診察する"], ["exhibit", "〜を展示する・示す"],
+  ["expand", "拡大する・広げる"], ["experience", "〜を経験する・体験する"], ["expose", "〜をさらす・暴露する"],
+  ["express", "〜を表現する・述べる"], ["fascinate", "〜を魅了する・夢中にさせる"], ["flee", "逃げる・避難する"],
+  ["forgive", "〜を許す・勘弁する"], ["gain", "〜を得る・増やす"], ["govern", "〜を統治する・支配する"],
+  ["guarantee", "〜を保証する・請け合う"], ["hesitate", "ためらう・躊躇する"], ["highlight", "〜を強調する・目立たせる"],
+  ["illustrate", "〜を説明する・挿絵を入れる"], ["imitate", "〜の真似をする・模倣する"], ["implement", "〜を実行する・導入する"],
+  ["imply", "〜をほのめかす・暗示する"], ["impress", "〜に感銘を与える・印象づける"], ["influence", "〜に影響を与える"],
+  ["inform", "〜に知らせる・通知する"], ["inherit", "〜を受け継ぐ・相続する"], ["injure", "〜を傷つける・怪我をさせる"],
+  ["insist", "〜を強く主張する・要求する"], ["inspire", "〜を鼓舞する・やる気にさせる"], ["interact", "交流する・相互に作用する"],
+  ["investigate", "〜を調査する・究明する"], ["involve", "〜を巻き込む・含む"], ["judge", "〜を判断する・裁く"],
+  ["justify", "〜を正当化する"], ["launch", "〜を開始する・発射する"], ["limit", "〜を制限する・限定する"],
+  ["maintain", "〜を維持する・主張する"], ["manage", "どうにか〜し遂げる・管理する"], ["manufacture", "〜を製造する・生産する"],
+  ["measure", "〜を測定する・測る"], ["motivate", "〜に動機を与える・やる気にさせる"],
+
+  // --- 準2級 頻出名詞 Part 2 (No.331 〜 No.380) ---
+  ["employee", "従業員・社員"], ["employer", "雇用者・雇い主"], ["employment", "雇用・職"],
+  ["energy", "活力・エネルギー"], ["enterprise", "企業・事業"], ["enthusiasm", "熱意・情熱"],
+  ["environment", "自然環境・周囲の状況"], ["equipment", "設備・用具・備品"], ["era", "時代・年代"],
+  ["essential", "必須のもの・不可欠な要素"], ["establishment", "設立・施設・機関"], ["evidence", "証拠・根拠"],
+  ["evolution", "進化・発展"], ["exception", "例外・除外"], ["excess", "過剰・超過"],
+  ["exchange", "交換・為替・両替"], ["exhibition", "展示会・展覧会"], ["existence", "存在・生存"],
+  ["expansion", "拡大・進出"], ["expectation", "期待・予想"], ["expense", "費用・出費・経費"],
+  ["experience", "経験・体験"], ["expert", "専門家・熟練者"], ["explanation", "説明・解釈"],
+  ["explosion", "爆発・急増"], ["facility", "施設・設備・機能"], ["factor", "要因・要素"],
+  ["failure", "失敗・不作"], ["faith", "信頼・信用・信仰"], ["feature", "特徴・呼び物・顔立ち"],
+  ["fee", "料金・謝礼・手数料"], ["figure", "数字・人物・体型・図"], ["finance", "財政・金融・資金"],
+  ["flavor", "風味・味・味わい"], ["flight", "飛行・航空便・フライト"], ["flu", "インフルエンザ・流感"],
+  ["focus", "焦点・重点"], ["folk", "人々・民族・民謡"], ["forecast", "予報・予測"],
+  ["form", "形態・用紙・形式"], ["foundation", "基礎・土台・財団"], ["fraction", "わずか・断片・分数"],
+  ["freedom", "自由・解放"], ["frequency", "頻度・周波数"], ["function", "機能・働き・役割"],
+  ["furniture", "家具"], ["gap", "すき間・格差・隔たり"], ["gardener", "庭師・園芸家"],
+  ["generation", "世代・同世代の人々"], ["gesture", "身振り・ジェスチャー・意思表示"],
+
+  // --- 準2級 頻出形容詞・副詞 Part 2 (No.381 〜 No.440) ---
+  ["disappointed", "失望した・がっかりした"], ["distinct", "明確な・独特の・はっきりした"], ["diverse", "多様な・種々の"],
+  ["dramatic", "劇的な・めざましい・演劇の"], ["durable", "耐久性のある・丈夫な"], ["eager", "熱望して・しきりに〜したがる"],
+  ["economic", "経済の・経済に関する"], ["effective", "効果的な・有効な"], ["efficient", "効率的な・能率的な"],
+  ["elderly", "年配の・高齢の"], ["electronic", "電子の・電子機器の"], ["elementary", "初歩の・基本的な・小学校の"],
+  ["eligible", "資格がある・適格な"], ["emotional", "感情的な・感情に関する"], ["endless", "終わりのない・無限の"],
+  ["energetic", "精力的な・活気にあふれた"], ["enormous", "巨大な・莫大な"], ["entire", "全体の・すべての"],
+  ["environmental", "環境の・環境保護の"], ["equal", "平等な・等しい"], ["essential", "不可欠な・極めて重要な"],
+  ["eventual", "最終的な・結果としての"], ["evident", "明白な・明らかな"], ["exact", "正確な・ぴったりの"],
+  ["exceptional", "並外れた・極めて優秀な"], ["excessive", "過度の・極端な"], ["exclusive", "独占的な・専用の・高級な"],
+  ["exotic", "異国風の・魅力的な"], ["expensive", "高価な・費用のかかる"], ["experienced", "経験豊富な・熟練した"],
+  ["explicit", "明確な・率直な"], ["expressive", "表現豊かな・感情を表す"], ["extensive", "広範囲に及ぶ・大規模な"],
+  ["extra", "余分の・追加の"], ["extraordinary", "並外れた・異常な"], ["extreme", "極端な・過激な"],
+  ["fair", "公平な・妥当な・かなりの"], ["familiar", "よく知られた・馴染みのある"], ["famous", "有名な・名高い"],
+  ["fantastic", "素晴らしい・空想的な"], ["fascinating", "魅力的な・興味深い"], ["fatal", "致命的な・破滅的な"],
+  ["favorable", "好意的な・有利な・好都合な"], ["fearful", "恐れている・心配して"], ["federal", "連邦の・連邦政府の"],
+  ["female", "女性の・雌の"], ["fierce", "獰猛な・激しい・猛烈な"], ["financial", "財政の・金融の"],
+  ["flexible", "柔軟な・融通の利く"], ["fluent", "流暢な・すらすら話せる"], ["formal", "公式の・正式な・形式ばった"],
+  ["fortunate", "幸運な・幸せな"], ["frequent", "頻繁な・しばしば起きる"], ["frequently", "頻繁に・しばしば"],
+  ["friendly", "親しみやすい・友好的な"], ["frightened", "怖がった・怯えた"], ["fundamental", "根本的な・基本的な"],
+  ["furious", "激怒した・猛烈な"], ["general", "一般的な・全般的な"],
+  // --- 準2級 頻出動詞・名詞・形容詞 Part 4 (No.441 〜 No.570) ---
+  ["global", "世界的な・地球全体の"], ["gradual", "徐々の・緩やかな"], ["guilty", "有罪の・罪悪感のある"],
+  ["harmful", "有害な・害を及ぼす"], ["harsh", "厳しい・過酷な"], ["healthy", "健康的な・健全な"],
+  ["historic", "歴史的に重要な・歴史的な"], ["historical", "歴史に関する・史実の"], ["hollow", "空洞の・中空の"],
+  ["hostile", "敵対的な・反感を持った"], ["huge", "巨大な・莫大な"], ["ideal", "理想的な・申し分のない"],
+  ["identical", "同一の・まったく同じ"], ["ignorant", "無知な・知らない"], ["illegal", "違法の・不法な"],
+  ["immediate", "即座の・直接の"], ["immense", "巨大な・計り知れない"], ["immune", "免疫のある・免除された"],
+  ["impatient", "我慢できない・短気な"], ["impressive", "印象的な・感動的な"], ["incredible", "信じられない・素晴らしい"],
+  ["independent", "独立した・自立した"], ["indifferent", "無関心な・冷淡な"], ["inevitable", "避けられない・必然的な"],
+  ["infectious", "伝染性の・感染性の"], ["inferior", "劣っている・下位の"], ["infinite", "無限の・無数の"],
+  ["influential", "影響力のある・有力な"], ["informal", "非公式の・略式の・気さくな"], ["initial", "最初の・初期の"],
+  ["innocent", "無罪の・無邪気な"], ["innovative", "革新的な・刷新的な"], ["instant", "即時の・瞬時の"],
+  ["intellectual", "知的な・知識人の"], ["intelligent", "知能の高い・賢い"], ["intense", "強烈な・激しい"],
+  ["internal", "内部の・国内の"], ["international", "国際的な・世界的な"], ["invisible", "目に見えない・不可視の"],
+  ["isolate", "〜を孤立させる・分離する"], ["keen", "熱心な・鋭い・鋭利な"], ["latest", "最新の・最近の"],
+  ["legendary", "伝説の・名高い"], ["logical", "論理的な・筋の通った"], ["loyal", "忠実な・誠実な"],
+  ["magnificent", "壮大な・素晴らしい"], ["major", "主要な・重大な"], ["mandatory", "義務的な・強制の"],
+  ["marvelous", "驚くべき・素晴らしい"], ["massive", "巨大な・大量の"], ["mature", "成熟した・大人の"],
+  ["maximum", "最大の・最高限度の"], ["mental", "精神の・知能の"], ["mere", "単なる・ほんの"],
+  ["minimum", "最小の・最低限度の"], ["minor", "少数の・重要でない"], ["miserable", "惨めな・不幸な"],
+  ["modest", "謙虚な・控えめな"], ["moist", "湿った・潤いのある"], ["moral", "道徳的な・倫理の"],
+  ["multiple", "多様な・多数の"], ["mutual", "相互の・共通の"], ["mysterious", "神秘的な・不可解な"],
+  ["native", "母国の・出身の・自生の"], ["natural", "自然の・当然の"], ["neat", "きちんとした・小奇麗な"],
+  ["negative", "否定的な・消極的な"], ["neutral", "中立の・公平な"], ["noble", "高潔な・貴族の"],
+  ["normal", "標準の・通常の"], ["notable", "注目すべき・著名な"], ["noticeable", "目立つ・顕著な"],
+  ["novel", "斬新な・新奇な"], ["nuclear", "核の・原子力の"], ["numerous", "多数の・無数の"],
+  ["objective", "客観的な・公平な"], ["obvious", "明白な・明らかな"], ["occasional", "時折の・たまの"],
+  ["official", "公式の・公の"], ["ongoing", "進行中の・継続している"], ["optimistic", "楽観的な・前向きな"],
+  ["ordinary", "普通の・平凡な"], ["original", "独創的な・元の・最初の"], ["outstanding", "傑出した・目立った"],
+  ["overall", "全体的な・総合的な"], ["overseas", "海外の・外国への"], ["painful", "痛みを伴う・つらい"],
+  ["partial", "部分的な・不完全な"], ["particular", "特定の・こだわりのある"], ["passion", "情熱・熱中"],
+  ["patient", "忍耐強い・我慢強い"], ["peculiar", "独特の・風変わりな"], ["permanent", "永続的な・恒久の"],
+  ["personal", "個人の・個人的な"], ["physical", "身体の・物質的な・物理の"], ["pleasant", "心地よい・楽しい"],
+  ["plentiful", "豊富な・十分な"], ["polite", "礼儀正しい・丁寧な"], ["political", "政治の・政治的な"],
+  ["popular", "人気のある・大衆的な"], ["positive", "前向きな・肯定的な"], ["potential", "潜在的な・可能性のある"],
+  ["practical", "実用的な・現実的な"], ["precious", "貴重な・高価な"], ["precise", "正確な・精密な"],
+  ["predictable", "予測可能な"], ["preferable", "好ましい・より望ましい"], ["pregnant", "妊娠している"],
+  ["preliminary", "予備の・事前の"], ["premium", "高級な・割増の"], ["present", "現在の・出席している"],
+  ["presidential", "大統領の"], ["previous", "以前の・前の"], ["primary", "主要な・初等の"],
+  ["primitive", "原始的な・初期の"], ["principal", "主要な・第一の"], ["prior", "事前の・先の"],
+  ["private", "私的な・個人の・秘密の"], ["probable", "十分にありそうな・確実な"], ["productive", "生産的な・実り多い"],
+  ["professional", "専門職の・プロの"], ["profitable", "利益になる・有益な"], ["profound", "深い・深遠な"],
+  ["prominent", "卓越した・目立つ"], ["promising", "前途有望な・見込みのある"], ["prompt", "迅速な・即座の"],
+  ["proper", "適切な・ふさわしい"], ["protective", "保護する・防御の"], ["proud", "誇りに思う・高慢な"],
+  ["pure", "純粋な・清潔な"], ["qualified", "資格のある・適任の"], ["rapid", "急速な・速い"],
+  ["rare", "珍しい・まれな"], ["rational", "合理的な・理性的な"], ["raw", "生の・加工されていない"],
+  ["realistic", "現実的な・実際的な"], ["reasonable", "妥当な・手頃な・道理にかなった"], ["recent", "最近の・近頃の"],
+
+  // --- 準2級 頻出名詞・社会・自然・科学 Part 5 (No.571 〜 No.700) ---
+  ["growth", "成長・発展・増加"], ["habitat", "生息地・生息環境"], ["habit", "習慣・癖"],
+  ["heritage", "遺産・継承物"], ["hierarchy", "階層制・ヒエラルキー"], ["horizon", "地平線・視野"],
+  ["household", "家庭・世帯"], ["humanity", "人類・人間性・慈悲"], ["hygiene", "衛生・清潔"],
+  ["identity", "身元・個性・アイデンティティ"], ["illness", "病気・疾患"], ["illusion", "幻想・錯覚"],
+  ["immigration", "移住・入国審査"], ["impact", "影響・衝撃"], ["import", "輸入・輸入品"],
+  ["impression", "印象・感想"], ["improvement", "改善・向上"], ["incident", "出来事・事件"],
+  ["income", "収入・所得"], ["independence", "独立・自立"], ["industry", "産業・工業・勤勉"],
+  ["infection", "感染・伝染病"], ["inflation", "インフレ・物価高騰"], ["ingredient", "材料・成分"],
+  ["initiative", "主導権・構想・自発性"], ["injustice", "不正・不当・不公平"], ["injury", "負傷・怪我"],
+  ["insight", "洞察力・見識"], ["instance", "例・実例"], ["instinct", "本能・直感"],
+  ["institution", "機関・施設・制度"], ["instruction", "指示・教育・説明書"], ["instrument", "器具・楽器・道具"],
+  ["insurance", "保険・保護"], ["intellect", "知性・知力"], ["intelligence", "知能・情報"],
+  ["intention", "意図・意向・目的"], ["interaction", "相互作用・交流"], ["interior", "内部・室内・内陸"],
+  ["interpretation", "通訳・解釈・説明"], ["interruption", "中断・邪魔・妨害"], ["interview", "面接・取材"],
+  ["introduction", "導入・紹介・序文"], ["invention", "発明・発明品"], ["investigation", "調査・研究・捜査"],
+  ["invitation", "招待・招待状"], ["issue", "問題・論点・発行物"], ["item", "品目・項目・記事"],
+  ["journey", "旅行・旅程・道程"], ["judgment", "判断・裁判・判決"], ["justice", "正義・公正・裁判"],
+  ["knowledge", "知識・理解"], ["laboratory", "研究所・実験室"], ["landscape", "風景・景観"],
+  ["language", "言語・言葉"], ["lawyer", "弁護士・法律家"], ["leadership", "指導力・統率力"],
+  ["lecture", "講義・講演"], ["legend", "伝説・偉人"], ["legislation", "法律・立法"],
+  ["liberty", "自由・解放"], ["lifestyle", "生き方・生活様式"], ["limitation", "制限・限度"],
+  ["literature", "文学・文献"], ["location", "位置・場所・立地"], ["luggage", "手荷物・スーツケース"],
+  ["luxury", "贅沢・豪華さ・贅沢品"], ["majority", "大多数・過半数"], ["management", "経営・管理・経営陣"],
+  ["manner", "方法・態度・礼儀作法"], ["manufacture", "製造・生産・製品"], ["manuscript", "原稿・手書き文書"],
+  ["material", "原料・材料・資料"], ["mayor", "市長・町長"], ["measurement", "測定・寸法・測量"],
+  ["media", "報道機関・メディア"], ["melody", "旋律・メロディー"], ["membership", "会員資格・メンバー数"],
+  ["memory", "記憶・思い出"], ["merchant", "商人・貿易商"], ["mercy", "慈悲・情け・恩恵"],
+  ["merit", "長所・利点・功績"], ["method", "方法・方式・手順"], ["migration", "移住・渡り・移動"],
+  ["minority", "少数派・少数民族"], ["miracle", "奇跡・驚異"], ["mission", "使命・任務・使節団"],
+  ["mixture", "混合物・調合物"], ["moisture", "湿気・水分・水蒸気"], ["monument", "記念碑・遺跡"],
+  ["motivation", "動機づけ・やる気"], ["movement", "運動・動き・活動"], ["muscle", "筋肉・腕力"],
+  ["museum", "博物館・美術館"], ["mystery", "謎・神秘・不可解なこと"], ["nation", "国家・国民"],
+  ["navigation", "航海・航空・ナビゲーション"], ["necessity", "必需品・必要性"], ["neighborhood", "近所・地域・界隈"],
+  ["network", "網・ネットワーク・人脈"], ["novel", "小説"], ["nutrition", "栄養・栄養摂取"],
+  ["obstacle", "障害・邪魔・障害物"], ["occasion", "機会・場合・行事"], ["occupation", "職業・占領"],
+  ["odor", "におい・香り・悪臭"], ["officer", "将校・役員・警察官"], ["opportunity", "機会・好機・チャンス"],
+  ["opposition", "反対・対立・野党"], ["option", "選択肢・選択権"], ["organism", "生物・有機体"],
+  ["origin", "起源・生まれ・発祥"], ["outcome", "結果・成果"], ["output", "生産高・出力・排出量"],
+  ["ownership", "所有権・所有者であること"], ["package", "小包・包装・パッケージ"], ["palace", "宮殿・大邸宅"],
+  ["panic", "パニック・大混乱"], ["paragraph", "段落・パラグラフ"], ["parliament", "議会・国会"],
+  ["participant", "参加者・関係者"], ["passage", "通路・一節・経過"], ["passenger", "乗客・旅客"],
+  ["passion", "情熱・激しい感情"], ["patient", "患者・病人"], ["pattern", "模様・型・パターン"],
+  ["pavement", "舗道・歩道"], ["penalty", "罰則・ペナルティー・刑罰"], ["perception", "知覚・認識・見解"],
+  ["performance", "公演・実績・性能"], ["permission", "許可・認可・同意"], ["personality", "個性・性格・人柄"],
+  ["perspective", "観点・展望・遠近法"], ["phenomenon", "現象・驚異的な人物"], ["philosophy", "哲学・人生観"],
+  ["pollution", "汚染・公害"], ["population", "人口・全住民"], ["portion", "一部分・分け前・一人前"],
+  ["position", "位置・立場・職位"], ["possibility", "可能性・見込み"], ["poverty", "貧困・欠乏"],
+  ["practice", "練習・実行・慣習"], ["precaution", "予防策・用心・警戒"], ["predator", "捕食動物・略奪者"],
+  ["prejudice", "偏見・先入観"], ["presence", "存在・出席・影響力"], ["preservation", "保存・保護・維持"],
+  ["pressure", "圧力・重圧・プレッシャー"], ["prestige", "名声・威信・名誉"], ["prevention", "予防・防止・阻止"],
+  ["principle", "原理・原則・信条"], ["priority", "優先事項・優先権"], ["privacy", "プライバシー・私生活"],
+  ["procedure", "手続き・手順・処置"], ["profession", "専門職・職業"], ["professor", "教授"],
+  ["project", "計画・事業・プロジェクト"], ["promotion", "昇進・促進・販売促進"], ["property", "財産・所有物・特性"],
+  ["proportion", "割合・比率・均整"], ["proposal", "提案・企画・プロポーズ"], ["prospect", "見通し・展望・可能性"],
+  ["protection", "保護・防御・保護貿易"], ["protein", "タンパク質"], ["psychology", "心理学・心理状態"],
+  ["publication", "出版・発行・刊行物"], ["purpose", "目的・意図・用途"], ["qualification", "資格・条件・適性"],
+  ["quantity", "量・分量・数量"], ["questionnaire", "アンケート調査・質問票"], ["radiation", "放射線・放射・発散"],
+  ["range", "範囲・限界・山脈"], ["reaction", "反応・反発・反射"], ["reality", "現実・真実・実態"],
+  ["recession", "不況・景気後退"], ["recipe", "調理法・レシピ・秘訣"], ["recognition", "認識・承認・表彰"],
+  ["recommendation", "推薦・推薦状・忠告"], ["recovery", "回復・復旧・回収"], ["reduction", "削減・減少・割引"],
+  ["reference", "言及・参照・推薦人"], ["reflection", "反射・反映・熟考"], ["reform", "改革・改善・改正"],
+  ["refund", "払い戻し・返金"], ["region", "地域・地方・行政区"], ["regulation", "規則・規制・調整"],
+  ["relationship", "関係・関連・結びつき"], ["relative", "親戚・親類"], ["religion", "宗教・信仰"],
+  ["requirement", "必要条件・要件"], ["rescue", "救助・救出・救援"], ["research", "研究・調査"],
+  ["resident", "居住者・住民"], ["resource", "資源・財源・資質"], ["respect", "尊敬・敬意・尊重"],
+  ["response", "応答・反応・返答"], ["responsibility", "責任・責務"], ["restriction", "制限・制約・規制"],
+  ["reward", "報酬・報奨金・ご褒美"], ["ritual", "儀式・習慣的行為"], ["routine", "決まり切った仕事・日課"],
+  ["ruin", "破滅・廃墟・荒廃"], ["rumor", "噂・風聞"], ["sacrifice", "犠牲・いけにえ"],
+  ["safety", "安全・無事・安全装置"], ["salary", "給料・月給"], ["sample", "見本・標本・サンプル"],
+  ["satisfaction", "満足・充足・達成感"], ["scale", "規模・尺度・体重計"], ["scenario", "筋書き・想定シナリオ"],
+  ["scent", "香り・におい・気配"], ["schedule", "予定表・スケジュール"], ["scholar", "学者・知識人"],
+  ["scholarship", "奨学金・学識"], ["score", "得点・スコア・楽譜"], ["security", "安全・警備・防犯"],
+  ["sensation", "感覚・知覚・大評判"], ["sentiment", "感情・心情・意見"], ["session", "会期・会議・期間"],
+  ["shelter", "避難所・保護施設"], ["shortage", "不足・欠乏"], ["signature", "署名・サイン"],
+  ["significance", "重要性・意義・重大さ"], ["similarity", "類似・似ている点"], ["site", "敷地・場所・遺跡"],
+  ["situation", "状況・事態・立場"], ["skeleton", "骨格・骨・概略"], ["skyscraper", "超高層ビル・摩天楼"],
+  ["society", "社会・共同体・社交界"], ["solution", "解決策・解答・溶解液"], ["species", "生物の種・種類"],
+  ["specification", "仕様書・明細・規格"], ["specimen", "標本・見本・検体"], ["sphere", "球体・天体・活動分野"],
+  ["spirit", "精神・魂・意気込み"], ["stability", "安定・安定性・堅実さ"], ["stadium", "競技場・スタジアム"],
+  ["standard", "基準・標準・水準"], ["status", "地位・身分・状況"], ["stimulus", "刺激・動機・励み"],
+  ["strategy", "戦略・方策・策略"], ["stress", "緊張・ストレス・強調"], ["structure", "構造・建造物・組織"],
+  ["struggle", "闘争・苦闘・もがき"], ["substance", "物質・実体・中身"], ["substitute", "代用品・代理人"],
+  ["suburb", "郊外・住宅街"], ["success", "成功・成果・成功者"], ["summary", "要約・概要・総括"],
+  ["surface", "表面・外見・水面"], ["surgery", "手術・外科"], ["surplus", "余剰・黒字・過剰分"],
+  ["survey", "調査・見渡し・測量"], ["survival", "生存・生き残ること"], ["suspect", "容疑者・被疑者"],
+  ["symptom", "症状・兆候・兆し"], ["system", "組織・体系・制度・システム"], ["target", "目標・標的・ターゲット"],
+  ["task", "任務・職務・課題"], ["technician", "専門技術者・技師"], ["technique", "技術・技巧・手法"],
+  ["technology", "科学技術・テクノロジー"], ["tendency", "傾向・偏り・風潮"], ["tension", "緊張・張り・緊迫感"],
+  ["terminal", "終着駅・ターミナル"], ["territory", "領土・縄張り・分野"], ["theater", "劇場・映画館"],
+  ["theme", "主題・テーマ・題目"], ["theory", "理論・学説・原理"], ["thermometer", "温度計・体温計"],
+  ["threat", "脅威・脅迫・兆候"], ["tide", "潮・潮の満ち引き・潮流"], ["tissue", "ティッシュ・生体組織"],
+  ["tolerance", "寛容・忍耐・耐性"], ["tomb", "墓・墓碑"], ["topic", "話題・トピック・論点"],
+  ["tourism", "観光事業・旅行業"], ["tournament", "勝ち抜き試合・大会"], ["trace", "痕跡・形跡・わずかな量"],
+  ["track", "小道・走路・線路・足跡"], ["tradition", "伝統・慣習・しきたり"], ["tragedy", "悲劇・惨事・悲惨な出来事"],
+  ["trail", "小道・山道・足跡"], ["trait", "特徴・特質・習性"], ["transition", "移り変わり・過渡期・移行"],
+  ["transmission", "送信・伝達・伝染"], ["transport", "輸送・交通機関・運送"], ["treatment", "治療・手当て・待遇"],
+  ["treaty", "条約・協定"], ["trend", "傾向・流行・トレンド"], ["trial", "試み・裁判・試練"],
+  ["trigger", "引き金・誘因・きっかけ"], ["troop", "軍隊・部隊・群れ"], ["trophy", "優勝記念品・トロフィー"],
+  ["twilight", "薄明かり・黄昏・夕暮れ"], ["uncertainty", "不確実さ・不安定・半信半疑"], ["universe", "全宇宙・森羅万象"],
+  ["update", "最新情報・更新・アップデート"], ["utility", "公共料金・公益事業・実用性"], ["vaccine", "ワクチン"],
+  ["validity", "妥当性・有効性・正当さ"], ["valley", "谷・渓谷・盆地"], ["variety", "多様性・変化・種類"],
+  ["vegetation", "植生・植物群落"], ["vehicle", "乗り物・車両・手段"], ["vendor", "露天商・販売業者"],
+  ["venture", "冒険的事業・ベンチャー"], ["venue", "開催地・会場"], ["verdict", "評決・判断・決定"],
+  ["version", "版・バージョン・説明"], ["vessel", "船舶・容器・血管"], ["victim", "犠牲者・被害者・被災者"],
+  ["victory", "勝利・克服・大成功"], ["village", "村・村落"], ["violence", "暴力・猛威・激しさ"],
+  ["virtue", "美徳・長所・効能"], ["virus", "ウイルス・病原体"], ["visibility", "視界・可視性・目に見えること"],
+  ["vision", "視力・先見の明・幻影"], ["visitor", "訪問者・来客・観光客"], ["volunteer", "志願者・ボランティア"],
+  ["voyage", "航海・船旅・宇宙旅行"], ["wage", "賃金・時給・給料"], ["warning", "警告・警報・前兆"],
+  ["waste", "浪費・ごみ・廃棄物"], ["wealth", "富・財産・豊富さ"], ["weapon", "武器・兵器・手段"],
+  ["welfare", "福祉・幸福・生活保護"], ["wildlife", "野生生物・野生動物"], ["wisdom", "知恵・賢さ・名言"],
+  ["witness", "目撃者・証人・証拠"], ["wound", "傷・負傷・心の傷"], ["yield", "産出量・収穫・利回り"],
+  ["zone", "区域・地帯・ゾーン"]
+];
+// ==================== 5. 準2級 頻出文法・語法 (No.1 〜 No.50) ====================
 const RAW_GRAMMAR_DATA = [
+  // --- 仮定法・助動詞の発展 (No.1 〜 No.10) ---
   {
-    q: "If I ( ) rich, I would buy a house by the sea.",
-    sub: "🪄 仮定法過去",
-    opt: ["am", "were", "will be", "have been"],
+    q: "If I ( ) enough money, I would travel around the world.",
+    sub: "【訳】もし十分なお金があれば、世界中を旅するのに。",
+    opt: ["have", "had", "will have", "having"],
     ans: 1,
-    exp: "【解説】現在の事実と異なる願望や仮定を表す「仮定法過去」では、if節の動詞を過去形（be動詞は主に were）にします。\n\n【訳】もし私がお金持ちなら、海辺に家を買うのに。"
+    exp: "現在の事実と異なる仮定を表す「仮定法過去」です。if節の動詞は過去形 had にします。"
   },
   {
-    q: "The woman ( ) lives next door is a famous pianist.",
-    sub: "🪄 関係代名詞 (主格)",
-    opt: ["who", "which", "whose", "whom"],
-    ans: 0,
-    exp: "【解説】先行詞が「人（The woman）」であり、関係代名詞節内で主語の役割を果たしているため、主格の who が正解です。\n\n【訳】隣に住んでいる女性は有名なピアニストです。"
-  },
-  {
-    q: "He didn't know what ( ) in that difficult situation.",
-    sub: "🪄 疑問詞 ＋ 不定詞",
-    opt: ["do", "to do", "doing", "did"],
+    q: "If she ( ) here now, she could help us with this project.",
+    sub: "【訳】もし彼女が今ここにいれば、この課題を手伝ってくれるのに。",
+    opt: ["is", "were", "will be", "has been"],
     ans: 1,
-    exp: "【解説】〈what to do〉で「何をすべきか」を表す名詞句になります。\n\n【訳】彼はその困難な状況で何をすべきかわかりませんでした。"
+    exp: "仮定法過去の be動詞は、主語が三人称単数であっても原則 were を用います。"
   },
   {
-    q: "You ( ) better see a doctor if you still have a fever.",
-    sub: "🪄 助動詞 (had better)",
+    q: "I wish I ( ) speak French as fluently as my teacher.",
+    sub: "【訳】先生と同じくらい流暢にフランス語が話せたらいいのに。",
+    opt: ["can", "could", "will", "may"],
+    ans: 1,
+    exp: "〈I wish ＋ 仮定法過去〉で「〜できたらいいのに（現在の願望）」を表します。can の過去形 could が正解です。"
+  },
+  {
+    q: "You ( ) better see a doctor before your cold gets worse.",
+    sub: "【訳】風邪が悪化する前に、医者に診てもらったほうがいいですよ。",
     opt: ["had", "would", "should", "did"],
     ans: 0,
-    exp: "【解説】〈had better ＋ 動詞の原形〉で「〜したほうがよい（強い忠告）」を表します。\n\n【訳】まだ熱があるなら、医者に診てもらったほうがいいですよ。"
+    exp: "〈had better ＋ 動詞の原形〉で「〜したほうがよい（強い忠告）」を表します。"
   },
   {
-    q: "This problem is too difficult for me ( ).",
-    sub: "🪄 too 〜 to 構文",
-    opt: ["solve", "solved", "to solve", "solving"],
-    ans: 2,
-    exp: "【解説】〈too ＋ 形容詞 ＋ for 人 ＋ to ＋ 動詞の原形〉で「人が〜するには…すぎる」を表します。\n\n【訳】この問題は私が解くには難しすぎます。"
+    q: "I would rather ( ) at home than go out in this stormy weather.",
+    sub: "【訳】この嵐の中外出するくらいなら、むしろ家にいたいです。",
+    opt: ["stay", "stayed", "staying", "to stay"],
+    ans: 0,
+    exp: "〈would rather ＋ 動詞の原形 than ...〉で「…するよりむしろ〜したい」を表します。"
   },
   {
-    q: "The museum ( ) built more than two hundred years ago.",
-    sub: "🪄 受動態 (過去形)",
-    opt: ["is", "was", "has", "were"],
+    q: "You ( ) have checked the train schedule before leaving the house.",
+    sub: "【訳】家を出る前に電車の時刻表を確認しておくべきでしたね。",
+    opt: ["should", "must", "may", "will"],
+    ans: 0,
+    exp: "〈should have ＋ 過去分詞〉で「〜すべきだったのに（過去の不履行への後悔・非難）」を表します。"
+  },
+  {
+    q: "She ( ) have forgotten about our meeting because she is always punctual.",
+    sub: "【訳】彼女はいつも時間に正確なので、約束を忘れてしまったに違いありません。",
+    opt: ["must", "should", "can", "would"],
+    ans: 0,
+    exp: "〈must have ＋ 過去分詞〉で「〜したに違いない（過去の確信）」を表します。"
+  },
+  {
+    q: "He ( ) have missed the last bus; otherwise, he would be here by now.",
+    sub: "【訳】彼は最終バスに乗り遅れたのかもしれません。そうでなければ今頃ここに着いているはずです。",
+    opt: ["may", "must", "should", "shall"],
+    ans: 0,
+    exp: "〈may [might] have ＋ 過去分詞〉で「〜したかもしれない（過去の推量）」を表します。"
+  },
+  {
+    q: "My grandfather ( ) to take a walk along the river every morning.",
+    sub: "【訳】私の祖父はかつて毎朝川沿いを散歩したものでした。",
+    opt: ["used", "is used", "was using", "uses"],
+    ans: 0,
+    exp: "〈used to ＋ 動詞の原形〉で「かつては〜したものだった（過去の習慣）」を表します。"
+  },
+  {
+    q: "You don't ( ) to finish all the tasks today.",
+    sub: "【訳】今日すべての課題を終わらせる必要はありません。",
+    opt: ["need", "have", "must", "should"],
     ans: 1,
-    exp: "【解説】two hundred years ago（200年前）という過去の時制で、主語が単数（The museum）の受動態なので was built が正解です。\n\n【訳】その博物館は200年以上前に建てられました。"
+    exp: "〈don't have to ＋ 動詞の原形〉で「〜する必要はない（不必要）」を表します。"
+  },
+
+  // --- 不定詞・動名詞・分詞の発展 (No.11 〜 No.25) ---
+  {
+    q: "This luggage is ( ) heavy for the little girl to carry alone.",
+    sub: "【訳】この荷物は小さなお弁当少女が一人で運ぶには重すぎます。",
+    opt: ["so", "too", "very", "much"],
+    ans: 1,
+    exp: "〈too ＋ 形容詞 ＋ for 人 ＋ to ＋ 原形〉で「人が〜するには…すぎる」を表します。"
   },
   {
-    q: "I am looking forward to ( ) you at the international festival.",
-    sub: "🪄 動名詞の重要慣用表現",
-    opt: ["see", "saw", "seeing", "seen"],
-    ans: 2,
-    exp: "【解説】熟語 look forward to の to は前置詞なので、後ろには名詞または動名詞（seeing）が続きます。\n\n【訳】国際フェスティバルであなたにお会いできるのを楽しみにしています。"
+    q: "He was kind ( ) to show me the way to the city hall.",
+    sub: "【訳】彼は親切にも市役所への道を教えてくれました。",
+    opt: ["enough", "too", "so", "as"],
+    ans: 0,
+    exp: "〈形容詞 ＋ enough ＋ to ＋ 原形〉で「〜するほど十分に…」を表します。"
   },
   {
-    q: "She asked him ( ) turn down the volume of the TV.",
-    sub: "🪄 不定詞 (tell/ask + 人 + to do)",
+    q: "She turned on the subtitles in ( ) to understand the English film better.",
+    sub: "【訳】彼女はその英語映画をよりよく理解するために字幕をつけました。",
+    opt: ["case", "order", "fact", "terms"],
+    ans: 1,
+    exp: "〈in order to ＋ 動詞の原形〉で「〜するために（目的）」を表します。"
+  },
+  {
+    q: "My teacher encouraged me ( ) apply for the speech contest.",
+    sub: "【訳】先生は私にスピーチコンテストに応募するよう励ましてくれました。",
     opt: ["to", "for", "with", "at"],
     ans: 0,
-    exp: "【解説】〈ask ＋ 人 ＋ to ＋ 動詞の原形〉で「人に〜するよう頼む」を表します。\n\n【訳】彼女は彼にテレビの音量を下げるよう頼みました。"
+    exp: "〈encourage ＋ 人 ＋ to ＋ 動詞の原形〉で「人に〜するよう促す・励ます」を表します。"
   },
   {
-    q: "Kyoto is one of the most famous cities ( ) in Japan.",
-    sub: "🪄 過去分詞の後置修飾",
+    q: "The doctor advised him ( ) eat too much fast food.",
+    sub: "【訳】医師は彼にファストフードを食べ過ぎないよう忠告しました。",
+    opt: ["not to", "to not", "don't", "no to"],
+    ans: 0,
+    exp: "不定詞の否定形は to の直前に not を置き、〈not to ＋ 動詞の原形〉にします。"
+  },
+  {
+    q: "We are all looking forward to ( ) you at the cultural festival.",
+    sub: "【訳】私たちは文化祭であなたにお会いできるのをみんな楽しみにしています。",
+    opt: ["see", "saw", "seeing", "seen"],
+    ans: 2,
+    exp: "熟語 look forward to の to は前置詞なので、後ろには動名詞 seeing が続きます。"
+  },
+  {
+    q: "She is not used to ( ) in front of such a large audience.",
+    sub: "【訳】彼女はそれほど大勢の聴衆の前で話すことに慣れていません。",
+    opt: ["speak", "spoke", "speaking", "spoken"],
+    ans: 2,
+    exp: "〈be used to ＋ 動名詞〉で「〜することに慣れている」を表します。"
+  },
+  {
+    q: "He spent three hours ( ) for the math examination yesterday.",
+    sub: "【訳】彼は昨日、数学の試験勉強に3時間を費やしました。",
+    opt: ["study", "studied", "studying", "to study"],
+    ans: 2,
+    exp: "〈spend ＋ 時間 ＋ 動名詞（〜ing）〉で「〜して時間を過ごす」を表します。"
+  },
+  {
+    q: "I cannot help ( ) sorry for the lost kitten.",
+    sub: "【訳】私はその迷子の子猫を気の毒に思わずにはいられません。",
+    opt: ["feel", "felt", "feeling", "to feel"],
+    ans: 2,
+    exp: "〈cannot help ＋ 動名詞（〜ing）〉で「〜せずにはいられない」を表す重要構文です。"
+  },
+  {
+    q: "It is no use ( ) over what has already happened.",
+    sub: "【訳】すでに起きてしまったことを悔やんでも無駄です。",
+    opt: ["cry", "cried", "crying", "to cry"],
+    ans: 2,
+    exp: "〈It is no use ＋ 動名詞（〜ing）〉で「〜しても無駄である」を表します。"
+  },
+  {
+    q: "The girl ( ) over there near the library entrance is my cousin.",
+    sub: "【訳】あそこの図書館の入り口近くに立っている女の子は私のいとこです。",
+    opt: ["stand", "stands", "standing", "stood"],
+    ans: 2,
+    exp: "名詞 The girl を後ろから能動の意味で修飾するため、現在分詞 standing が正解です。"
+  },
+  {
+    q: "Most of the products ( ) in this factory are exported to Asian countries.",
+    sub: "【訳】この工場で製造されている製品のほとんどはアジア諸国へ輸出されます。",
+    opt: ["make", "making", "made", "makes"],
+    ans: 2,
+    exp: "名詞 the products を後ろから受動の意味で修飾するため、過去分詞 made が正解です。"
+  },
+  {
+    q: "( ) from the top of the mountain, the lake looked like a blue sapphire.",
+    sub: "【訳】山頂から見ると、その湖は青いサファイアのように見えました。",
+    opt: ["See", "Seeing", "Seen", "Saw"],
+    ans: 2,
+    exp: "湖が「見られる」という受動の関係を表す分詞構文のため、過去分詞 Seen が正解です。"
+  },
+  {
+    q: "( ) all his homework, Ken went out to play tennis.",
+    sub: "【訳】宿題をすべて終えたので、ケンはテニスをしに外出しました。",
+    opt: ["Finish", "Finishing", "Finished", "Having finished"],
+    ans: 3,
+    exp: "主節の時制（went out）よりも前に完了したことを表す完了分詞構文 Having finished です。"
+  },
+  {
+    q: "She sat on the sofa with her eyes ( ).",
+    sub: "【訳】彼女は目を閉じたままソファに座っていました。",
+    opt: ["close", "closed", "closing", "to close"],
+    ans: 1,
+    exp: "〈with ＋ 名詞 ＋ 過去分詞〉で「名詞を〜された状態で（付帯状況）」を表します。"
+  },
+
+  // --- 関係詞・接続詞の発展 (No.26 〜 No.40) ---
+  {
+    q: "The scientist ( ) discovered the new medicine won an international prize.",
+    sub: "【訳】その新薬を発見した科学者は国際的な賞を受賞しました。",
+    opt: ["who", "which", "whose", "whom"],
+    ans: 0,
+    exp: "先行詞が「人（The scientist）」で関係代名詞節の主語となるため、主格の who が正解です。"
+  },
+  {
+    q: "I met a woman ( ) daughter is a professional violinist.",
+    sub: "【訳】私は娘さんがプロのバイオリニストである女性に出会いました。",
+    opt: ["who", "which", "whose", "whom"],
+    ans: 2,
+    exp: "「その女性の娘」という所有の関係を表すため、所有格の関係代名詞 whose が正解です。"
+  },
+  {
+    q: "This is the laboratory ( ) my brother conducts his chemical experiments.",
+    sub: "【訳】ここは私の兄（弟）が化学実験を行っている研究所です。",
+    opt: ["which", "where", "when", "why"],
+    ans: 1,
+    exp: "先行詞が場所（the laboratory）で、後ろに完全な文が続いているため、関係副詞 where が正解です。"
+  },
+  {
+    q: "I will never forget the day ( ) we first met at the airport.",
+    sub: "【訳】私は私たちが初めて空港で出会った日を決して忘れません。",
+    opt: ["which", "where", "when", "why"],
+    ans: 2,
+    exp: "先行詞が時（the day）を表しているため、関係副詞 when が正解です。"
+  },
+  {
+    q: "Do you know the reason ( ) he was absent from the meeting?",
+    sub: "【訳】彼がなぜ会議を欠席したのか、その理由を知っていますか？",
+    opt: ["which", "where", "when", "why"],
+    ans: 3,
+    exp: "先行詞 the reason（理由）に対応する関係副詞 why が正解です。"
+  },
+  {
+    q: "The hotel at ( ) we stayed during the trip was very clean and comfortable.",
+    sub: "【訳】私たちが旅行中に滞在したホテルはとても清潔で快適でした。",
+    opt: ["which", "that", "where", "what"],
+    ans: 0,
+    exp: "前置詞（at）の直後には that は置けないため、which を用いて at which とします。"
+  },
+  {
+    q: "( ) it rained heavily throughout the day, the sports event was held as planned.",
+    sub: "【訳】一日中激しい雨が降ったにもかかわらず、スポーツ大会は予定通り開催されました。",
+    opt: ["Although", "Because", "Unless", "Since"],
+    ans: 0,
+    exp: "逆接の接続詞 Although（〜だけれども）が文意に合致します。"
+  },
+  {
+    q: "You will not improve your English skills ( ) you practice speaking regularly.",
+    sub: "【訳】定期的に話す練習をしなければ、英語力は上達しないでしょう。",
+    opt: ["if", "unless", "since", "while"],
+    ans: 1,
+    exp: "〈unless 〜〉で「〜しない限りは（条件の否定）」を表します。"
+  },
+  {
+    q: "Please keep quiet ( ) the professor is giving the lecture.",
+    sub: "【訳】教授が講義をしている間は静かにしていてください。",
+    opt: ["during", "while", "since", "until"],
+    ans: 1,
+    exp: "後ろに節（主語＋動詞）が続いているため、接続詞 while（〜する間）を用います。"
+  },
+  {
+    q: "( ) the bad weather condition, the airplane arrived exactly on schedule.",
+    sub: "【訳】悪天候にもかかわらず、その飛行機は時間通りぴったりに到着しました。",
+    opt: ["Despite", "Although", "Because", "Unless"],
+    ans: 0,
+    exp: "後ろに名詞句（the bad weather condition）が続いているため、前置詞 Despite（〜にもかかわらず）を用います。"
+  },
+  {
+    q: "He spoke clearly ( ) that everyone in the large hall could understand him.",
+    sub: "【訳】大ホールの全員が理解できるように、彼ははっきりと話しました。",
+    opt: ["so", "such", "in", "as"],
+    ans: 0,
+    exp: "〈so that ＋ 主語 ＋ 助動詞〉で「〜できるように（目的）」を表します。"
+  },
+  {
+    q: "The story was ( ) exciting that I couldn't put the book down until midnight.",
+    sub: "【訳】その物語はとてもワクワクするものだったので、私は真夜中まで本を置けませんでした。",
+    opt: ["so", "such", "too", "very"],
+    ans: 0,
+    exp: "〈so ＋ 形容詞 ＋ that 節〉で「とても〜なので…だ」を表します。"
+  },
+  {
+    q: "It was ( ) a lovely day that we decided to go for a picnic in the park.",
+    sub: "【訳】とても素晴らしい日だったので、私たちは公園にピクニックに行くことにしました。",
+    opt: ["so", "such", "too", "quite"],
+    ans: 1,
+    exp: "〈such ＋ a ＋ 形容詞 ＋ 名詞 ＋ that 節〉で「非常に…な〜なので」を表します。"
+  },
+  {
+    q: "You can choose ( ) coffee or tea after the meal.",
+    sub: "【訳】食後にコーヒーか紅茶のどちらかをお選びいただけます。",
+    opt: ["both", "either", "neither", "not"],
+    ans: 1,
+    exp: "〈either A or B〉で「AかBのどちらか一方」を表します。"
+  },
+  {
+    q: "( ) Tom nor Jerry was able to solve the difficult math problem.",
+    sub: "【訳】トムもジェリーもその難しい数学の問題を解くことができませんでした。",
+    opt: ["Either", "Neither", "Both", "Not"],
+    ans: 1,
+    exp: "〈Neither A nor B〉で「AもBも〜ない（両者否定）」を表します。"
+  },
+
+  // --- 使役・知覚・時制の一致・受動態 (No.41 〜 No.50) ---
+  {
+    q: "The funny comedian made all the audience ( ) loudly.",
+    sub: "【訳】その面白いコメディアンは観客全員を大声で笑わせました。",
+    opt: ["laugh", "laughed", "laughing", "to laugh"],
+    ans: 0,
+    exp: "使役動詞 make の後は〈人 ＋ 動詞の原形〉で「人に〜させる（強制・自然発生）」を表します。"
+  },
+  {
+    q: "My mother let me ( ) video games after I finished my homework.",
+    sub: "【訳】宿題を終わらせた後、母は私にテレビゲームをさせてくれました。",
+    opt: ["play", "played", "playing", "to play"],
+    ans: 0,
+    exp: "使役動詞 let の後は〈人 ＋ 動詞の原形〉で「人に〜することを許す」を表します。"
+  },
+  {
+    q: "I had the technician ( ) my broken computer yesterday.",
+    sub: "【訳】昨日、専門の技術者に壊れたパソコンを修理してもらいました。",
+    opt: ["repair", "repaired", "repairing", "to repair"],
+    ans: 0,
+    exp: "使役動詞 have の後は〈人（技術者）＋ 動詞の原形〉で「人に〜してもらう」を表します。"
+  },
+  {
+    q: "I saw a strange man ( ) into the dark alley last night.",
+    sub: "【訳】昨夜、見知らぬ男が暗い路地に入っていくのを見かけました。",
+    opt: ["walk", "walked", "to walk", "walks"],
+    ans: 0,
+    exp: "知覚動詞 see の後は〈人 ＋ 動詞の原形 または 〜ing〉を用います。"
+  },
+  {
+    q: "We could hear someone ( ) the piano in the music room.",
+    sub: "【訳】音楽室で誰かがピアノを弾いているのが聞こえました。",
+    opt: ["play", "played", "to play", "plays"],
+    ans: 0,
+    exp: "知覚動詞 hear の後は〈目的語 ＋ 原形 または 〜ing〉を用います。"
+  },
+  {
+    q: "The heavy storm prevented the ship from ( ) the harbor.",
+    sub: "【訳】猛烈な嵐のために、その船は港を出発することができませんでした。",
+    opt: ["leave", "left", "leaving", "to leave"],
+    ans: 2,
+    exp: "〈prevent ＋ 目的語 ＋ from ＋ 動名詞（〜ing）〉で「〜のために…ができない」を表します。"
+  },
+  {
+    q: "This old song always reminds me ( ) my elementary school days.",
+    sub: "【訳】この懐かしい歌はいつも私に小学校時代を思い出させます。",
+    opt: ["of", "to", "for", "with"],
+    ans: 0,
+    exp: "〈remind ＋ 人 ＋ of ＋ もの/思い出〉で「人に〜を思い出させる」を表します。"
+  },
+  {
+    q: "The new bridge ( ) by the end of next year.",
+    sub: "【訳】その新しい橋は来年の終わりまでに建設される予定です。",
+    opt: ["will build", "will be built", "is built", "was built"],
+    ans: 1,
+    exp: "未来の受動態〈will be ＋ 過去分詞〉（〜される予定だ）の形になります。"
+  },
+  {
+    q: "This ancient castle has been ( ) by millions of tourists since 2000.",
+    sub: "【訳】この古代の城は2000年以来、何百万人もの観光客に訪れられています。",
     opt: ["visit", "visiting", "visited", "visits"],
     ans: 2,
-    exp: "【解説】直前の名詞 cities を後ろから修飾し、「日本で（観光客によって）訪れられる最も有名な都市」となるため過去分詞 visited が正解です。\n\n【訳】京都は日本で最も多くの人が訪れる都市の1つです。"
+    exp: "現在完了の受動態〈has been ＋ 過去分詞〉（〜され続けている）の形です。"
   },
   {
-    q: "I would rather stay at home ( ) go out in the heavy rain.",
-    sub: "🪄 would rather 〜 than ...",
-    opt: ["than", "to", "from", "as"],
+    q: "The ( ) you practice speaking, the more confident you will become.",
+    sub: "【訳】話す練習をすればするほど、より自信が持てるようになりますよ。",
+    opt: ["more", "most", "much", "many"],
     ans: 0,
-    exp: "【解説】〈would rather A than B〉で「BするよりむしろAしたい」を表します。\n\n【訳】大雨の中外出するくらいなら、むしろ家にいたいです。"
-  }
-];
-
-// ==================== 5. 準2級 実戦リスニング データベース ====================
-const RAW_LISTENING_DATA = [
+    exp: "〈The ＋ 比較級 ..., the ＋ 比較級 〜〉で「…すればするほど、ますます〜になる」を表します。"
+  },
+  // --- 仮定法・倒置・強調・発展構文 (No.51 〜 No.65) ---
   {
-    q: "音声を聞いて、質問に答えよう。",
-    sub: "🎧 実戦リスニング (対話)",
-    opt: ["To borrow some books.", "To submit an assignment.", "To meet her professor.", "To attend a seminar."],
+    q: "If I ( ) your email address, I would have sent you the project file.",
+    sub: "【訳】もしあなたのメールアドレスを知っていたら、企画書ファイルを送ったのに。",
+    opt: ["know", "knew", "had known", "have known"],
+    ans: 2,
+    exp: "過去の事実に反する仮定を表す「仮定法過去完了」です。if節は〈had ＋ 過去分詞〉を用います。"
+  },
+  {
+    q: "( ) water and air, no living creatures could survive on Earth.",
+    sub: "【訳】水と空気がなければ、いかなる生物も地球上で生き残ることはできないでしょう。",
+    opt: ["Without", "Except", "Unless", "Besides"],
+    ans: 0,
+    exp: "〈Without ＋ 名詞〉で「〜がなければ（仮定法）」を表します。"
+  },
+  {
+    q: "She talks about Paris as if she ( ) there many times.",
+    sub: "【訳】彼女はまるで何度もそこへ行ったことがあるかのようにパリについて話します。",
+    opt: ["is", "were", "had been", "has been"],
+    ans: 2,
+    exp: "〈as if ＋ 仮定法過去完了〉で「まるで〜だったかのように（過去の事実と異なる様態）」を表します。"
+  },
+  {
+    q: "It is high time you ( ) thinking seriously about your future career.",
+    sub: "【訳】あなたは将来の進路について真剣に考え始めてもよい時間ですよ。",
+    opt: ["start", "started", "starting", "to start"],
     ans: 1,
-    exp: "【会話】\nMan: Are you going to the library, Sarah?\nWoman: No, I'm heading to Professor Clark's office to turn in my term paper before three o'clock.\n\n【質問】Why is the woman going to the professor's office?\n（女性はなぜ教授の研究室へ行くのですか？）\n\n【正解の訳】\n2. 課題を提出するため。\n\n【解説】turn in my term paper（レポートを提出する）が目的です。",
-    dialogue: [
-      { speaker: 'male', text: "Are you going to the library, Sarah?" },
-      { speaker: 'female', text: "No, I'm heading to Professor Clark's office to turn in my term paper before three o'clock." },
-      { speaker: 'narrator', text: "Question. Why is the woman going to the professor's office?" }
-    ],
-    aud_complete: "Why is the woman going to the professor's office? To submit an assignment."
+    exp: "〈It is high time ＋ 主語 ＋ 過去形〉で「当然〜する時間だ」を表す仮定法構文です。"
   },
   {
-    q: "音声を聞いて、質問に答えよう。",
-    sub: "🎧 実戦リスニング (対話)",
-    opt: ["By bus.", "By subway.", "By taxi.", "On foot."],
+    q: "It was in the school library ( ) I found this valuable historic book.",
+    sub: "【訳】私がこの貴重な歴史書を見つけたのは、学校の図書館でのことでした。",
+    opt: ["which", "where", "that", "what"],
+    ans: 2,
+    exp: "強調構文〈It was ... that 〜〉で、副詞句 in the school library を強調しています。"
+  },
+  {
+    q: "Little ( ) I imagine that we would meet again in New York.",
+    sub: "【訳】ニューヨークで私たちが再会しようとは夢にも思っていませんでした。",
+    opt: ["did", "do", "had", "was"],
+    ans: 0,
+    exp: "否定の副詞 Little が文頭に出ることで、疑問文の語順〈did ＋ 主語 ＋ 動詞の原形〉になる倒置構文です。"
+  },
+  {
+    q: "Never ( ) I heard such a touching and beautiful musical performance.",
+    sub: "【訳】これほど感動的で美しい演奏は今まで一度も聴いたことがありません。",
+    opt: ["have", "did", "was", "had"],
+    ans: 0,
+    exp: "否定語 Never が文頭に出ることで、〈have ＋ 主語 ＋ 過去分詞〉の語順になる倒置です。"
+  },
+  {
+    q: "The news ( ) our school choir won the gold medal surprised everyone.",
+    sub: "【訳】私たちの学校の合唱部が金賞を受賞したという知らせは全員を驚かせました。",
+    opt: ["which", "what", "that", "whose"],
+    ans: 2,
+    exp: "名詞 The news と同格の関係を結び「〜という知らせ」を表す接続詞 that です。"
+  },
+  {
+    q: "Could you please tell me ( ) the nearest subway station is located?",
+    sub: "【訳】最寄りの地下鉄の駅がどこにあるか教えていただけますか？",
+    opt: ["where", "which", "what", "how"],
+    ans: 0,
+    exp: "間接疑問文では、疑問詞（where）の後は平叙文の語順〈主語 ＋ 動詞〉になります。"
+  },
+  {
+    q: "What do you ( ) we should do to reduce plastic waste in our daily life?",
+    sub: "【訳】日常生活のプラスチックごみを減らすために私たちは何をすべきだと思いますか？",
+    opt: ["think", "know", "wonder", "suppose"],
+    ans: 0,
+    exp: "思考を表す動詞 think を用いた連鎖疑問文〈疑問詞 ＋ do you think ＋ 主語 ＋ 動詞〉です。"
+  },
+  {
+    q: "My brother is two years ( ) to me, but he is in the same grade.",
+    sub: "【訳】私の兄は私より2歳年上ですが、同じ学年です。",
+    opt: ["older", "senior", "elder", "superior"],
     ans: 1,
-    exp: "【会話】\nWoman: Excuse me, what's the fastest way to get to the city art gallery from here?\nMan: Taking the subway line 3 will take only ten minutes without any traffic delays.\n\n【質問】Which transportation does the man recommend?\n（男性はどの交通機関を勧めていますか？）\n\n【正解の訳】\n2. 地下鉄で。\n\n【解説】Taking the subway line 3 を勧めています。",
-    dialogue: [
-      { speaker: 'female', text: "Excuse me, what's the fastest way to get to the city art gallery from here?" },
-      { speaker: 'male', text: "Taking the subway line 3 will take only ten minutes without any traffic delays." },
-      { speaker: 'narrator', text: "Question. Which transportation does the man recommend?" }
-    ],
-    aud_complete: "Which transportation does the man recommend? By subway."
+    exp: "ラテン語由来の比較表現で、than ではなく前置詞 to を用いて〈senior to 〜〉（〜より年上）と表します。"
   },
   {
-    q: "音声を聞いて、質問に答えよう。",
-    sub: "🎧 実戦リスニング (短文読解)",
-    opt: ["To protect marine animals.", "To build new hotels.", "To clean the beaches.", "To reduce energy use."],
-    ans: 0,
-    exp: "【英文】\nThe local government started a new project to protect rare sea turtles living along the coast from plastic waste.\n\n【質問】What is the main goal of the new project?\n（新しいプロジェクトの主な目的は何ですか？）\n\n【正解の訳】\n1. 海洋生物を保護するため。\n\n【解説】protect rare sea turtles（ウミガメを保護する）と述べています。",
-    dialogue: [
-      { speaker: 'female', text: "The local government started a new project to protect rare sea turtles living along the coast from plastic waste." },
-      { speaker: 'narrator', text: "Question. What is the main goal of the new project?" }
-    ],
-    aud_complete: "What is the main goal of the new project? To protect marine animals."
-  }
-];
-
-// ==================== 6. ボス戦用 過去問模試 データベース ====================
-const ACTUAL_PAST_EXAM_DATA = [
-  {
-    id: "pre2_p1",
-    type: "grammar",
-    q: "Although he was exhausted, he managed ( ) the marathon.",
-    sub: "⚔️ 準2級過去問 (短文補充)",
-    options: ["finish", "to finish", "finishing", "finished"],
+    q: "I prefer reading novels at home ( ) watching movies at the cinema.",
+    sub: "【訳】私は映画館で映画を見るよりも、家で小説を読む方を好みます。",
+    opt: ["than", "to", "from", "for"],
     ans: 1,
-    explain: "【解説】〈manage to ＋ 動詞の原形〉で「どうにか〜し遂げる」を表します。正解は to finish です。\n\n【訳】極度に疲れていましたが、彼はどうにかマラソンを完走しました。",
-    audio_question: "Although he was exhausted, he managed ... the marathon.",
-    audio_complete: "Although he was exhausted, he managed to finish the marathon."
+    exp: "〈prefer A to B〉で「BよりもAを好む」を表します（比較対象に to を用います）。"
   },
   {
-    id: "pre2_p2",
-    type: "grammar",
-    q: "The manager insisted that everyone ( ) on time for the meeting.",
-    sub: "⚔️ 準2級過去問 (短文補充)",
-    options: ["be", "is", "was", "are"],
+    q: "She had ( ) more than five dollars left in her purse.",
+    sub: "【訳】彼女の財布にはわずか5ドルしか残っていませんでした。",
+    opt: ["no", "not", "any", "much"],
     ans: 0,
-    exp: "【解説】提案・要求・主張（insist）を表す動詞に続く that 節内では、動詞は原形（仮定法現在）になります。\n\n【訳】部長は全員が会議に時間通り出席するよう強く主張しました。",
-    audio_question: "The manager insisted that everyone ... on time for the meeting.",
-    audio_complete: "The manager insisted that everyone be on time for the meeting."
+    exp: "〈no more than ＋ 数詞〉で「わずか〜しか（only）」を表します。"
   },
   {
-    id: "pre2_p3",
-    type: "grammar",
-    q: "She has lived in London ( ) she graduated from university.",
-    sub: "⚔️ 準2級過去問 (短文補充)",
-    options: ["since", "for", "during", "while"],
+    q: "He donated ( ) less than one million yen to the local animal shelter.",
+    sub: "【訳】彼は地元の動物保護施設になんと100万円もの大金を寄付しました。",
+    opt: ["no", "not", "any", "much"],
     ans: 0,
-    explain: "【解説】「大学を卒業して以来ずっと（起点の過去）」を表す接続詞 since が正解です。\n\n【訳】彼女は大学を卒業して以来、ロンドンに住んでいます。",
-    audio_question: "She has lived in London ... she graduated from university.",
-    audio_complete: "She has lived in London since she graduated from university."
+    exp: "〈no less than ＋ 数詞〉で「〜もの多くの（as much as）」を表します。"
   },
   {
-    id: "pre2_p4",
-    type: "grammar",
-    q: "He is capable ( ) speaking four different languages fluently.",
-    sub: "⚔️ 準2級過去問 (短文補充)",
-    options: ["of", "to", "for", "with"],
+    q: "Please send your application form to the office as soon as ( ).",
+    sub: "【訳】できるだけ早く応募用紙を事務局へ送付してください。",
+    opt: ["possible", "probable", "capable", "available"],
     ans: 0,
-    explain: "【解説】「〜する能力がある・〜できる」は熟語 be capable of 〜 で表します。\n\n【訳】彼は4つの異なる言語を流暢に話すことができます。",
-    audio_question: "He is capable ... speaking four different languages fluently.",
-    audio_complete: "He is capable of speaking four different languages fluently."
+    exp: "〈as soon as possible〉で「できるだけ早く」を表す定番熟語です。"
   },
-  {
-    id: "pre2_p5",
-    type: "grammar",
-    q: "Hardly had I arrived at the airport ( ) the plane took off.",
-    sub: "⚔️ 準2級過去問 (短文補充)",
-    options: ["when", "than", "after", "then"],
-    ans: 0,
-    explain: "【解説】〈Hardly had ＋ 主語 ＋ 過去分詞 when ＋ 過去形〉で「〜するとすぐに…した」を表します。\n\n【訳】私が空港に着くとすぐに飛行機は離陸しました。",
-    audio_question: "Hardly had I arrived at the airport ... the plane took off.",
-    audio_complete: "Hardly had I arrived at the airport when the plane took off."
-  }
-];
 
-// ==================== 7. ボスステージ (全11段階) ====================
-const BOSS_STAGES = [
-  { lv: 1, name: "古代樹の歩行獣", icon: "🐗", hp: 3500, atk: 40, exp: 120, gems: 20, desc: "高校英語の森に潜む獣。まずは基本単語で撃破！" },
-  { lv: 2, name: "青銅の重装ゴーレム", icon: "🗿", hp: 9000, atk: 75, exp: 180, gems: 30, desc: "硬い装甲を持つ。助動詞や不定詞の知識で砕け！" },
-  { lv: 3, name: "烈風のグリフォン", icon: "🦅", hp: 18000, atk: 120, exp: 260, gems: 45, desc: "素早い飛翔獣。3秒以内のクリティカルで仕留めよう。" },
-  { lv: 4, name: "深海のクラーケン", icon: "🐙", hp: 32000, atk: 180, exp: 360, gems: 60, desc: "長い触手を操る。動名詞や分詞構文が弱点！" },
-  { lv: 5, name: "冥界のケルベロス", icon: "🐺🔥", hp: 50000, atk: 250, exp: 500, gems: 80, desc: "【中ボス】強力な反撃を放つ。ミスを減らそう！" },
-  { lv: 6, name: "双頭のキマイラ", icon: "🦁🐉", hp: 72000, atk: 330, exp: 680, gems: 100, desc: "猛毒と炎を吐く強敵。装備を強化して挑もう。" },
-  { lv: 7, name: "古代雷神・トール", icon: "⚡🔨", hp: 100000, atk: 420, exp: 900, gems: 130, desc: "轟く雷を操る巨人。関係詞の完璧な理解が必要！" },
-  { lv: 8, name: "混沌の黒竜・ティアマト", icon: "🐲🖤", hp: 140000, atk: 520, exp: 1200, gems: 170, desc: "暗黒を纏う巨竜。最高峰の攻撃力で圧倒せよ！" },
-  { lv: 9, name: "終焉のフェニックス", icon: "🔥🦅✨", hp: 190000, atk: 640, exp: 1600, gems: 220, desc: "不滅の炎鳥。全問正解に近いスピードが求められる。" },
-  { lv: 10, name: "創世神龍・エターナル・バハムート", icon: "👑🐉🌌", hp: 260000, atk: 800, exp: 2200, gems: 300, desc: "【表ラスボス】準2級の頂点に君臨する創世の神龍！" },
-  { lv: 11, name: "虚空の創造主・クロノスオメガ", icon: "🌌👁️⌛", hp: 500000, atk: 9999, exp: 5000, gems: 500, desc: "【真・隠し裏ボス】Lv.100＆創世神装備でのみ討伐可能な究極神！", isSecret: true }
+  // --- 準2級 必須動詞語法・熟語 (No.66 〜 No.80) ---
+  {
+    q: "The school provides all students ( ) free digital textbooks.",
+    sub: "【訳】その学校はすべての生徒に無料のデジタル教科書を支給しています。",
+    opt: ["with", "for", "to", "at"],
+    ans: 0,
+    exp: "〈provide A with B〉で「A（人・組織）にB（物）を供給・提供する」を表します。"
+  },
+  {
+    q: "Heavy snow prevented the airplane ( ) taking off on time.",
+    sub: "【訳】大雪のために、その飛行機は定刻通りに離陸することができませんでした。",
+    opt: ["to", "from", "for", "with"],
+    ans: 1,
+    exp: "〈prevent A from 〜ing〉で「Aが〜するのを妨げる／〜のせいでAが…できない」を表します。"
+  },
+  {
+    q: "Modern smartphones enable us ( ) access information from anywhere.",
+    sub: "【訳】現代のスマートフォンは、私たちがどこからでも情報にアクセスすることを可能にします。",
+    opt: ["to", "for", "in", "with"],
+    ans: 0,
+    exp: "〈enable A to ＋ 動詞の原形〉で「Aが〜することを可能にする」を表します。"
+  },
+  {
+    q: "All the teachers congratulated Lisa ( ) passing the difficult exam.",
+    sub: "【訳】先生方全員が、難関試験に合格したことでリサを祝福しました。",
+    opt: ["on", "for", "with", "at"],
+    ans: 0,
+    exp: "〈congratulate A on B〉で「A（人）をB（事柄）のことで祝う」を表します。"
+  },
+  {
+    q: "The masked robber robbed the bank ( ) a large amount of cash.",
+    sub: "【訳】覆面をした強盗は銀行から多額の現金を奪い去りました。",
+    opt: ["of", "from", "with", "off"],
+    ans: 0,
+    exp: "〈rob A of B〉で「A（人・場所）からB（金品）を奪う」を表します。"
+  },
+  {
+    q: "This traditional melody always reminds me ( ) my hometown in the countryside.",
+    sub: "【訳】この伝統的な旋律はいつも私に田舎の故郷を思い出させます。",
+    opt: ["of", "about", "to", "for"],
+    ans: 0,
+    exp: "〈remind A of B〉で「AにBを思い出させる」を表します。"
+  },
+  {
+    q: "Many international critics regard this animation film ( ) a masterpiece.",
+    sub: "【訳】多くの国際的な批評家たちが、このアニメ映画を傑作とみなしています。",
+    opt: ["as", "for", "to", "with"],
+    ans: 0,
+    exp: "〈regard A as B〉で「AをBとみなす・評価する」を表します。"
+  },
+  {
+    q: "Whether we can achieve our goal depends ( ) our daily efforts.",
+    sub: "【訳】私たちが目標を達成できるかどうかは、毎日の努力にかかっています。",
+    opt: ["on", "in", "at", "to"],
+    ans: 0,
+    exp: "〈depend on 〜〉で「〜に依存する／〜次第である」を表します。"
+  },
+  {
+    q: "Careless driving often results ( ) serious traffic accidents.",
+    sub: "【訳】不注意な運転はしばしば重大な交通事故という結果をもたらします。",
+    opt: ["in", "from", "at", "to"],
+    ans: 0,
+    exp: "〈result in 〜〉で「（結果として）〜をもたらす・〜に終わる」を表します。"
+  },
+  {
+    q: "Consistent daily practice will eventually lead ( ) great success in the contest.",
+    sub: "【訳】毎日の地道な練習は、最終的にコンテストでの大きな成功へとつながるでしょう。",
+    opt: ["to", "in", "for", "at"],
+    ans: 0,
+    exp: "〈lead to 〜〉で「〜へとつながる・〜を引き起こす」を表します。"
+  },
+  {
+    q: "The solar system consists ( ) the Sun and the planets orbiting around it.",
+    sub: "【訳】太陽系は太陽とその周りを回る惑星で構成されています。",
+    opt: ["of", "in", "from", "with"],
+    ans: 0,
+    exp: "〈consist of 〜〉で「〜から成り立っている・構成されている」を表します。"
+  },
+  {
+    q: "Many elderly people in the community suffer ( ) chronic joint pain.",
+    sub: "【訳】その地域の多くの高齢者が慢性的な関節痛に苦しんでいます。",
+    opt: ["from", "with", "of", "by"],
+    ans: 0,
+    exp: "〈suffer from 〜〉で「〜（病気・苦痛など）で苦しむ」を表します。"
+  },
+  {
+    q: "He sincerely apologized to the teacher ( ) being late for the rehearsal.",
+    sub: "【訳】彼はリハーサルに遅刻したことについて先生に心から謝罪しました。",
+    opt: ["for", "to", "with", "about"],
+    ans: 0,
+    exp: "〈apologize to 人 for 理由〉で「人に〜の理由で謝る」を表します。"
+  },
+  {
+    q: "We should not take our safe and comfortable life for ( ).",
+    sub: "【訳】私たちは安全で快適な生活を当然のことと思ってはなりません。",
+    opt: ["granted", "sure", "certain", "true"],
+    ans: 0,
+    exp: "〈take 〜 for granted〉で「〜を当たり前のことと思う」を表す超頻出構文です。"
+  },
+  {
+    q: "She has made remarkable ( ) in her spoken English this semester.",
+    sub: "【訳】彼女は今学期、英語のスピーキング力において目覚ましい進歩を遂げました。",
+    opt: ["progress", "process", "program", "promise"],
+    ans: 0,
+    exp: "〈make progress〉で「進歩する・上達する」を表します。"
+  },
+
+  // --- 実戦・日常会話表現 (No.81 〜 No.100) ---
+  {
+    q: "A: Could we have a table by the window, please?\nB: ( ), right this way.",
+    sub: "【訳】A: 窓側の席をお願いできますか？\nB: かしこまりました、こちらへどうぞ。",
+    opt: ["Certainly", "Never mind", "Not at all", "Excuse me"],
+    ans: 0,
+    exp: "店員の丁寧な承諾「かしこまりました」は Certainly. が適切です。"
+  },
+  {
+    q: "A: I'd like to return this sweater because the size is too small.\nB: Sure. Do you have your ( )?",
+    sub: "【訳】A: サイズが小さすぎるのでこのセーターを返品したいのですが。\nB: かしこまりました。レシートはお持ちですか？",
+    opt: ["receipt", "recipe", "ticket", "passport"],
+    ans: 0,
+    exp: "返品の際に確認する「購入レシート・領収書」は receipt です。"
+  },
+  {
+    q: "A: May I take a message for Mr. Davis?\nB: Yes, please ask him to ( ) me back.",
+    sub: "【訳】A: デイビス先生に伝言を承りましょうか？\nB: はい、折り返し電話をくださるようお伝えください。",
+    opt: ["call", "tell", "speak", "talk"],
+    ans: 0,
+    exp: "電話の折り返しを頼む表現は〈call 人 back〉を用います。"
+  },
+  {
+    q: "A: Would you like to join our study group this evening?\nB: ( ), but I have another appointment.",
+    sub: "【訳】A: 今晩、私たちの勉強会に参加しませんか？\nB: ぜひ参加したいのですが、あいにく別の約束があるんです。",
+    opt: ["I'd love to", "I don't care", "Not really", "Of course not"],
+    ans: 0,
+    exp: "誘いを丁寧に断る際の前置き「喜んでそうしたいのですが」は I'd love to, but ... です。"
+  },
+  {
+    q: "A: Do you need any help with those heavy luggage bags?\nB: ( ). That's very kind of you.",
+    sub: "【訳】A: その重い荷物をお手伝いしましょうか？\nB: はい、お願いします。ご親切にありがとうございます。",
+    opt: ["Yes, please", "No, thanks", "Never mind", "You're welcome"],
+    ans: 0,
+    exp: "親切な申し出を快く受ける返答は Yes, please. です。"
+  },
+  {
+    q: "A: What's your ( ) on the new school smartphone rule?\nB: I think it's fair and reasonable.",
+    sub: "【訳】A: 新しい学校のスマホ規則についてどう思いますか？\nB: 公平で理にかなっていると思います。",
+    opt: ["opinion", "problem", "reason", "schedule"],
+    ans: 0,
+    exp: "「〜についての意見」を尋ねる表現は What's your opinion on ...? です。"
+  },
+  {
+    q: "A: We should start preparing for the midterm exam right now.\nB: I couldn't ( ) more.",
+    sub: "【訳】A: 今すぐ中間試験の準備を始めるべきだよ。\nB: まったく同感です（大賛成です）。",
+    opt: ["agree", "disagree", "think", "believe"],
+    ans: 0,
+    exp: "〈I couldn't agree more.〉で「これ以上ないほど同意する＝大賛成です」を表します。"
+  },
+  {
+    q: "A: How are you feeling after taking the medicine?\nB: ( ) better, thank you for asking.",
+    sub: "【訳】A: 薬を飲んだ後、気分はどうですか？\nB: ずっと良くなりました、気遣ってくれてありがとう。",
+    opt: ["Much", "Very", "More", "Many"],
+    ans: 0,
+    exp: "比較級 better を強調する副詞は Much です（Much better＝ずっと良い）。"
+  },
+  {
+    q: "A: Excuse me, how can I get to the public library from here?\nB: Go straight for two blocks and it's ( ) your left.",
+    sub: "【訳】A: すみません、ここから市立図書館へはどう行けばいいですか？\nB: 2ブロックまっすぐ行くと、左手にありますよ。",
+    opt: ["on", "at", "in", "to"],
+    ans: 0,
+    exp: "道案内で「あなたの左手に」は on your left と表します。"
+  },
+  {
+    q: "A: How about visiting the botanical garden this Saturday?\nB: That ( ) like a wonderful idea!",
+    sub: "【訳】A: 今週の土曜日に植物園に行ってみるのはどう？\nB: それはとても素敵なアイデアですね！",
+    opt: ["sounds", "looks", "tastes", "smells"],
+    ans: 0,
+    exp: "提案に対して「〜そうに聞こえる・いいね」と賛成する定番表現は That sounds like ... です。"
+  },
+  {
+    q: "A: I am terribly sorry for keeping you waiting for so long.\nB: Don't ( ) about it. I just arrived a few minutes ago.",
+    sub: "【訳】A: 長い間お待たせして本当に申し訳ありませんでした。\nB: 気にしないでください。私も数分前に着いたばかりですから。",
+    opt: ["worry", "mind", "care", "bother"],
+    ans: 0,
+    exp: "謝罪に対して「気にしないで・大丈夫ですよ」と返す表現は Don't worry about it. です。"
+  },
+  {
+    q: "A: You gave a fantastic presentation in class today!\nB: Thank you, I'm really ( ) you liked it.",
+    sub: "【訳】A: 今日の授業でのプレゼンテーション、素晴らしかったよ！\nB: ありがとう、気に入ってもらえて本当に嬉しいです。",
+    opt: ["glad", "proud", "sorry", "nervous"],
+    ans: 0,
+    exp: "褒められた返答として「〜で嬉しい」を表す I'm glad (that) ... が適切です。"
+  },
+  {
+    q: "A: Make sure to lock the front door before leaving the classroom.\nB: Don't worry, I won't ( ).",
+    sub: "【訳】A: 教室を出る前に必ず正面玄関の鍵を閉めてね。\nB: 心配しないで、忘れないよ。",
+    opt: ["forget", "remember", "leave", "miss"],
+    ans: 0,
+    exp: "「忘れません」と約束する返答は I won't forget. です。"
+  },
+  {
+    q: "A: How many pieces of luggage are you checking in today?\nB: ( ) this suitcase, please.",
+    sub: "【訳】A: 本日お預けになる手荷物はおいくつですか？\nB: このスーツケース1個だけです。",
+    opt: ["Just", "Even", "Almost", "Quite"],
+    ans: 0,
+    exp: "「〜だけです」と限定して答える副詞は Just です。"
+  },
+  {
+    q: "A: I'm having trouble focusing on my studies lately.\nB: ( ) don't you turn off your smartphone notifications?",
+    sub: "【訳】A: 最近勉強に集中できなくて困っているんだ。\nB: スマホの通知をオフにしてみたらどう？",
+    opt: ["Why", "How", "What", "When"],
+    ans: 0,
+    exp: "〈Why don't you ＋ 動詞の原形?〉で「〜してみてはどうですか（提案・助言）」を表します。"
+  },
+  {
+    q: "A: I have a reservation under the name of Yamada for two nights.\nB: Welcome, let me ( ) your booking in our system.",
+    sub: "【訳】A: ヤマダという名前で2泊の予約をしているのですが。\nB: いらっしゃいませ、システムの予約を確認いたしますね。",
+    opt: ["check", "find", "take", "call"],
+    ans: 0,
+    exp: "予約状況を「照合・確認する」は check を用います。"
+  },
+  {
+    q: "A: Here is a small souvenir from my trip to Canada.\nB: Thank you so much! You ( ) have!",
+    sub: "【訳】A: カナダ旅行のささやかなお土産です、どうぞ。\nB: どうもありがとうございます！ そんな気を使わなくてもよかったのに！",
+    opt: ["shouldn't", "mustn't", "can't", "won't"],
+    ans: 0,
+    exp: "贈り物を受け取った際の決まり文句〈You shouldn't have!〉（ご丁寧に恐れ入ります）です。"
+  },
+  {
+    q: "A: Do you mind if I open the window for fresh air?\nB: ( ), go right ahead.",
+    sub: "【訳】A: 換気のために窓を開けても構いませんか？\nB: ええ、どうぞ開けてください（全く構いませんよ）。",
+    opt: ["Not at all", "Yes, please", "I mind", "Of course"],
+    ans: 0,
+    exp: "〈Do you mind if 〜?〉（〜しても嫌ですか？）に対する快諾の返答は Not at all.（全く嫌ではありません＝どうぞ）です。"
+  },
+  {
+    q: "A: Which dessert would you like, chocolate cake or fruit tart?\nB: ( ) one looks delicious, so it's hard to choose.",
+    sub: "【訳】A: デザートはチョコレートケーキとフルーツタルト、どちらにしますか？\nB: どちらもおいしそうなので選ぶのが難しいです。",
+    opt: ["Either", "Neither", "Both", "Every"],
+    ans: 0,
+    exp: "単数名詞（one）を受けて「どちらの〜も」を表す Either が正解です。"
+  },
+  {
+    q: "A: Wish me luck on my English speech contest tomorrow!\nB: ( ) a leg! You'll do fantastic!",
+    sub: "【訳】A: 明日の英語スピーチコンテスト、応援していてね！\nB: 頑張ってね（成功を祈っているよ）！ あなたならきっとうまくいくよ！",
+    opt: ["Break", "Take", "Make", "Hold"],
+    ans: 0,
+    exp: "舞台やコンテストの本番前に「幸運を祈る・頑張って！」と声をかける決まり文句は〈Break a leg!〉です。"
+  }
 ];
