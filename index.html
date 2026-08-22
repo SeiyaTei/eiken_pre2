@@ -11,7 +11,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="準2級クエスト">
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/5260/5260505.png">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3132/3132738.png">
   
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -61,7 +61,7 @@
 </head>
 <body class="bg-[#120d2b] text-slate-100 min-h-screen pb-20 font-sans selection:bg-pink-400 selection:text-purple-950 select-none">
 
-  <!-- ヘッダー / ステータスバー（スマホ1行に収まる設計） -->
+  <!-- ヘッダー / ステータスバー -->
   <header class="bg-[#1b143a]/95 backdrop-blur border-b border-purple-500/30 sticky top-0 z-40 px-2.5 py-1.5 shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between gap-1">
       <div class="flex items-center gap-1.5 min-w-0">
@@ -136,7 +136,7 @@
 
         <!-- 試験までのカウントダウン -->
         <div class="mt-2.5 pt-2 border-t border-purple-500/30 flex justify-between items-center text-[11px]">
-          <span class="text-purple-200">🎯 英検準2級 本番まで あと</span>
+          <span class="text-purple-200">🎯 英検準2級 本番(2026/10/4)まで</span>
           <span id="countdownDays" class="font-black text-pink-300 text-xs">-- 日</span>
         </div>
       </div>
@@ -228,7 +228,7 @@
         </div>
       </div>
 
-      <!-- 通常特訓コース（サイクル制・ローテーション仕様） -->
+      <!-- 通常特訓コース（サイクル制） -->
       <div class="bg-[#1a123a]/80 border border-purple-500/40 rounded-3xl p-3.5 space-y-2.5">
         <div class="flex justify-between items-baseline px-1">
           <div>
@@ -673,7 +673,7 @@
     </div>
   </div>
 
-  <!-- ボトムナビゲーションバー（スマホ片手操作最適化） -->
+  <!-- ボトムナビゲーションバー -->
   <nav class="fixed bottom-0 left-0 right-0 bg-[#160f33]/98 backdrop-blur border-t border-purple-500/30 py-1.5 z-40 shadow-2xl">
     <div class="max-w-md mx-auto grid grid-cols-5 text-[9px] font-bold text-center">
       <button onclick="showHome()" id="navHome" class="flex flex-col items-center gap-0.5 text-pink-300">
