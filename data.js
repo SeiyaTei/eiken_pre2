@@ -1240,3 +1240,816 @@ const RAW_GRAMMAR_DATA = [
     exp: "舞台やコンテストの本番前に「幸運を祈る・頑張って！」と声をかける決まり文句は〈Break a leg!〉です。"
   }
 ];
+// ==================== 6. 実戦リスニング データベース (No.1 〜 No.30) ====================
+const RAW_LISTENING_DATA = [
+  // --- 対話リスニング (No.1 〜 No.15) ---
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["At 3:30.", "At 4:00.", "At 4:30.", "At 5:00."],
+    ans: 2,
+    explain: "【会話】\nGirl: Shall we meet at four o'clock to work on our science project?\nBoy: I have a choir rehearsal until four. Could we make it four thirty instead?\nGirl: That works for me.\n\n【質問】What time will they meet today?\n（彼らは今日何時に会いますか？）\n\n【正解の訳】\n3. 4時30分に。\n\n【解説】男子の提案した four thirty（4時30分）で合意しています。",
+    dialogue: [
+      { speaker: 'female', text: "Shall we meet at four o'clock to work on our science project?" },
+      { speaker: 'male', text: "I have a choir rehearsal until four. Could we make it four thirty instead?" },
+      { speaker: 'female', text: "That works for me." },
+      { speaker: 'narrator', text: "Question. What time will they meet today?" }
+    ],
+    aud_complete: "What time will they meet today? At 4:30."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["To the library.", "To the art museum.", "To the science museum.", "To the shopping mall."],
+    ans: 1,
+    explain: "【会話】\nBoy: Are you going anywhere special this weekend, Yuna?\nGirl: Yes, my sister and I are going to visit the modern art museum downtown.\n\n【質問】Where is Yuna going this weekend?\n（ユウナは今週末どこへ行きますか？）\n\n【正解の訳】\n2. 美術館へ。\n\n【解説】visit the modern art museum（現代美術館を訪れる）と答えています。",
+    dialogue: [
+      { speaker: 'male', text: "Are you going anywhere special this weekend, Yuna?" },
+      { speaker: 'female', text: "Yes, my sister and I are going to visit the modern art museum downtown." },
+      { speaker: 'narrator', text: "Question. Where is Yuna going this weekend?" }
+    ],
+    aud_complete: "Where is Yuna going this weekend? To the art museum."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["She lost her notebook.", "She missed the rapid train.", "Her alarm clock was broken.", "There was heavy traffic."],
+    ans: 1,
+    explain: "【会話】\nBoy: You're running late, Sarah. What happened?\nGirl: I just missed the rapid train, so I had to wait twenty minutes for the local one.\n\n【質問】Why was Sarah late?\n（サラはなぜ遅刻したのですか？）\n\n【正解の訳】\n2. 快速電車に乗り遅れたから。\n\n【解説】missed the rapid train（快速電車に乗り遅れた）ことが理由です。",
+    dialogue: [
+      { speaker: 'male', text: "You're running late, Sarah. What happened?" },
+      { speaker: 'female', text: "I just missed the rapid train, so I had to wait twenty minutes for the local one." },
+      { speaker: 'narrator', text: "Question. Why was Sarah late?" }
+    ],
+    aud_complete: "Why was Sarah late? She missed the rapid train."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["A red sweater.", "A blue backpack.", "A warm scarf.", "A pair of white sneakers."],
+    ans: 1,
+    explain: "【会話】\nWoman: May I help you find something?\nGirl: Yes, please. I'm looking for a sturdy blue backpack for high school.\nWoman: Right this way, please.\n\n【質問】What is the girl looking for?\n（女の子は何を探していますか？）\n\n【正解の訳】\n2. 青いリュックサック。\n\n【解説】looking for a sturdy blue backpack と話しています。",
+    dialogue: [
+      { speaker: 'female', text: "May I help you find something?" },
+      { speaker: 'female', text: "Yes, please. I'm looking for a sturdy blue backpack for high school." },
+      { speaker: 'female', text: "Right this way, please." },
+      { speaker: 'narrator', text: "Question. What is the girl looking for?" }
+    ],
+    aud_complete: "What is the girl looking for? A blue backpack."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["An English teacher.", "A flight attendant.", "A graphic designer.", "A veterinarian."],
+    ans: 2,
+    explain: "【会話】\nBoy: What kind of career do you want to pursue in the future, Maya?\nGirl: I love drawing and using computers, so I want to become a graphic designer.\nBoy: That suits you perfectly!\n\n【質問】What does Maya want to be in the future?\n（マヤは将来何になりたいですか？）\n\n【正解の訳】\n3. グラフィックデザイナー。\n\n【解説】become a graphic designer と述べています。",
+    dialogue: [
+      { speaker: 'male', text: "What kind of career do you want to pursue in the future, Maya?" },
+      { speaker: 'female', text: "I love drawing and using computers, so I want to become a graphic designer." },
+      { speaker: 'male', text: "That suits you perfectly!" },
+      { speaker: 'narrator', text: "Question. What does Maya want to be in the future?" }
+    ],
+    aud_complete: "What does Maya want to be in the future? A graphic designer."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["By bus.", "By subway.", "By bicycle.", "On foot."],
+    ans: 1,
+    explain: "【会話】\nWoman: Excuse me, what's the fastest way to get to the botanical garden?\nMan: Taking subway line 2 is the quickest because there are no traffic delays.\n\n【質問】How does the man suggest going to the botanical garden?\n（男性は植物園へどうやって行くことを勧めていますか？）\n\n【正解の訳】\n2. 地下鉄で。\n\n【解説】Taking subway line 2 を勧めています。",
+    dialogue: [
+      { speaker: 'female', text: "Excuse me, what's the fastest way to get to the botanical garden?" },
+      { speaker: 'male', text: "Taking subway line 2 is the quickest because there are no traffic delays." },
+      { speaker: 'narrator', text: "Question. How does the man suggest going to the botanical garden?" }
+    ],
+    aud_complete: "How does the man suggest going to the botanical garden? By subway."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["History.", "Biology.", "World geography.", "Chemistry."],
+    ans: 3,
+    explain: "【会話】\nGirl: Did you understand yesterday's chemistry assignment, Ren?\nBoy: Actually, question four was very complicated for me.\nGirl: I can explain the chemical formula after school.\n\n【質問】Which subject's homework is difficult for the boy?\n（男の子にとってどの科目の宿題が難しいですか？）\n\n【正解の訳】\n4. 化学。\n\n【解説】chemistry assignment（化学の課題）について話しています。",
+    dialogue: [
+      { speaker: 'female', text: "Did you understand yesterday's chemistry assignment, Ren?" },
+      { speaker: 'male', text: "Actually, question four was very complicated for me." },
+      { speaker: 'female', text: "I can explain the chemical formula after school." },
+      { speaker: 'narrator', text: "Question. Which subject's homework is difficult for the boy?" }
+    ],
+    aud_complete: "Which subject's homework is difficult for the boy? Chemistry."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["On the kitchen counter.", "Under the desk.", "In the school locker.", "In her sister's room."],
+    ans: 0,
+    explain: "【会話】\nGirl: Dad, have you seen my student ID card anywhere?\nMan: Yes, you left it on the kitchen counter next to the fruit basket.\nGirl: Thanks a lot!\n\n【質問】Where is the girl's student ID card?\n（女の子の学生証はどこにありますか？）\n\n【正解の訳】\n1. キッチンの調理台の上。\n\n【解説】on the kitchen counter（台所のカウンターの上）にあります。",
+    dialogue: [
+      { speaker: 'female', text: "Dad, have you seen my student ID card anywhere?" },
+      { speaker: 'male', text: "Yes, you left it on the kitchen counter next to the fruit basket." },
+      { speaker: 'female', text: "Thanks a lot!" },
+      { speaker: 'narrator', text: "Question. Where is the girl's student ID card?" }
+    ],
+    aud_complete: "Where is the girl's student ID card? On the kitchen counter."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["Bake cookies at home.", "Go shopping downtown.", "Watch a movie at the theater.", "Study at the public library."],
+    ans: 0,
+    explain: "【会話】\nBoy: It's pouring rain outside. We can't play tennis in the park.\nGirl: Then, how about baking chocolate cookies at my house instead?\nBoy: Sounds delicious!\n\n【質問】What will they do this afternoon?\n（彼らは今日の午後何をしますか？）\n\n【正解の訳】\n1. 家でクッキーを焼くこと。\n\n【解説】baking chocolate cookies at my house を提案し決定しています。",
+    dialogue: [
+      { speaker: 'male', text: "It's pouring rain outside. We can't play tennis in the park." },
+      { speaker: 'female', text: "Then, how about baking chocolate cookies at my house instead?" },
+      { speaker: 'male', text: "Sounds delicious!" },
+      { speaker: 'narrator', text: "Question. What will they do this afternoon?" }
+    ],
+    aud_complete: "What will they do this afternoon? Bake cookies at home."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["Her older brother.", "Her chemistry teacher.", "Her classmate.", "Her mother."],
+    ans: 0,
+    explain: "【会話】\nBoy: Your presentation slides look amazing, Lisa! Who helped you design them?\nGirl: My older brother. He is studying digital arts at university.\n\n【質問】Who helped Lisa with her presentation?\n（誰がリサのプレゼンを手伝いましたか？）\n\n【正解の訳】\n1. 彼女の兄。\n\n【解説】My older brother が手伝ってくれたと述べています。",
+    dialogue: [
+      { speaker: 'male', text: "Your presentation slides look amazing, Lisa! Who helped you design them?" },
+      { speaker: 'female', text: "My older brother. He is studying digital arts at university." },
+      { speaker: 'narrator', text: "Question. Who helped Lisa with her presentation?" }
+    ],
+    aud_complete: "Who helped Lisa with her presentation? Her older brother."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["Hot lemon tea.", "Iced green tea.", "Hot chocolate.", "Orange juice."],
+    ans: 0,
+    explain: "【会話】\nWoman: Welcome to Cafe Stella. What can I get for you today?\nGirl: Could I have a cup of hot lemon tea with honey, please?\nWoman: Certainly. Anything to eat?\nGirl: No, just the tea, thanks.\n\n【質問】What did the girl order?\n（女の子は何を注文しましたか？）\n\n【正解の訳】\n1. ホットレモンティー。\n\n【解説】hot lemon tea を注文しています。",
+    dialogue: [
+      { speaker: 'female', text: "Welcome to Cafe Stella. What can I get for you today?" },
+      { speaker: 'female', text: "Could I have a cup of hot lemon tea with honey, please?" },
+      { speaker: 'female', text: "Certainly. Anything to eat?" },
+      { speaker: 'female', text: "No, just the tea, thanks." },
+      { speaker: 'narrator', text: "Question. What did the girl order?" }
+    ],
+    aud_complete: "What did the girl order? Hot lemon tea."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["Once a week.", "Twice a week.", "Three times a week.", "Every day."],
+    ans: 1,
+    explain: "【会話】\nBoy: How often do you practice badminton, Aoi?\nGirl: I have club practice every Tuesday and Friday after school.\n\n【質問】How often does Aoi practice badminton?\n（アオイはどのくらいの頻度でバドミントンを練習しますか？）\n\n【正解の訳】\n2. 週に2回。\n\n【解説】火曜日と金曜日なので Twice a week（週2回）です。",
+    dialogue: [
+      { speaker: 'male', text: "How often do you practice badminton, Aoi?" },
+      { speaker: 'female', text: "I have club practice every Tuesday and Friday after school." },
+      { speaker: 'narrator', text: "Question. How often does Aoi practice badminton?" }
+    ],
+    aud_complete: "How often does Aoi practice badminton? Twice a week."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["To Australia.", "To Canada.", "To the United Kingdom.", "To Singapore."],
+    ans: 1,
+    explain: "【会話】\nGirl: Where are you traveling during the summer vacation, Ken?\nBoy: I'm participating in a two-week homestay program in Vancouver, Canada.\nGirl: That sounds like an unforgettable experience!\n\n【質問】Where is Ken traveling for his summer program?\n（ケンは夏期プログラムでどこへ旅行しますか？）\n\n【正解の訳】\n2. カナダへ。\n\n【解説】Vancouver, Canada と答えています。",
+    dialogue: [
+      { speaker: 'female', text: "Where are you traveling during the summer vacation, Ken?" },
+      { speaker: 'male', text: "I'm participating in a two-week homestay program in Vancouver, Canada." },
+      { speaker: 'female', text: "That sounds like an unforgettable experience!" },
+      { speaker: 'narrator', text: "Question. Where is Ken traveling for his summer program?" }
+    ],
+    aud_complete: "Where is Ken traveling for his summer program? To Canada."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["Japanese ramen.", "Italian pasta.", "Chinese fried rice.", "Mexican tacos."],
+    ans: 1,
+    explain: "【会話】\nGirl: What should we cook for tonight's dinner party?\nBoy: How about handmade Italian pasta with fresh tomatoes?\nGirl: Great idea! Let's buy the ingredients.\n\n【質問】What will they cook for dinner tonight?\n（彼らは今夜の夕食に何を料理しますか？）\n\n【正解の訳】\n2. イタリアンパスタ。\n\n【解説】Italian pasta を作ることで合意しています。",
+    dialogue: [
+      { speaker: 'female', text: "What should we cook for tonight's dinner party?" },
+      { speaker: 'male', text: "How about handmade Italian pasta with fresh tomatoes?" },
+      { speaker: 'female', text: "Great idea! Let's buy the ingredients." },
+      { speaker: 'narrator', text: "Question. What will they cook for dinner tonight?" }
+    ],
+    aud_complete: "What will they cook for dinner tonight? Italian pasta."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["Badminton club.", "Brass band club.", "Art club.", "Astronomy club."],
+    ans: 3,
+    explain: "【会話】\nBoy: Which club did you decide to join, Nanami?\nGirl: I joined the astronomy club because I love observing constellations through the telescope.\nBoy: That sounds wonderful!\n\n【質問】Which club did Nanami join?\n（ナナミはどの部活動に入部しましたか？）\n\n【正解の訳】\n4. 天文部。\n\n【解説】astronomy club（天文部）に入部しました。",
+    dialogue: [
+      { speaker: 'male', text: "Which club did you decide to join, Nanami?" },
+      { speaker: 'female', text: "I joined the astronomy club because I love observing constellations through the telescope." },
+      { speaker: 'male', text: "That sounds wonderful!" },
+      { speaker: 'narrator', text: "Question. Which club did Nanami join?" }
+    ],
+    aud_complete: "Which club did Nanami join? Astronomy club."
+  },
+
+  // --- 短文・アナウンス・説明リスニング (No.16 〜 No.30) ---
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["To clean coastal beaches.", "To protect endangered sea turtles.", "To build new hotels.", "To promote sea tourism."],
+    ans: 1,
+    explain: "【英文】\nThe local environmental group started a conservation project to protect endangered sea turtles and their nesting beaches from plastic pollution.\n\n【質問】What is the main purpose of the project?\n（そのプロジェクトの主な目的は何ですか？）\n\n【正解の訳】\n2. 絶滅危惧種のウミガメを保護すること。\n\n【解説】protect endangered sea turtles と述べています。",
+    dialogue: [
+      { speaker: 'female', text: "The local environmental group started a conservation project to protect endangered sea turtles and their nesting beaches from plastic pollution." },
+      { speaker: 'narrator', text: "Question. What is the main purpose of the project?" }
+    ],
+    aud_complete: "What is the main purpose of the project? To protect endangered sea turtles."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["At 5:00 p.m.", "At 5:30 p.m.", "At 6:00 p.m.", "At 6:30 p.m."],
+    ans: 1,
+    explain: "【英文】\nAttention museum visitors. The city science museum will close at five thirty this evening. Please return your audio tour devices to the information desk.\n\n【質問】What time will the museum close today?\n（博物館は本日何時に閉館しますか？）\n\n【正解の訳】\n2. 午後5時30分に。\n\n【解説】close at five thirty と案内されています。",
+    dialogue: [
+      { speaker: 'female', text: "Attention museum visitors. The city science museum will close at five thirty this evening. Please return your audio tour devices to the information desk." },
+      { speaker: 'narrator', text: "Question. What time will the museum close today?" }
+    ],
+    aud_complete: "What time will the museum close today? At 5:30 p.m."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Five dollars.", "Eight dollars.", "Twelve dollars.", "Fifteen dollars."],
+    ans: 2,
+    explain: "【英文】\nAdmission tickets to the botanical exhibition are five dollars for children and twelve dollars for high school students and adults.\n\n【質問】How much is the ticket for high school students?\n（高校生の入場チケットはいくらですか？）\n\n【正解の訳】\n3. 12ドル。\n\n【解説】twelve dollars for high school students と述べています。",
+    dialogue: [
+      { speaker: 'male', text: "Admission tickets to the botanical exhibition are five dollars for children and twelve dollars for high school students and adults." },
+      { speaker: 'narrator', text: "Question. How much is the ticket for high school students?" }
+    ],
+    aud_complete: "How much is the ticket for high school students? Twelve dollars."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Visited an ancient temple.", "Read historical books in the library.", "Went swimming in the ocean.", "Watched a soccer match."],
+    ans: 1,
+    explain: "【英文】\nLast Saturday was stormy all afternoon, so Yuto stayed in the municipal library and read three books about medieval European history.\n\n【質問】What did Yuto do last Saturday afternoon?\n（ユウトはこの前の土曜日の午後何をしましたか？）\n\n【正解の訳】\n2. 図書館で歴史の本を読んだ。\n\n【解説】read three books about medieval European history in the library が行動内容です。",
+    dialogue: [
+      { speaker: 'male', text: "Last Saturday was stormy all afternoon, so Yuto stayed in the municipal library and read three books about medieval European history." },
+      { speaker: 'narrator', text: "Question. What did Yuto do last Saturday afternoon?" }
+    ],
+    aud_complete: "What did Yuto do last Saturday afternoon? Read historical books in the library."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Sunny.", "Cloudy.", "Rainy.", "Snowy."],
+    ans: 2,
+    explain: "【英文】\nIt was clear and sunny on Friday morning, but heavy rain started to fall suddenly around two o'clock in the afternoon.\n\n【質問】How was the weather on Friday afternoon?\n（金曜日の午後の天気はどうでしたか？）\n\n【正解の訳】\n3. 雨。\n\n【解説】heavy rain started to fall（大雨が降り始めた）ので Rainy です。",
+    dialogue: [
+      { speaker: 'female', text: "It was clear and sunny on Friday morning, but heavy rain started to fall suddenly around two o'clock in the afternoon." },
+      { speaker: 'narrator', text: "Question. How was the weather on Friday afternoon?" }
+    ],
+    aud_complete: "How was the weather on Friday afternoon? Rainy."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["A digital camera.", "A pair of headphones.", "A leather backpack.", "An electronic dictionary."],
+    ans: 3,
+    explain: "【英文】\nYesterday was Emily's fifteenth birthday. Her grandmother gave her a high-tech electronic dictionary for her English studies.\n\n【質問】What did Emily receive from her grandmother?\n（エミリーは祖母から何をもらいましたか？）\n\n【正解の訳】\n4. 電子辞書。\n\n【解説】gave her a high-tech electronic dictionary と述べています。",
+    dialogue: [
+      { speaker: 'female', text: "Yesterday was Emily's fifteenth birthday. Her grandmother gave her a high-tech electronic dictionary for her English studies." },
+      { speaker: 'narrator', text: "Question. What did Emily receive from her grandmother?" }
+    ],
+    aud_complete: "What did Emily receive from her grandmother? An electronic dictionary."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["In Kyoto.", "In Hokkaido.", "In Okinawa.", "In Tokyo."],
+    ans: 1,
+    explain: "【英文】\nDuring the winter holiday, Karen's family visited Hokkaido. They enjoyed skiing down the snowy mountains and eating hot soup.\n\n【質問】Where did Karen's family spend their winter holiday?\n（カレンの家族は冬休みをどこで過ごしましたか？）\n\n【正解の訳】\n2. 北海道で。\n\n【解説】visited Hokkaido と述べています。",
+    dialogue: [
+      { speaker: 'male', text: "During the winter holiday, Karen's family visited Hokkaido. They enjoyed skiing down the snowy mountains and eating hot soup." },
+      { speaker: 'narrator', text: "Question. Where did Karen's family spend their winter holiday?" }
+    ],
+    aud_complete: "Where did Karen's family spend their winter holiday? In Hokkaido."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Practices the violin.", "Practices the flute.", "Draws digital illustrations.", "Studies French."],
+    ans: 0,
+    explain: "【英文】\nSakura is determined to become a classical musician. She practices the violin for two hours every evening after finishing her homework.\n\n【質問】What does Sakura do every evening?\n（サクラは毎晩何をしていますか？）\n\n【正解の訳】\n1. バイオリンを練習する。\n\n【解説】practices the violin と述べています。",
+    dialogue: [
+      { speaker: 'female', text: "Sakura is determined to become a classical musician. She practices the violin for two hours every evening after finishing her homework." },
+      { speaker: 'narrator', text: "Question. What does Sakura do every evening?" }
+    ],
+    aud_complete: "What does Sakura do every evening? Practices the violin."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Every day.", "Once a week.", "Twice a month.", "Three times a year."],
+    ans: 1,
+    explain: "【英文】\nHaruto is passionate about volunteering. He visits the local community center every Saturday morning to teach chess to children.\n\n【質問】How often does Haruto volunteer at the community center?\n（ハルトはどのくらいの頻度で公民館でボランティアをしていますか？）\n\n【正解の訳】\n2. 週に1回。\n\n【解説】every Saturday morning（毎週土曜の朝）なので Once a week（週1回）です。",
+    dialogue: [
+      { speaker: 'male', text: "Haruto is passionate about volunteering. He visits the local community center every Saturday morning to teach chess to children." },
+      { speaker: 'narrator', text: "Question. How often does Haruto volunteer at the community center?" }
+    ],
+    aud_complete: "How often does Haruto volunteer at the community center? Once a week."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Baked a chocolate cake.", "Bought an acoustic guitar.", "Cooked Italian pasta.", "Organized a surprise party."],
+    ans: 0,
+    explain: "【英文】\nYesterday was my best friend's fourteenth birthday. My sister and I baked a delicious strawberry and chocolate cake to surprise her.\n\n【質問】What did the speaker do for her best friend?\n（話し手は親友のために何をしましたか？）\n\n【正解の訳】\n1. チョコレートケーキを焼いた。\n\n【解説】baked a delicious strawberry and chocolate cake が行動内容です。",
+    dialogue: [
+      { speaker: 'female', text: "Yesterday was my best friend's fourteenth birthday. My sister and I baked a delicious strawberry and chocolate cake to surprise her." },
+      { speaker: 'narrator', text: "Question. What did the speaker do for her best friend?" }
+    ],
+    aud_complete: "What did the speaker do for her best friend? Baked a chocolate cake."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["By chartered bus.", "By bullet train.", "By airplane.", "By ferry."],
+    ans: 0,
+    explain: "【英文】\nOur high school class went on a field trip to the historical village yesterday. All forty students traveled together by chartered bus.\n\n【質問】How did the class travel to the historical village?\n（クラスのみんなはどうやって歴史村へ移動しましたか？）\n\n【正解の訳】\n1. 貸切バスで。\n\n【解説】by chartered bus（貸切バスで）と述べています。",
+    dialogue: [
+      { speaker: 'female', text: "Our high school class went on a field trip to the historical village yesterday. All forty students traveled together by chartered bus." },
+      { speaker: 'narrator', text: "Question. How did the class travel to the historical village?" }
+    ],
+    aud_complete: "How did the class travel to the historical village? By chartered bus."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Two white cats.", "A golden retriever.", "Three parrots.", "Two rabbits."],
+    ans: 1,
+    explain: "【英文】\nMiyu loves domestic animals. She recently adopted a friendly golden retriever and walks him in the park every morning.\n\n【質問】What pet does Miyu have?\n（ミユはどんなペットを飼っていますか？）\n\n【正解の訳】\n2. ゴールデンレトリバー（犬）。\n\n【解説】adopted a friendly golden retriever（犬）を飼っています。",
+    dialogue: [
+      { speaker: 'female', text: "Miyu loves domestic animals. She recently adopted a friendly golden retriever and walks him in the park every morning." },
+      { speaker: 'narrator', text: "Question. What pet does Miyu have?" }
+    ],
+    aud_complete: "What pet does Miyu have? A golden retriever."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["A warm wool coat.", "A pair of winter boots.", "A knitted scarf.", "A leather jacket."],
+    ans: 0,
+    explain: "【英文】\nAs the temperature dropped sharply, Jessica went to the department store on Sunday and purchased a warm wool coat for the winter.\n\n【質問】What did Jessica purchase on Sunday?\n（ジェシカは日曜日に何を購入しましたか？）\n\n【正解の訳】\n1. 暖かいウールのコート。\n\n【解説】purchased a warm wool coat と述べています。",
+    dialogue: [
+      { speaker: 'male', text: "As the temperature dropped sharply, Jessica went to the department store on Sunday and purchased a warm wool coat for the winter." },
+      { speaker: 'narrator', text: "Question. What did Jessica purchase on Sunday?" }
+    ],
+    aud_complete: "What did Jessica purchase on Sunday? A warm wool coat."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["To a theme park.", "To an aquarium.", "To a planetarium.", "To a ski resort."],
+    ans: 2,
+    explain: "【英文】\nNext Sunday is my younger brother's birthday. My father promised to drive the whole family to the city planetarium to watch the star show.\n\n【質問】Where will the family go next Sunday?\n（家族は次の日曜日どこへ行きますか？）\n\n【正解の訳】\n3. プラネタリウムへ。\n\n【解説】drive the whole family to the city planetarium と述べています。",
+    dialogue: [
+      { speaker: 'female', text: "Next Sunday is my younger brother's birthday. My father promised to drive the whole family to the city planetarium to watch the star show." },
+      { speaker: 'narrator', text: "Question. Where will the family go next Sunday?" }
+    ],
+    aud_complete: "Where will the family go next Sunday? To a planetarium."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["At 7:45 a.m.", "At 8:00 a.m.", "At 8:20 a.m.", "At 8:40 a.m."],
+    ans: 2,
+    explain: "【英文】\nRiko usually leaves her apartment at eight o'clock and arrives at the school gate at eight twenty every morning.\n\n【質問】What time does Riko arrive at school?\n（リコは何時に学校に到着しますか？）\n\n【正解の訳】\n3. 午前8時20分に。\n\n【解説】arrives at the school gate at eight twenty と述べています。",
+    dialogue: [
+      { speaker: 'female', text: "Riko usually leaves her apartment at eight o'clock and arrives at the school gate at eight twenty every morning." },
+      { speaker: 'narrator', text: "Question. What time does Riko arrive at school?" }
+    ],
+    aud_complete: "What time does Riko arrive at school? At 8:20 a.m."
+  },
+  // --- 対話リスニング Part 2 (No.31 〜 No.45) ---
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["In the science lab.", "In the art room.", "In the cafeteria.", "In her locker."],
+    ans: 1,
+    exp: "【会話】\nGirl: I can't find my color pencil set anywhere.\nBoy: Didn't you leave it on the desk in the art room during fifth period?\nGirl: Oh, that's right! I'll go check right now.\n\n【質問】Where did the girl leave her pencil set?\n（女の子はどこに色鉛筆セットを置き忘れましたか？）\n\n【正解の訳】\n2. 美術室に。\n\n【解説】art room（美術室）に置き忘れたことを思い出しています。",
+    explain: "【会話】\nGirl: I can't find my color pencil set anywhere.\nBoy: Didn't you leave it on the desk in the art room during fifth period?\nGirl: Oh, that's right! I'll go check right now.\n\n【質問】Where did the girl leave her pencil set?\n（女の子はどこに色鉛筆セットを置き忘れましたか？）\n\n【正解の訳】\n2. 美術室に。\n\n【解説】art room（美術室）に置き忘れたことを思い出しています。",
+    dialogue: [
+      { speaker: 'female', text: "I can't find my color pencil set anywhere." },
+      { speaker: 'male', text: "Didn't you leave it on the desk in the art room during fifth period?" },
+      { speaker: 'female', text: "Oh, that's right! I'll go check right now." },
+      { speaker: 'narrator', text: "Question. Where did the girl leave her pencil set?" }
+    ],
+    aud_complete: "Where did the girl leave her pencil set? In the art room."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["Plant trees in the park.", "Volunteer at an animal shelter.", "Visit her grandparents.", "Study for the exam."],
+    ans: 1,
+    exp: "【会話】\nBoy: Do you have any plans for this Saturday, Hana?\nGirl: I'm going to volunteer at the local animal shelter to help feed the rescued dogs.\nBoy: That's very kind of you.\n\n【質問】What will Hana do this Saturday?\n（ハナは今週の土曜日に何をしますか？）\n\n【正解の訳】\n2. 動物保護施設でボランティアをする。\n\n【解説】volunteer at the local animal shelter と述べています。",
+    explain: "【会話】\nBoy: Do you have any plans for this Saturday, Hana?\nGirl: I'm going to volunteer at the local animal shelter to help feed the rescued dogs.\nBoy: That's very kind of you.\n\n【質問】What will Hana do this Saturday?\n（ハナは今週の土曜日に何をしますか？）\n\n【正解の訳】\n2. 動物保護施設でボランティアをする。\n\n【解説】volunteer at the local animal shelter と述べています。",
+    dialogue: [
+      { speaker: 'male', text: "Do you have any plans for this Saturday, Hana?" },
+      { speaker: 'female', text: "I'm going to volunteer at the local animal shelter to help feed the rescued dogs." },
+      { speaker: 'male', text: "That's very kind of you." },
+      { speaker: 'narrator', text: "Question. What will Hana do this Saturday?" }
+    ],
+    aud_complete: "What will Hana do this Saturday? Volunteer at an animal shelter."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["Strawberry shortcake.", "Fresh apple pie.", "Chocolate muffins.", "Blueberry cheesecake."],
+    ans: 1,
+    exp: "【会話】\nBoy: What did you bake in cooking class today?\nGirl: We baked a fresh apple pie with cinnamon. It was delicious!\nBoy: I wish I could taste it.\n\n【質問】What did the girl bake in class?\n（女の子は授業で何を焼きましたか？）\n\n【正解の訳】\n2. 焼きたてのアップルパイ。\n\n【解説】baked a fresh apple pie と答えています。",
+    explain: "【会話】\nBoy: What did you bake in cooking class today?\nGirl: We baked a fresh apple pie with cinnamon. It was delicious!\nBoy: I wish I could taste it.\n\n【質問】What did the girl bake in class?\n（女の子は授業で何を焼きましたか？）\n\n【正解の訳】\n2. 焼きたてのアップルパイ。\n\n【解説】baked a fresh apple pie と答えています。",
+    dialogue: [
+      { speaker: 'male', text: "What did you bake in cooking class today?" },
+      { speaker: 'female', text: "We baked a fresh apple pie with cinnamon. It was delicious!" },
+      { speaker: 'male', text: "I wish I could taste it." },
+      { speaker: 'narrator', text: "Question. What did the girl bake in class?" }
+    ],
+    aud_complete: "What did the girl bake in class? Fresh apple pie."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["Next Monday.", "Next Tuesday.", "Next Thursday.", "Next Friday."],
+    ans: 1,
+    exp: "【会話】\nWoman: Is the novel about space travel currently available in the library?\nMan: It is checked out right now, but it will be returned next Tuesday.\nWoman: Thank you, I'll come back then.\n\n【質問】When will the novel be available in the library?\n（その小説はいつ図書館で利用可能になりますか？）\n\n【正解の訳】\n2. 来週の火曜日に。\n\n【解説】returned next Tuesday（来週火曜日に返却される）と案内されています。",
+    explain: "【会話】\nWoman: Is the novel about space travel currently available in the library?\nMan: It is checked out right now, but it will be returned next Tuesday.\nWoman: Thank you, I'll come back then.\n\n【質問】When will the novel be available in the library?\n（その小説はいつ図書館で利用可能になりますか？）\n\n【正解の訳】\n2. 来週の火曜日に。\n\n【解説】returned next Tuesday（来週火曜日に返却される）と案内されています。",
+    dialogue: [
+      { speaker: 'female', text: "Is the novel about space travel currently available in the library?" },
+      { speaker: 'male', text: "It is checked out right now, but it will be returned next Tuesday." },
+      { speaker: 'female', text: "Thank you, I'll come back then." },
+      { speaker: 'narrator', text: "Question. When will the novel be available in the library?" }
+    ],
+    aud_complete: "When will the novel be available in the library? Next Tuesday."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["Preparing food stands.", "Designing event posters.", "Organizing the stage.", "Cleaning the hall."],
+    ans: 1,
+    exp: "【会話】\nBoy: What is your role for the school festival committee, Emi?\nGirl: I'm in charge of designing digital posters to promote our musical concert.\nBoy: Your drawings are always wonderful!\n\n【質問】What is Emi's role for the school festival?\n（エミの学園祭での役割は何ですか？）\n\n【正解の訳】\n2. イベントのポスターをデザインすること。\n\n【解説】in charge of designing digital posters と答えています。",
+    explain: "【会話】\nBoy: What is your role for the school festival committee, Emi?\nGirl: I'm in charge of designing digital posters to promote our musical concert.\nBoy: Your drawings are always wonderful!\n\n【質問】What is Emi's role for the school festival?\n（エミの学園祭での役割は何ですか？）\n\n【正解の訳】\n2. イベントのポスターをデザインすること。\n\n【解説】in charge of designing digital posters と答えています。",
+    dialogue: [
+      { speaker: 'male', text: "What is your role for the school festival committee, Emi?" },
+      { speaker: 'female', text: "I'm in charge of designing digital posters to promote our musical concert." },
+      { speaker: 'male', text: "Your drawings are always wonderful!" },
+      { speaker: 'narrator', text: "Question. What is Emi's role for the school festival?" }
+    ],
+    aud_complete: "What is Emi's role for the school festival? Designing event posters."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["A silk scarf.", "A silver necklace.", "A leather purse.", "A pearl bracelet."],
+    ans: 0,
+    exp: "【会話】\nBoy: Did you find a Mother's Day gift for your mom, Meg?\nGirl: Yes, I bought a lovely pink silk scarf with floral patterns.\nBoy: I'm sure she will love it.\n\n【質問】What gift did Meg buy for her mother?\n（メグは母親のためにどんなプレゼントを買いましたか？）\n\n【正解の訳】\n1. シルクのスカーフ。\n\n【解説】bought a lovely pink silk scarf と答えています。",
+    explain: "【会話】\nBoy: Did you find a Mother's Day gift for your mom, Meg?\nGirl: Yes, I bought a lovely pink silk scarf with floral patterns.\nBoy: I'm sure she will love it.\n\n【質問】What gift did Meg buy for her mother?\n（メグは母親のためにどんなプレゼントを買いましたか？）\n\n【正解の訳】\n1. シルクのスカーフ。\n\n【解説】bought a lovely pink silk scarf と答えています。",
+    dialogue: [
+      { speaker: 'male', text: "Did you find a Mother's Day gift for your mom, Meg?" },
+      { speaker: 'female', text: "Yes, I bought a lovely pink silk scarf with floral patterns." },
+      { speaker: 'male', text: "I'm sure she will love it." },
+      { speaker: 'narrator', text: "Question. What gift did Meg buy for her mother?" }
+    ],
+    aud_complete: "What gift did Meg buy for her mother? A silk scarf."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["In the schoolyard.", "In the gymnasium.", "In the cafeteria.", "In classroom 3B."],
+    ans: 1,
+    exp: "【会話】\nGirl: It's raining heavily outside. Where is tennis club practice today?\nBoy: The outdoor courts are wet, so we will meet in the gymnasium for fitness training.\n\n【質問】Where will the tennis club practice today?\n（テニス部は今日どこで練習しますか？）\n\n【正解の訳】\n2. 体育館で。\n\n【解説】meet in the gymnasium と述べています。",
+    explain: "【会話】\nGirl: It's raining heavily outside. Where is tennis club practice today?\nBoy: The outdoor courts are wet, so we will meet in the gymnasium for fitness training.\n\n【質問】Where will the tennis club practice today?\n（テニス部は今日どこで練習しますか？）\n\n【正解の訳】\n2. 体育館で。\n\n【解説】meet in the gymnasium と述べています。",
+    dialogue: [
+      { speaker: 'female', text: "It's raining heavily outside. Where is tennis club practice today?" },
+      { speaker: 'male', text: "The outdoor courts are wet, so we will meet in the gymnasium for fitness training." },
+      { speaker: 'narrator', text: "Question. Where will the tennis club practice today?" }
+    ],
+    aud_complete: "Where will the tennis club practice today? In the gymnasium."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["By highway bus.", "By rapid express train.", "By taxi.", "By bicycle."],
+    ans: 1,
+    exp: "【会話】\nGirl: How did you travel to the regional science contest, Leo?\nBoy: The highway bus was crowded, so my teacher and I took the rapid express train.\n\n【質問】How did Leo travel to the contest?\n（レオはどうやってコンテストへ移動しましたか？）\n\n【正解の訳】\n2. 快速急行電車で。\n\n【解説】took the rapid express train と答えています。",
+    explain: "【会話】\nGirl: How did you travel to the regional science contest, Leo?\nBoy: The highway bus was crowded, so my teacher and I took the rapid express train.\n\n【質問】How did Leo travel to the contest?\n（レオはどうやってコンテストへ移動しましたか？）\n\n【正解の訳】\n2. 快速急行電車で。\n\n【解説】took the rapid express train と答えています。",
+    dialogue: [
+      { speaker: 'female', text: "How did you travel to the regional science contest, Leo?" },
+      { speaker: 'male', text: "The highway bus was crowded, so my teacher and I took the rapid express train." },
+      { speaker: 'narrator', text: "Question. How did Leo travel to the contest?" }
+    ],
+    aud_complete: "How did Leo travel to the contest? By rapid express train."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["At 5:30.", "At 6:00.", "At 6:30.", "At 7:00."],
+    ans: 1,
+    exp: "【会話】\nGirl: The orchestral concert begins at six thirty. What time should we meet at the hall entrance?\nBoy: Let's meet at six o'clock so we can find our seats early.\nGirl: Sounds good.\n\n【質問】What time will they meet at the hall entrance?\n（彼らはホールの入り口で何時に会いますか？）\n\n【正解の訳】\n2. 6時ちょうどに。\n\n【解説】meet at six o'clock で合意しています。",
+    explain: "【会話】\nGirl: The orchestral concert begins at six thirty. What time should we meet at the hall entrance?\nBoy: Let's meet at six o'clock so we can find our seats early.\nGirl: Sounds good.\n\n【質問】What time will they meet at the hall entrance?\n（彼らはホールの入り口で何時に会いますか？）\n\n【正解の訳】\n2. 6時ちょうどに。\n\n【解説】meet at six o'clock で合意しています。",
+    dialogue: [
+      { speaker: 'female', text: "The orchestral concert begins at six thirty. What time should we meet at the hall entrance?" },
+      { speaker: 'male', text: "Let's meet at six o'clock so we can find our seats early." },
+      { speaker: 'female', text: "Sounds good." },
+      { speaker: 'narrator', text: "Question. What time will they meet at the hall entrance?" }
+    ],
+    aud_complete: "What time will they meet at the hall entrance? At 6:00."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["For one week.", "For two weeks.", "For one month.", "For three months."],
+    ans: 1,
+    exp: "【会話】\nGirl: Our school is welcoming an exchange student from Sydney next Monday.\nBoy: That's exciting! How long will she stay with us?\nGirl: She will stay for two weeks and attend our English classes.\n\n【質問】How long will the exchange student stay?\n（交換留学生はどのくらいの期間滞在しますか？）\n\n【正解の訳】\n2. 2週間。\n\n【解説】stay for two weeks と述べています。",
+    explain: "【会話】\nGirl: Our school is welcoming an exchange student from Sydney next Monday.\nBoy: That's exciting! How long will she stay with us?\nGirl: She will stay for two weeks and attend our English classes.\n\n【質問】How long will the exchange student stay?\n（交換留学生はどのくらいの期間滞在しますか？）\n\n【正解の訳】\n2. 2週間。\n\n【解説】stay for two weeks と述べています。",
+    dialogue: [
+      { speaker: 'female', text: "Our school is welcoming an exchange student from Sydney next Monday." },
+      { speaker: 'male', text: "That's exciting! How long will she stay with us?" },
+      { speaker: 'female', text: "She will stay for two weeks and attend our English classes." },
+      { speaker: 'narrator', text: "Question. How long will the exchange student stay?" }
+    ],
+    aud_complete: "How long will the exchange student stay? For two weeks."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["Hot black coffee.", "Iced cafe latte with soy milk.", "Green tea latte.", "Iced lemon water."],
+    ans: 1,
+    exp: "【会話】\nWoman: Good afternoon. What would you like to drink today?\nGirl: Could I have a medium iced cafe latte made with soy milk, please?\nWoman: Sure thing. For here or to go?\nGirl: For here, please.\n\n【質問】What beverage did the girl order?\n（女の子は何の飲み物を注文しましたか？）\n\n【正解の訳】\n2. 豆乳のアイスカフェラテ。\n\n【解説】iced cafe latte made with soy milk を注文しています。",
+    explain: "【会話】\nWoman: Good afternoon. What would you like to drink today?\nGirl: Could I have a medium iced cafe latte made with soy milk, please?\nWoman: Sure thing. For here or to go?\nGirl: For here, please.\n\n【質問】What beverage did the girl order?\n（女の子は何の飲み物を注文しましたか？）\n\n【正解の訳】\n2. 豆乳のアイスカフェラテ。\n\n【解説】iced cafe latte made with soy milk を注文しています。",
+    dialogue: [
+      { speaker: 'female', text: "Good afternoon. What would you like to drink today?" },
+      { speaker: 'female', text: "Could I have a medium iced cafe latte made with soy milk, please?" },
+      { speaker: 'female', text: "Sure thing. For here or to go?" },
+      { speaker: 'female', text: "For here, please." },
+      { speaker: 'narrator', text: "Question. What beverage did the girl order?" }
+    ],
+    aud_complete: "What beverage did the girl order? Iced cafe latte with soy milk."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["World history.", "Spanish architecture.", "Modern literature.", "Environmental biology."],
+    ans: 1,
+    exp: "【会話】\nBoy: Yuka, could you look over my slides for tomorrow's presentation?\nGirl: Sure. What topic are you presenting on?\nBoy: I'm discussing traditional Spanish architecture in Barcelona.\n\n【質問】What topic is the boy presenting on?\n（男の子は何のテーマについてプレゼンしますか？）\n\n【正解の訳】\n2. スペインの建築。\n\n【解説】Spanish architecture について発表します。",
+    explain: "【会話】\nBoy: Yuka, could you look over my slides for tomorrow's presentation?\nGirl: Sure. What topic are you presenting on?\nBoy: I'm discussing traditional Spanish architecture in Barcelona.\n\n【質問】What topic is the boy presenting on?\n（男の子は何のテーマについてプレゼンしますか？）\n\n【正解の訳】\n2. スペインの建築。\n\n【解説】Spanish architecture について発表します。",
+    dialogue: [
+      { speaker: 'male', text: "Yuka, could you look over my slides for tomorrow's presentation?" },
+      { speaker: 'female', text: "Sure. What topic are you presenting on?" },
+      { speaker: 'male', text: "I'm discussing traditional Spanish architecture in Barcelona." },
+      { speaker: 'narrator', text: "Question. What topic is the boy presenting on?" }
+    ],
+    aud_complete: "What topic is the boy presenting on? Spanish architecture."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["On Friday.", "On Saturday.", "On Sunday.", "Next weekend."],
+    ans: 2,
+    exp: "【会話】\nGirl: The weather forecast predicts heavy showers on Saturday. Should we reschedule our picnic?\nBoy: Yes, Sunday is expected to be sunny and warm, so let's go on Sunday instead.\n\n【質問】When will they have their picnic?\n（彼らはいつピクニックをしますか？）\n\n【正解の訳】\n3. 日曜日に。\n\n【解説】Sunday is expected to be sunny... so let's go on Sunday と合意しています。",
+    explain: "【会話】\nGirl: The weather forecast predicts heavy showers on Saturday. Should we reschedule our picnic?\nBoy: Yes, Sunday is expected to be sunny and warm, so let's go on Sunday instead.\n\n【質問】When will they have their picnic?\n（彼らはいつピクニックをしますか？）\n\n【正解の訳】\n3. 日曜日に。\n\n【解説】Sunday is expected to be sunny... so let's go on Sunday と合意しています。",
+    dialogue: [
+      { speaker: 'female', text: "The weather forecast predicts heavy showers on Saturday. Should we reschedule our picnic?" },
+      { speaker: 'male', text: "Yes, Sunday is expected to be sunny and warm, so let's go on Sunday instead." },
+      { speaker: 'narrator', text: "Question. When will they have their picnic?" }
+    ],
+    aud_complete: "When will they have their picnic? On Sunday."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["First prize.", "Second prize.", "Third prize.", "Special jury award."],
+    ans: 1,
+    exp: "【会話】\nBoy: Congratulations on the city photography competition, Saki!\nGirl: Thank you! My picture of the autumn sunset received second prize among 200 entries.\n\n【質問】Which award did Saki receive in the photo contest?\n（サキは写真コンテストでどの賞を受賞しましたか？）\n\n【正解の訳】\n2. 準優勝（第2位）。\n\n【解説】received second prize と述べています。",
+    explain: "【会話】\nBoy: Congratulations on the city photography competition, Saki!\nGirl: Thank you! My picture of the autumn sunset received second prize among 200 entries.\n\n【質問】Which award did Saki receive in the photo contest?\n（サキは写真コンテストでどの賞を受賞しましたか？）\n\n【正解の訳】\n2. 準優勝（第2位）。\n\n【解説】received second prize と述べています。",
+    dialogue: [
+      { speaker: 'male', text: "Congratulations on the city photography competition, Saki!" },
+      { speaker: 'female', text: "Thank you! My picture of the autumn sunset received second prize among 200 entries." },
+      { speaker: 'narrator', text: "Question. Which award did Saki receive in the photo contest?" }
+    ],
+    aud_complete: "Which award did Saki receive in the photo contest? Second prize."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (対話)",
+    opt: ["Wednesday at 3:30.", "Thursday at 4:15.", "Friday at 4:30.", "Saturday at 10:00."],
+    ans: 1,
+    exp: "【会話】\nMan: Dental Clinic Green. How may I help you?\nGirl: Hello, I'd like to book a routine dental checkup this week.\nMan: We have an opening on Thursday at four fifteen in the afternoon.\nGirl: That time works great.\n\n【質問】When is the girl's dental appointment?\n（女の子の歯科検診の予約はいつですか？）\n\n【正解の訳】\n2. 木曜日の午後4時15分に。\n\n【解説】Thursday at four fifteen と約束しています。",
+    explain: "【会話】\nMan: Dental Clinic Green. How may I help you?\nGirl: Hello, I'd like to book a routine dental checkup this week.\nMan: We have an opening on Thursday at four fifteen in the afternoon.\nGirl: That time works great.\n\n【質問】When is the girl's dental appointment?\n（女の子の歯科検診の予約はいつですか？）\n\n【正解の訳】\n2. 木曜日の午後4時15分に。\n\n【解説】Thursday at four fifteen と約束しています。",
+    dialogue: [
+      { speaker: 'male', text: "Dental Clinic Green. How may I help you?" },
+      { speaker: 'female', text: "Hello, I'd like to book a routine dental checkup this week." },
+      { speaker: 'male', text: "We have an opening on Thursday at four fifteen in the afternoon." },
+      { speaker: 'female', text: "That time works great." },
+      { speaker: 'narrator', text: "Question. When is the girl's dental appointment?" }
+    ],
+    aud_complete: "When is the girl's dental appointment? Thursday at 4:15."
+  },
+
+  // --- 短文・アナウンス・説明リスニング Part 2 (No.46 〜 No.60) ---
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Cleaned the community pond.", "Planted fifty cherry trees.", "Built wooden benches.", "Painted park fences."],
+    ans: 1,
+    exp: "【英文】\nLast Saturday, fifty local students participated in a community green project. Together with town volunteers, they planted fifty young cherry trees in the riverside park.\n\n【質問】What did the volunteers do last Saturday?\n（ボランティアたちはこの前の土曜日に何をしましたか？）\n\n【正解の訳】\n2. 50本の桜の木を植えた。\n\n【解説】planted fifty young cherry trees が活動内容です。",
+    explain: "【英文】\nLast Saturday, fifty local students participated in a community green project. Together with town volunteers, they planted fifty young cherry trees in the riverside park.\n\n【質問】What did the volunteers do last Saturday?\n（ボランティアたちはこの前の土曜日に何をしましたか？）\n\n【正解の訳】\n2. 50本の桜の木を植えた。\n\n【解説】planted fifty young cherry trees が活動内容です。",
+    dialogue: [
+      { speaker: 'female', text: "Last Saturday, fifty local students participated in a community green project. Together with town volunteers, they planted fifty young cherry trees in the riverside park." },
+      { speaker: 'narrator', text: "Question. What did the volunteers do last Saturday?" }
+    ],
+    aud_complete: "What did the volunteers do last Saturday? Planted fifty cherry trees."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["At 1:00 p.m.", "At 1:30 p.m.", "At 2:00 p.m.", "At 2:30 p.m."],
+    ans: 1,
+    exp: "【英文】\nAttention students and staff. The school cafeteria usually serves lunch until two o'clock. However, today it will close thirty minutes early at one thirty for a safety inspection.\n\n【質問】What time will the school cafeteria close today?\n（学食は本日何時に閉まりますか？）\n\n【正解の訳】\n2. 午後1時30分に。\n\n【解説】close thirty minutes early at one thirty と案内されています。",
+    explain: "【英文】\nAttention students and staff. The school cafeteria usually serves lunch until two o'clock. However, today it will close thirty minutes early at one thirty for a safety inspection.\n\n【質問】What time will the school cafeteria close today?\n（学食は本日何時に閉まりますか？）\n\n【正解の訳】\n2. 午後1時30分に。\n\n【解説】close thirty minutes early at one thirty と案内されています。",
+    dialogue: [
+      { speaker: 'male', text: "Attention students and staff. The school cafeteria usually serves lunch until two o'clock. However, today it will close thirty minutes early at one thirty for a safety inspection." },
+      { speaker: 'narrator', text: "Question. What time will the school cafeteria close today?" }
+    ],
+    aud_complete: "What time will the school cafeteria close today? At 1:30 p.m."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["On International Museum Day.", "Every Sunday morning.", "On public holidays.", "During winter vacation."],
+    ans: 0,
+    exp: "【英文】\nTo encourage youth education, the city historical museum announced that admission will be completely free for all middle and high school students on International Museum Day.\n\n【質問】When can students enter the museum for free?\n（生徒たちはいつ無料で博物館に入館できますか？）\n\n【正解の訳】\n1. 国際博物館の日に。\n\n【解説】on International Museum Day に無料になります。",
+    explain: "【英文】\nTo encourage youth education, the city historical museum announced that admission will be completely free for all middle and high school students on International Museum Day.\n\n【質問】When can students enter the museum for free?\n（生徒たちはいつ無料で博物館に入館できますか？）\n\n【正解の訳】\n1. 国際博物館の日に。\n\n【解説】on International Museum Day に無料になります。",
+    dialogue: [
+      { speaker: 'female', text: "To encourage youth education, the city historical museum announced that admission will be completely free for all middle and high school students on International Museum Day." },
+      { speaker: 'narrator', text: "Question. When can students enter the museum for free?" }
+    ],
+    aud_complete: "When can students enter the museum for free? On International Museum Day."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Sea otters.", "Polar bears.", "Humpback whales.", "Snow leopards."],
+    ans: 0,
+    exp: "【英文】\nResearchers on the northern island established a new wildlife protection zone along the rocky coast to preserve the natural habitat of wild sea otters.\n\n【質問】Which animal is the protection zone designed for?\n（その保護区域はどの動物のために設けられましたか？）\n\n【正解の訳】\n1. ラッコ（Sea otters）。\n\n【解説】habitat of wild sea otters を保護するためです。",
+    explain: "【英文】\nResearchers on the northern island established a new wildlife protection zone along the rocky coast to preserve the natural habitat of wild sea otters.\n\n【質問】Which animal is the protection zone designed for?\n（その保護区域はどの動物のために設けられましたか？）\n\n【正解の訳】\n1. ラッコ（Sea otters）。\n\n【解説】habitat of wild sea otters を保護するためです。",
+    dialogue: [
+      { speaker: 'male', text: "Researchers on the northern island established a new wildlife protection zone along the rocky coast to preserve the natural habitat of wild sea otters." },
+      { speaker: 'narrator', text: "Question. Which animal is the protection zone designed for?" }
+    ],
+    aud_complete: "Which animal is the protection zone designed for? Sea otters."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Japanese calligraphy.", "Traditional tea ceremony.", "Flower arrangement.", "Kendo martial arts."],
+    ans: 1,
+    exp: "【英文】\nDuring her summer trip to Kyoto, Karen stayed at a traditional inn and attended workshops every afternoon to learn the etiquette of the Japanese tea ceremony.\n\n【質問】What traditional culture did Karen study in Kyoto?\n（カレンは京都で何の伝統文化を学びましたか？）\n\n【正解の訳】\n2. 茶道（Traditional tea ceremony）。\n\n【解説】Japanese tea ceremony を学びました。",
+    explain: "【英文】\nDuring her summer trip to Kyoto, Karen stayed at a traditional inn and attended workshops every afternoon to learn the etiquette of the Japanese tea ceremony.\n\n【質問】What traditional culture did Karen study in Kyoto?\n（カレンは京都で何の伝統文化を学びましたか？）\n\n【正解の訳】\n2. 茶道（Traditional tea ceremony）。\n\n【解説】Japanese tea ceremony を学びました。",
+    dialogue: [
+      { speaker: 'female', text: "During her summer trip to Kyoto, Karen stayed at a traditional inn and attended workshops every afternoon to learn the etiquette of the Japanese tea ceremony." },
+      { speaker: 'narrator', text: "Question. What traditional culture did Karen study in Kyoto?" }
+    ],
+    aud_complete: "What traditional culture did Karen study in Kyoto? Traditional tea ceremony."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["A solar-powered water filter.", "An earthquake alarm system.", "A wind energy generator.", "A robotic garden helper."],
+    ans: 0,
+    exp: "【英文】\nAt the national high school science fair, a student team won first prize for developing a compact, solar-powered water filtration device designed for emergency use.\n\n【質問】What invention won first prize at the science fair?\n（科学フェアで何の発明が一等賞を受賞しましたか？）\n\n【正解の訳】\n1. 太陽光発電の浄水フィルター装置。\n\n【解説】solar-powered water filtration device が受賞しました。",
+    explain: "【英文】\nAt the national high school science fair, a student team won first prize for developing a compact, solar-powered water filtration device designed for emergency use.\n\n【質問】What invention won first prize at the science fair?\n（科学フェアで何の発明が一等賞を受賞しましたか？）\n\n【正解の訳】\n1. 太陽光発電の浄水フィルター装置。\n\n【解説】solar-powered water filtration device が受賞しました。",
+    dialogue: [
+      { speaker: 'male', text: "At the national high school science fair, a student team won first prize for developing a compact, solar-powered water filtration device designed for emergency use." },
+      { speaker: 'narrator', text: "Question. What invention won first prize at the science fair?" }
+    ],
+    aud_complete: "What invention won first prize at the science fair? A solar-powered water filter."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Track 1.", "Track 2.", "Track 3.", "Track 4."],
+    ans: 2,
+    exp: "【英文】\nMay I have your attention, train passengers. The rapid express departing for Central Airport at ten thirty has changed platforms due to maintenance work. Please proceed to Track 3.\n\n【質問】Which track will the airport train depart from?\n（空港行きの電車はどの番線から出発しますか？）\n\n【正解の訳】\n3. 3番線。\n\n【解説】proceed to Track 3 とアナウンスされています。",
+    explain: "【英文】\nMay I have your attention, train passengers. The rapid express departing for Central Airport at ten thirty has changed platforms due to maintenance work. Please proceed to Track 3.\n\n【質問】Which track will the airport train depart from?\n（空港行きの電車はどの番線から出発しますか？）\n\n【正解の訳】\n3. 3番線。\n\n【解説】proceed to Track 3 とアナウンスされています。",
+    dialogue: [
+      { speaker: 'female', text: "May I have your attention, train passengers. The rapid express departing for Central Airport at ten thirty has changed platforms due to maintenance work. Please proceed to Track 3." },
+      { speaker: 'narrator', text: "Question. Which track will the airport train depart from?" }
+    ],
+    aud_complete: "Which track will the airport train depart from? Track 3."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Five books.", "Eight books.", "Ten books.", "Twelve books."],
+    ans: 2,
+    exp: "【英文】\nDuring the autumn reading challenge at West High School, students who successfully read ten English books within four weeks received a special commemorative bookmark.\n\n【質問】How many books did students need to read for the prize?\n（生徒たちは記念品をもらうために何冊本を読む必要がありましたか？）\n\n【正解の訳】\n3. 10冊。\n\n【解説】read ten English books と述べています。",
+    explain: "【英文】\nDuring the autumn reading challenge at West High School, students who successfully read ten English books within four weeks received a special commemorative bookmark.\n\n【質問】How many books did students need to read for the prize?\n（生徒たちは記念品をもらうために何冊本を読む必要がありましたか？）\n\n【正解の訳】\n3. 10冊。\n\n【解説】read ten English books と述べています。",
+    dialogue: [
+      { speaker: 'female', text: "During the autumn reading challenge at West High School, students who successfully read ten English books within four weeks received a special commemorative bookmark." },
+      { speaker: 'narrator', text: "Question. How many books did students need to read for the prize?" }
+    ],
+    aud_complete: "How many books did students need to read for the prize? Ten books."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Three kilometers.", "Five kilometers.", "Eight kilometers.", "Ten kilometers."],
+    ans: 1,
+    exp: "【英文】\nTo prepare for next month's city half-marathon, Kenji wakes up at six o'clock every morning and runs five kilometers around the lake near his house.\n\n【質問】How far does Kenji run every morning?\n（ケンジは毎朝どのくらいの距離を走りますか？）\n\n【正解の訳】\n2. 5キロメートル。\n\n【解説】runs five kilometers と述べています。",
+    explain: "【英文】\nTo prepare for next month's city half-marathon, Kenji wakes up at six o'clock every morning and runs five kilometers around the lake near his house.\n\n【質問】How far does Kenji run every morning?\n（ケンジは毎朝どのくらいの距離を走りますか？）\n\n【正解の訳】\n2. 5キロメートル。\n\n【解説】runs five kilometers と述べています。",
+    dialogue: [
+      { speaker: 'male', text: "To prepare for next month's city half-marathon, Kenji wakes up at six o'clock every morning and runs five kilometers around the lake near his house." },
+      { speaker: 'narrator', text: "Question. How far does Kenji run every morning?" }
+    ],
+    aud_complete: "How far does Kenji run every morning? Five kilometers."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["Sunny with light wind.", "Cloudy all day.", "Rainy in the afternoon.", "Snow showers in the evening."],
+    ans: 3,
+    exp: "【英文】\nHere is your evening weather update. While tomorrow morning will stay mild and cloudy, cold mountain air will bring sudden snow showers starting around seven in the evening.\n\n【質問】What weather is expected tomorrow evening?\n（明日の夕方・夜はどんな天気が予想されますか？）\n\n【正解の訳】\n4. 突然のにわか雪。\n\n【解説】snow showers starting around seven in the evening と予報されています。",
+    explain: "【英文】\nHere is your evening weather update. While tomorrow morning will stay mild and cloudy, cold mountain air will bring sudden snow showers starting around seven in the evening.\n\n【質問】What weather is expected tomorrow evening?\n（明日の夕方・夜はどんな天気が予想されますか？）\n\n【正解の訳】\n4. 突然のにわか雪。\n\n【解説】snow showers starting around seven in the evening と予報されています。",
+    dialogue: [
+      { speaker: 'female', text: "Here is your evening weather update. While tomorrow morning will stay mild and cloudy, cold mountain air will bring sudden snow showers starting around seven in the evening." },
+      { speaker: 'narrator', text: "Question. What weather is expected tomorrow evening?" }
+    ],
+    aud_complete: "What weather is expected tomorrow evening? Snow showers in the evening."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["300 yen.", "500 yen.", "800 yen.", "1,000 yen."],
+    ans: 1,
+    exp: "【英文】\nWelcome to the modern art gallery. Special exhibition admission is 500 yen for teenagers and students, while standard adult tickets are 1,000 yen.\n\n【質問】How much is the admission fee for students?\n（学生の入場料はいくらですか？）\n\n【正解の訳】\n2. 500円。\n\n【解説】500 yen for teenagers and students と案内されています。",
+    explain: "【英文】\nWelcome to the modern art gallery. Special exhibition admission is 500 yen for teenagers and students, while standard adult tickets are 1,000 yen.\n\n【質問】How much is the admission fee for students?\n（学生の入場料はいくらですか？）\n\n【正解の訳】\n2. 500円。\n\n【解説】500 yen for teenagers and students と案内されています。",
+    dialogue: [
+      { speaker: 'male', text: "Welcome to the modern art gallery. Special exhibition admission is 500 yen for teenagers and students, while standard adult tickets are 1,000 yen." },
+      { speaker: 'narrator', text: "Question. How much is the admission fee for students?" }
+    ],
+    aud_complete: "How much is the admission fee for students? 500 yen."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["In Australia.", "In the United Kingdom.", "In New Zealand.", "In Canada."],
+    ans: 2,
+    exp: "【英文】\nDuring spring break, Maya participated in a high school homestay program in New Zealand. She stayed with a local farming family and learned how to shear wool from sheep.\n\n【質問】Where did Maya do her homestay program?\n（マヤはどこでホームステイプログラムを体験しましたか？）\n\n【正解の訳】\n3. ニュージーランドで。\n\n【解説】homestay program in New Zealand と述べています。",
+    explain: "【英文】\nDuring spring break, Maya participated in a high school homestay program in New Zealand. She stayed with a local farming family and learned how to shear wool from sheep.\n\n【質問】Where did Maya do her homestay program?\n（マヤはどこでホームステイプログラムを体験しましたか？）\n\n【正解の訳】\n3. ニュージーランドで。\n\n【解説】homestay program in New Zealand と述べています。",
+    dialogue: [
+      { speaker: 'female', text: "During spring break, Maya participated in a high school homestay program in New Zealand. She stayed with a local farming family and learned how to shear wool from sheep." },
+      { speaker: 'narrator', text: "Question. Where did Maya do her homestay program?" }
+    ],
+    aud_complete: "Where did Maya do her homestay program? In New Zealand."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["100 muffins.", "150 muffins.", "200 muffins.", "250 muffins."],
+    ans: 2,
+    exp: "【英文】\nAt the annual school charity fair, the baking club made fresh blueberry and banana muffins. They completely sold out all 200 muffins within two hours to support animal rescue.\n\n【質問】How many muffins did the baking club sell?\n（お菓子作り部はマフィンを何個完売させましたか？）\n\n【正解の訳】\n3. 200個。\n\n【解説】sold out all 200 muffins と述べています。",
+    explain: "【英文】\nAt the annual school charity fair, the baking club made fresh blueberry and banana muffins. They completely sold out all 200 muffins within two hours to support animal rescue.\n\n【質問】How many muffins did the baking club sell?\n（お菓子作り部はマフィンを何個完売させましたか？）\n\n【正解の訳】\n3. 200個。\n\n【解説】sold out all 200 muffins と述べています。",
+    dialogue: [
+      { speaker: 'male', text: "At the annual school charity fair, the baking club made fresh blueberry and banana muffins. They completely sold out all 200 muffins within two hours to support animal rescue." },
+      { speaker: 'narrator', text: "Question. How many muffins did the baking club sell?" }
+    ],
+    aud_complete: "How many muffins did the baking club sell? 200 muffins."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["At 4:30 p.m.", "At 5:00 p.m.", "At 5:30 p.m.", "At 6:00 p.m."],
+    ans: 1,
+    exp: "【英文】\nAttention library visitors. The main reading room will close at five o'clock today for regular maintenance. Please return all borrowed electronic equipment to the front counter by five.\n\n【質問】What time must visitors return electronic equipment?\n（来館者は何時までに電子機器を返却しなければなりませんか？）\n\n【正解の訳】\n2. 午後5時までに。\n\n【解説】return all borrowed electronic equipment... by five と案内されています。",
+    explain: "【英文】\nAttention library visitors. The main reading room will close at five o'clock today for regular maintenance. Please return all borrowed electronic equipment to the front counter by five.\n\n【質問】What time must visitors return electronic equipment?\n（来館者は何時までに電子機器を返却しなければなりませんか？）\n\n【正解の訳】\n2. 午後5時までに。\n\n【解説】return all borrowed electronic equipment... by five と案内されています。",
+    dialogue: [
+      { speaker: 'female', text: "Attention library visitors. The main reading room will close at five o'clock today for regular maintenance. Please return all borrowed electronic equipment to the front counter by five." },
+      { speaker: 'narrator', text: "Question. What time must visitors return electronic equipment?" }
+    ],
+    aud_complete: "What time must visitors return electronic equipment? At 5:00 p.m."
+  },
+  {
+    q: "音声を聞いて、質問に答えよう。",
+    sub: "🎧 実戦リスニング (短文読解)",
+    opt: ["On Friday evening.", "On Saturday night.", "On Sunday night.", "Next Friday."],
+    ans: 1,
+    exp: "【英文】\nDue to thick clouds expected on Friday, the high school astronomy club's monthly stargazing observation event has been moved to Saturday night when skies will be clear.\n\n【質問】When will the stargazing event take place?\n（天体観測イベントはいつ開催されますか？）\n\n【正解の訳】\n2. 土曜日の夜に。\n\n【解説】moved to Saturday night と案内されています。",
+    explain: "【英文】\nDue to thick clouds expected on Friday, the high school astronomy club's monthly stargazing observation event has been moved to Saturday night when skies will be clear.\n\n【質問】When will the stargazing event take place?\n（天体観測イベントはいつ開催されますか？）\n\n【正解の訳】\n2. 土曜日の夜に。\n\n【解説】moved to Saturday night と案内されています。",
+    dialogue: [
+      { speaker: 'male', text: "Due to thick clouds expected on Friday, the high school astronomy club's monthly stargazing observation event has been moved to Saturday night when skies will be clear." },
+      { speaker: 'narrator', text: "Question. When will the stargazing event take place?" }
+    ],
+    aud_complete: "When will the stargazing event take place? On Saturday night."
+  }
+];
