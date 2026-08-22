@@ -1,6 +1,6 @@
 // ==========================================
 // 英検準2級 マジカルクエスト 〜星詠みの魔法学園〜
-// ゲーム進行・ロジックファイル (app.js) - 完全修正版
+// ゲーム進行・ロジックファイル (app.js) - デイリー動的難易度調整版
 // ==========================================
 
 // ==================== 音声読み上げエンジン ====================
@@ -443,9 +443,8 @@ function updateUiState() {
     setText('equipAuraIcon', auraEquip ? auraEquip.icon : '');
   }
 
-  // 🎯 2026年10月4日 試験日カウントダウン
   try {
-    const examDate = new Date(2026, 9, 4); // 月は0始まり(9 = 10月)
+    const examDate = new Date(2026, 9, 4);
     const today = new Date();
     today.setHours(0,0,0,0);
     examDate.setHours(0,0,0,0);
@@ -706,7 +705,7 @@ function showBossDialogueModal(title, icon, text, onConfirm) {
   }
 }
 
-// ==================== ボス選択 & バトル開始（不具合完全修正版） ====================
+// ==================== ボス選択 & バトル開始 ====================
 function openBossSelectModal() {
   initAudio();
   stopBattleTimers();
@@ -811,7 +810,6 @@ function startBossBattleWithStage(lv) {
     };
   });
 
-  // 初回エンカウント時の演出ダイアログ
   if (!userData.bossSeenIntros.includes(stage.lv) && stage.introMsg) {
     userData.bossSeenIntros.push(stage.lv);
     saveData();
@@ -948,7 +946,7 @@ function renderVocabBook() {
   });
 }
 
-// ==================== バトルセッション管理 ====================
+// ==================== バトルセッション管理（デイリー動的難易度調整） ====================
 let currentQueue = [];
 let currentIndex = 0;
 let currentMode = '';
@@ -1090,10 +1088,10 @@ function startSession() {
     enemyCurHp = currentBossStage.hp;
     enemyAtk = currentBossStage.atk;
   } else if (isDailyCurrentSession) {
-    if (currentMode === 'vocab') { enemyMaxHp = 600; enemyAtk = 18; }
-    else if (currentMode === 'grammar') { enemyMaxHp = 400; enemyAtk = 22; }
-    else if (currentMode === 'listening') { enemyMaxHp = 350; enemyAtk = 22; }
-    else { enemyMaxHp = 500; enemyAtk = 20; }
+    // ⚔️ デイリーミッション動的難易度調整（問数・攻撃力・最大HPに応じてなんとか倒せる絶妙バランスに設定）
+    const qCount = currentQueue.length || (currentMode === 'vocab' ? 5 : 3);
+    enemyMaxHp = Math.round(pStats.atk * qCount * 1.25);
+    enemyAtk = Math.max(15, Math.round(playerMaxHp * 0.38));
     enemyCurHp = enemyMaxHp;
   } else if (currentMode === 'weakBattle') {
     enemyMaxHp = 800;
@@ -1120,7 +1118,7 @@ function startSession() {
     enemyCurHp = enemyMaxHp;
   }
 
-  // 画面の確実な切り替え（ホーム画面を確実に隠す）
+  // 画面の確実な切り替え
   hideAllViews();
   document.getElementById('viewQuiz').classList.remove('hidden');
 
