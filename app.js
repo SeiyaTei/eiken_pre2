@@ -686,35 +686,27 @@ function startWeakBattle() {
 
 // ==================== ボス専用ダイアログ表示エンジン ====================
 function showBossDialogueModal(title, icon, text, onConfirm) {
-  let modal = document.getElementById('modalBossDialogue');
-  if (!modal) {
-    modal = document.createElement('div');
-    modal.id = 'modalBossDialogue';
-    modal.className = "fixed inset-0 bg-black/90 z-50 p-3 flex items-center justify-center";
-    document.body.appendChild(modal);
+  const modal = document.getElementById('modalBossDialogue');
+  const titleEl = document.getElementById('bossDialogueTitle');
+  const iconEl = document.getElementById('bossDialogueIcon');
+  const textEl = document.getElementById('bossDialogueText');
+  const btn = document.getElementById('btnBossDialogueNext');
+
+  if (titleEl) titleEl.innerText = title;
+  if (iconEl) iconEl.innerText = icon;
+  if (textEl) textEl.innerText = text;
+
+  if (modal) modal.classList.remove('hidden');
+
+  if (btn) {
+    btn.onclick = () => {
+      if (modal) modal.classList.add('hidden');
+      if (onConfirm) onConfirm();
+    };
   }
-
-  modal.innerHTML = `
-    <div class="max-w-sm w-full bg-gradient-to-b from-[#25174f] via-[#1a1038] to-[#120a28] border-2 border-pink-400/80 rounded-3xl p-4 shadow-2xl text-center space-y-3 glow-gold">
-      <div class="text-4xl animate-bounce">${icon}</div>
-      <div class="text-xs font-black text-pink-300 tracking-wider truncate">${title}</div>
-      <div class="bg-[#110a24]/90 p-3 rounded-2xl border border-purple-500/30 text-[11px] text-purple-100 leading-relaxed text-left font-medium whitespace-pre-line break-words max-h-48 overflow-y-auto">
-        ${text}
-      </div>
-      <button id="btnBossDialogueNext" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:brightness-110 text-white font-black py-2 rounded-xl text-xs shadow-xl transition active:scale-95">
-        進む 🌸
-      </button>
-    </div>
-  `;
-
-  modal.classList.remove('hidden');
-  document.getElementById('btnBossDialogueNext').onclick = () => {
-    modal.classList.add('hidden');
-    if (onConfirm) onConfirm();
-  };
 }
 
-// ==================== ボス選択 & バトル開始（不具合修正版） ====================
+// ==================== ボス選択 & バトル開始（不具合完全修正版） ====================
 function openBossSelectModal() {
   initAudio();
   stopBattleTimers();
@@ -1128,7 +1120,7 @@ function startSession() {
     enemyCurHp = enemyMaxHp;
   }
 
-  // 画面の確実な切り替え（不具合防止）
+  // 画面の確実な切り替え（ホーム画面を確実に隠す）
   hideAllViews();
   document.getElementById('viewQuiz').classList.remove('hidden');
 
@@ -1844,7 +1836,7 @@ function buyItem(type, price) {
 
 // ==================== 画面表示切替 ＆ ナビゲーション ====================
 function hideAllViews() {
-  ['viewHome', 'viewQuiz', 'viewResult', 'viewShop', 'viewParent', 'viewBook', 'viewWeakBook', 'modalBossSelect', 'modalNormalSelect', 'quizFeedback'].forEach(id => {
+  ['viewHome', 'viewQuiz', 'viewResult', 'viewShop', 'viewParent', 'viewBook', 'viewWeakBook', 'modalBossSelect', 'modalNormalSelect', 'modalBossDialogue', 'quizFeedback'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add('hidden');
   });
