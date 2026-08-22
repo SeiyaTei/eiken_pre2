@@ -30,7 +30,7 @@ const SHOP_EQUIP_DATA = [
   { id: 'hat_starlight_crown', name: '星詠みのプリンセス冠', type: 'hat', icon: '👑', price: 550, rank: '🟡 レジェンド', val: 3500, desc: 'HP +3500 / 学園の優等生' },
   { id: 'hat_aurora_veil', name: '極光のヴェール', type: 'hat', icon: '🧕', price: 800, rank: '🟡 レジェンド', val: 5000, desc: 'HP +5000 / 天空の守護' },
   { id: 'hat_crystal_tiara', name: '神話のダイヤティアラ', type: 'hat', icon: '💎', price: 1200, rank: '🌈 ゴッド', val: 8000, desc: 'HP +8000 / 準2級完全制覇' },
-  { id: ''hat_dragon_crown', name: '星光の聖冠', type: 'hat', icon: '🦄👑', price: 9999, rank: '🎁 ボス限定ドロップ', val: 12000, desc: 'HP +12000 / 神獣の加護 (Lv.60以上)', reqLv: 60 },
+  { id: 'hat_dragon_crown', name: '星光の聖冠', type: 'hat', icon: '🦄👑', price: 9999, rank: '🎁 ボス限定ドロップ', val: 12000, desc: 'HP +12000 / 神獣の加護 (Lv.60以上)', reqLv: 60 },
   // 👑 完全隠し最強頭装備
   { id: 'hat_genesis_crown', name: '創世神の王冠', type: 'hat', icon: '👑✨🌌', price: 99999, rank: '🌌 創世神話級', val: 25000, desc: 'HP +25000 / 全次元を統べる神の王冠 (Lv.60以上)', reqLv: 60, isSecret: true },
 
