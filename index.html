@@ -4,476 +4,701 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>英検準2級 マジカルクエスト 〜星詠みの魔法学園〜</title>
+  
+  <!-- PWA アプリ化設定 -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1b143a">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/5260/5260505.png">
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @keyframes pastelGlow {
-      0%, 100% { box-shadow: 0 0 15px rgba(236, 72, 153, 0.35), 0 0 5px rgba(168, 85, 247, 0.3); }
-      50% { box-shadow: 0 0 25px rgba(244, 114, 182, 0.65), 0 0 12px rgba(192, 132, 252, 0.6); }
+    @keyframes bounce-slow {
+      0%, 100% { transform: translateY(-4%); }
+      50% { transform: translateY(4%); }
     }
-    @keyframes critHeart {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      20% { transform: translate(-3px, 3px) scale(1.06); }
-      40% { transform: translate(3px, -3px) scale(1.06); }
-      60% { transform: translate(-2px, -2px) scale(1.03); }
-      80% { transform: translate(2px, 2px) scale(1.03); }
+    .animate-bounce-slow { animation: bounce-slow 2.2s infinite ease-in-out; }
+    
+    @keyframes pulse-magic {
+      0%, 100% { box-shadow: 0 0 15px rgba(244, 114, 182, 0.4), 0 0 5px rgba(192, 132, 252, 0.3); }
+      50% { box-shadow: 0 0 25px rgba(244, 114, 182, 0.8), 0 0 12px rgba(192, 132, 252, 0.6); }
     }
-    .glow-magic { animation: pastelGlow 2.5s infinite ease-in-out; }
-    .crit-active { animation: critHeart 0.35s ease-in-out; }
-    .damage-popup {
-      position: absolute;
-      top: 35%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      animation: popUp 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
-      z-index: 50;
+    .glow-gold { animation: pulse-magic 2s infinite; }
+    
+    @keyframes pulse-pink {
+      0%, 100% { box-shadow: 0 0 15px rgba(236, 72, 153, 0.5); }
+      50% { box-shadow: 0 0 25px rgba(244, 114, 182, 0.9); }
     }
-    @keyframes popUp {
-      0% { opacity: 0; transform: translate(-50%, 10px) scale(0.6); }
-      30% { opacity: 1; transform: translate(-50%, -25px) scale(1.15); }
-      100% { opacity: 0; transform: translate(-50%, -55px) scale(0.95); }
+    .glow-red { animation: pulse-pink 1.5s infinite; }
+    
+    @keyframes fever-magic-rainbow {
+      0% { border-color: #f472b6; box-shadow: 0 0 20px #f472b6; }
+      25% { border-color: #c084fc; box-shadow: 0 0 20px #c084fc; }
+      50% { border-color: #818cf8; box-shadow: 0 0 20px #818cf8; }
+      75% { border-color: #38bdf8; box-shadow: 0 0 20px #38bdf8; }
+      100% { border-color: #fb7185; box-shadow: 0 0 20px #fb7185; }
     }
-    .fever-magic {
-      animation: pastelGlow 1.2s infinite alternate;
-      border-color: #f472b6 !important;
+    .fever-active { animation: fever-magic-rainbow 1.5s infinite linear; }
+    
+    @keyframes pop-damage {
+      0% { transform: scale(0.5) translateY(0); opacity: 0; }
+      50% { transform: scale(1.2) translateY(-14px); opacity: 1; }
+      100% { transform: scale(1) translateY(-28px); opacity: 0; }
     }
+    .damage-popup { animation: pop-damage 0.8s ease-out forwards; }
+    
+    @keyframes screen-shake {
+      0%, 100% { transform: translate(0, 0); }
+      20% { transform: translate(-3px, 3px); }
+      40% { transform: translate(3px, -2px); }
+      60% { transform: translate(-3px, -3px); }
+      80% { transform: translate(3px, 2px); }
+    }
+    .animate-shake { animation: screen-shake 0.4s infinite; }
   </style>
 </head>
-<body class="bg-gradient-to-b from-[#131127] via-[#1a153a] to-[#0d0a1a] text-slate-100 min-h-screen font-sans select-none flex flex-col justify-between pb-20">
+<body class="bg-[#120d2b] text-slate-100 min-h-screen pb-24 font-sans selection:bg-pink-400 selection:text-purple-950 select-none">
 
-  <!-- ヘッダー -->
-  <header class="bg-[#1e1742]/90 backdrop-blur border-b border-pink-500/30 px-4 py-2.5 sticky top-0 z-40 flex items-center justify-between shadow-lg">
-    <div class="flex items-center gap-2">
-      <span class="text-2xl animate-pulse">✨🔮</span>
-      <div>
-        <h1 class="text-xs font-black bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-200 bg-clip-text text-transparent tracking-wide">英検準2級 マジカルクエスト</h1>
-        <div class="text-[9px] text-pink-200/70 flex items-center gap-1">
-          <span>本番まであと</span><strong id="countdownDays" class="text-pink-300 font-black">-- 日</strong>
+  <!-- ヘッダー / ステータスバー -->
+  <header class="bg-[#1b143a]/90 backdrop-blur border-b border-purple-500/30 sticky top-0 z-40 px-3 py-2">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-1.5">
+        <span class="text-2xl animate-pulse">✨🔮</span>
+        <div>
+          <h1 class="text-[9px] font-black tracking-wider text-pink-300 uppercase">Eiken Pre-2 Magical Quest</h1>
+          <div class="text-xs font-black text-white flex items-center gap-1">
+            星詠みの修練 <span id="headerLevel" class="text-[10px] bg-gradient-to-r from-pink-500 to-purple-500 text-white px-1.5 py-0.2 rounded-full font-black shadow">Lv.1</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="flex items-center gap-2">
-      <button id="btnSpeedToggle" onclick="toggleVoiceSpeed()" class="bg-purple-950/80 border border-purple-400/40 px-2 py-1 rounded-full text-[10px] font-bold text-purple-200 hover:bg-purple-900 transition">🗣️ ゆっくり</button>
-      <button id="btnBgmToggle" onclick="toggleBGM()" class="bg-purple-950/80 border border-purple-500/40 px-2 py-1 rounded-full text-[10px] font-bold text-slate-300 transition">🎵 OFF</button>
-      <div class="bg-gradient-to-r from-pink-950 to-purple-950 border border-pink-400/60 px-2.5 py-1 rounded-full text-xs font-black text-pink-300 flex items-center gap-1 shadow-md">
-        <span>💎</span><span id="gemCount">10</span>
+      
+      <div class="flex items-center gap-1.5 text-xs">
+        <button id="btnSpeedToggle" onclick="toggleVoiceSpeed()" class="bg-[#2a1e54] border border-purple-400/40 px-2 py-1 rounded-full text-[10px] font-bold text-pink-200 hover:bg-[#382870] transition">
+          🗣️ ゆっくり
+        </button>
+        <button id="btnBgmToggle" onclick="toggleBGM()" class="bg-[#2a1e54] border border-purple-400/40 px-2 py-1 rounded-full text-[10px] font-bold text-slate-300 transition">
+          🎵 OFF
+        </button>
+        <div class="bg-[#130c26]/90 border border-purple-500/40 px-2 py-1 rounded-full text-[10px] font-bold text-amber-300">
+          🌸 <span id="streakCount">1</span>日
+        </div>
+        <div class="bg-[#130c26]/90 border border-pink-500/40 px-2 py-1 rounded-full text-[10px] font-bold text-pink-300">
+          💎 <span id="gemCount">0</span>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- メインコンテンツ -->
-  <main class="flex-1 max-w-md w-full mx-auto p-4 space-y-4">
+  <!-- メイン画面コンテナ -->
+  <main class="max-w-md mx-auto p-4 space-y-4">
 
-    <!-- 1. ホーム画面 -->
+    <!-- ==================== 1. ホーム画面 ==================== -->
     <div id="viewHome" class="space-y-4">
       
-      <!-- ステータスカード -->
-      <div class="bg-gradient-to-b from-[#241a4f] via-[#1d1640] to-[#140e2d] border-2 border-pink-400/40 rounded-3xl p-4 shadow-xl relative overflow-hidden glow-magic">
-        <div class="flex items-center justify-between mb-2">
-          <div class="flex items-center gap-3">
-            <span id="heroAvatar" class="text-5xl drop-shadow-md">🐱✨</span>
-            <div>
-              <div class="flex items-center gap-1.5 flex-wrap">
-                <span id="headerLevel" class="text-[11px] font-black bg-gradient-to-r from-pink-500 to-purple-500 text-white px-2.5 py-0.5 rounded-full shadow">Lv.1</span>
-                <span id="heroRank" class="text-[10px] font-bold text-pink-300">星詠みの見習い生</span>
-              </div>
-              <div id="heroName" class="text-sm font-black text-white mt-0.5">ルナ・ステラ</div>
+      <!-- 相棒モンスター & レベル & ステータス -->
+      <div class="bg-gradient-to-br from-[#2b1b59] via-[#1f1542] to-[#160d33] border-2 border-pink-400/50 rounded-3xl p-4 shadow-2xl relative overflow-hidden glow-gold">
+        <div class="flex items-center gap-4">
+          <div class="relative flex-shrink-0">
+            <div id="heroAvatarContainer" class="w-24 h-24 rounded-3xl bg-[#110a24]/80 border-2 border-pink-400 flex items-center justify-center text-3xl shadow-inner animate-bounce-slow relative overflow-visible">
+              <span id="equipAuraIcon" class="absolute inset-0 flex items-center justify-center text-5xl opacity-75 pointer-events-none scale-125 z-0"></span>
+              <span id="equipHatIcon" class="absolute -top-3.5 z-20 text-2xl drop-shadow"></span>
+              <span id="heroAvatar" class="z-10 text-4xl">🐱✨</span>
+              <span id="equipWeaponIcon" class="absolute -right-2.5 bottom-0 z-20 text-2xl drop-shadow"></span>
+            </div>
+            <span id="heroRank" class="absolute -bottom-2 -right-1 text-[9px] font-black bg-gradient-to-r from-pink-500 to-purple-500 text-white px-2 py-0.5 rounded-full shadow z-30 whitespace-nowrap">
+              星詠みの見習い生
+            </span>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-baseline mb-1">
+              <h2 id="heroName" class="font-black text-base text-white truncate">ルナ・ステラ</h2>
+              <span id="levelLabel" class="text-xs font-black text-pink-300">Lv.1</span>
+            </div>
+            <div class="w-full bg-[#110a24] rounded-full h-3 border border-purple-500/40 overflow-hidden mb-1">
+              <div id="expBar" class="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-300 h-full w-0 transition-all duration-500"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-purple-200 font-bold mb-2">
+              <span>まほう力 (EXP)</span>
+              <span id="expText">0 / 100</span>
+            </div>
+
+            <!-- RPG ステータスパラメータ -->
+            <div class="grid grid-cols-3 gap-1 text-[9.5px] font-black bg-[#110a24]/90 p-1.5 rounded-xl border border-purple-500/30 text-center">
+              <div class="text-pink-300">🪄攻 <span id="statAtkVal">31</span></div>
+              <div class="text-purple-300">💖HP <span id="statHpVal">135</span></div>
+              <div class="text-amber-300">⚡速 <span id="statSpdVal">5</span></div>
             </div>
           </div>
-          <div class="text-right bg-purple-950/60 border border-pink-500/30 px-2.5 py-1.5 rounded-2xl">
-            <div class="text-[8.5px] text-pink-200/80">連続ログイン</div>
-            <div class="text-xs font-black text-amber-300"><span id="streakCount">1</span> 日連続 🌸</div>
-          </div>
         </div>
 
-        <!-- 装備スロット -->
-        <div class="flex gap-2 my-2.5 bg-[#120c29]/80 p-2 rounded-2xl border border-purple-500/30">
-          <div class="flex-1 flex items-center gap-1 text-[10px] text-purple-200"><span id="equipHatIcon" class="text-base">🎀</span><span class="truncate">ティアラなし</span></div>
-          <div class="flex-1 flex items-center gap-1 text-[10px] text-purple-200"><span id="equipWeaponIcon" class="text-base">🪄</span><span class="truncate">ロッドなし</span></div>
-          <div class="flex-1 flex items-center gap-1 text-[10px] text-purple-200"><span id="equipAuraIcon" class="text-base">🌸</span><span class="truncate">オーラなし</span></div>
-        </div>
-
-        <!-- EXPバー -->
-        <div class="space-y-1">
-          <div class="flex justify-between text-[9px] font-bold text-purple-200">
-            <span>まほう力 (EXP)</span>
-            <span id="expText">0 / 100</span>
-          </div>
-          <div class="w-full bg-[#120d29] h-2.5 rounded-full overflow-hidden border border-purple-500/30">
-            <div id="expBar" class="bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-300 h-full w-0 transition-all duration-300"></div>
-          </div>
-        </div>
-
-        <!-- パラメータ -->
-        <div class="grid grid-cols-3 gap-2 mt-3 pt-2.5 border-t border-purple-500/20 text-center">
-          <div class="bg-pink-950/40 p-1.5 rounded-2xl border border-pink-500/30">
-            <span class="text-[9px] text-pink-300 block font-bold">🪄 攻撃力</span>
-            <span id="statAtkVal" class="font-black text-sm text-pink-200">35</span>
-          </div>
-          <div class="bg-purple-950/40 p-1.5 rounded-2xl border border-purple-500/30">
-            <span class="text-[9px] text-purple-300 block font-bold">💖 HP</span>
-            <span id="statHpVal" class="font-black text-sm text-purple-200">180</span>
-          </div>
-          <div class="bg-amber-950/40 p-1.5 rounded-2xl border border-amber-500/30">
-            <span class="text-[9px] text-amber-300 block font-bold">🌟 すばやさ</span>
-            <span id="statSpdVal" class="font-black text-sm text-amber-200">10</span>
-          </div>
+        <!-- 試験までのカウントダウン -->
+        <div class="mt-3 pt-2.5 border-t border-purple-500/30 flex justify-between items-center text-xs">
+          <span class="text-purple-200">🎯 英検準2級 試験本番まで あと</span>
+          <span id="countdownDays" class="font-black text-pink-300 text-sm">-- 日</span>
         </div>
       </div>
 
-      <!-- デイリー3大修練 -->
-      <div class="bg-gradient-to-b from-[#201845] to-[#171133] border border-pink-500/30 rounded-3xl p-4 space-y-3 shadow-lg">
+      <!-- 👑 過去問ボスバトル巨大カード -->
+      <div class="bg-gradient-to-r from-[#42174a] via-[#2d123d] to-[#180a2b] border-2 border-pink-500/80 rounded-3xl p-4 shadow-2xl glow-red relative overflow-hidden">
+        <div class="flex items-center justify-between">
+          <div class="min-w-0 flex-1 mr-2">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[9px] font-black bg-pink-600 text-white px-2 py-0.5 rounded-full uppercase tracking-wider">BOSS BATTLE</span>
+              <span id="bossCurrentProgressBadge" class="text-[9px] font-black bg-gradient-to-r from-pink-400 to-purple-400 text-purple-950 px-2 py-0.5 rounded-full">Lv.1 解放中</span>
+            </div>
+            <h3 class="text-base font-black text-pink-300 mt-1 flex items-center gap-1.5 truncate">
+              👑 準2級 過去問ボス討伐
+            </h3>
+            <p class="text-[10px] text-purple-200 mt-0.5">本物の準2級過去問10問で討伐！Lv.10神獣を目指そう！</p>
+          </div>
+          <button onclick="openBossSelectModal()" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:brightness-110 text-white font-black px-4 py-3 rounded-2xl text-xs shadow-lg transition active:scale-95 flex flex-col items-center flex-shrink-0">
+            <span class="text-xl">🦄</span>
+            <span class="whitespace-nowrap">ボス選択</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 今日の3大デイリークエスト -->
+      <div class="bg-gradient-to-br from-[#24174d] via-[#1c123d] to-[#120a2b] border-2 border-pink-500/50 rounded-3xl p-4 shadow-xl space-y-3">
         <div class="flex justify-between items-center">
-          <h2 class="text-xs font-black text-pink-300 flex items-center gap-1.5">
-            <span>🌸</span><span>本日のデイリー修練</span>
-          </h2>
-          <span id="dailyProgressText" class="text-[10px] font-bold bg-purple-950 text-pink-300 px-2 py-0.5 rounded-full border border-pink-500/40">0 / 3 完了</span>
+          <div>
+            <h3 class="font-black text-sm text-pink-300 flex items-center gap-1.5">
+              🌸 本日の限定デイリー修練
+            </h3>
+            <p class="text-[9.5px] text-purple-200">1日各1回限定！敵を撃破して大量ボーナス獲得</p>
+          </div>
+          <span id="dailyProgressText" class="text-xs bg-[#110a24] px-2.5 py-0.5 rounded-full border border-purple-500/40 text-pink-300 font-bold whitespace-nowrap">0 / 3</span>
         </div>
-        <div class="space-y-2">
-          <!-- 単語 -->
-          <div class="bg-[#120d2b]/80 p-2.5 rounded-2xl border border-purple-500/20 flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-              <span class="text-2xl">📖</span>
-              <div>
-                <div class="text-xs font-black text-white">準2級コア単語 (5問)</div>
-                <div class="text-[9px] text-pink-300 font-bold">+50 EXP / 💎+15</div>
+
+        <div class="space-y-2 text-xs">
+          <!-- デイリー単語 -->
+          <div id="questCardVocab" class="bg-[#120a26]/90 border border-purple-500/30 p-2.5 rounded-2xl flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0 flex-1">
+              <span class="text-xl flex-shrink-0">📖</span>
+              <div class="min-w-0">
+                <div class="font-bold text-slate-200 truncate">準2級コア単語 5問特訓</div>
+                <div class="text-[10px] text-pink-300 font-semibold">+50 EXP / 💎+15</div>
               </div>
             </div>
-            <div id="questActionVocab"></div>
+            <div id="questActionVocab" class="flex-shrink-0">
+              <button onclick="startDailyQuest('vocab', 5)" class="bg-gradient-to-r from-pink-500 to-purple-500 hover:brightness-110 text-white font-black px-3.5 py-1.5 rounded-xl text-xs shadow transition active:scale-95 whitespace-nowrap">挑戦</button>
+            </div>
           </div>
-          <!-- 文法 -->
-          <div class="bg-[#120d2b]/80 p-2.5 rounded-2xl border border-purple-500/20 flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-              <span class="text-2xl">🪄</span>
-              <div>
-                <div class="text-xs font-black text-white">高校文法・語法 (3問)</div>
-                <div class="text-[9px] text-purple-300 font-bold">+60 EXP / 💎+20</div>
+
+          <!-- デイリー文法 -->
+          <div id="questCardGrammar" class="bg-[#120a26]/90 border border-purple-500/30 p-2.5 rounded-2xl flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0 flex-1">
+              <span class="text-xl flex-shrink-0">🪄</span>
+              <div class="min-w-0">
+                <div class="font-bold text-slate-200 truncate">高校文法・語法 3問特訓</div>
+                <div class="text-[10px] text-pink-300 font-semibold">+60 EXP / 💎+20</div>
               </div>
             </div>
-            <div id="questActionGrammar"></div>
+            <div id="questActionGrammar" class="flex-shrink-0">
+              <button onclick="startDailyQuest('grammar', 3)" class="bg-gradient-to-r from-pink-500 to-purple-500 hover:brightness-110 text-white font-black px-3.5 py-1.5 rounded-xl text-xs shadow transition active:scale-95 whitespace-nowrap">挑戦</button>
+            </div>
           </div>
-          <!-- リスニング -->
-          <div class="bg-[#120d2b]/80 p-2.5 rounded-2xl border border-purple-500/20 flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-              <span class="text-2xl">🎧</span>
-              <div>
-                <div class="text-xs font-black text-white">実戦リスニング (3問)</div>
-                <div class="text-[9px] text-indigo-300 font-bold">+80 EXP / 💎+25</div>
+
+          <!-- デイリーリスニング -->
+          <div id="questCardListening" class="bg-[#120a26]/90 border border-purple-500/30 p-2.5 rounded-2xl flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0 flex-1">
+              <span class="text-xl flex-shrink-0">🎧</span>
+              <div class="min-w-0">
+                <div class="font-bold text-slate-200 truncate">実戦リスニング 3問特訓</div>
+                <div class="text-[10px] text-pink-300 font-semibold">+80 EXP / 💎+25</div>
               </div>
             </div>
-            <div id="questActionListening"></div>
+            <div id="questActionListening" class="flex-shrink-0">
+              <button onclick="startDailyQuest('listening', 3)" class="bg-gradient-to-r from-pink-500 to-purple-500 hover:brightness-110 text-white font-black px-3.5 py-1.5 rounded-xl text-xs shadow transition active:scale-95 whitespace-nowrap">挑戦</button>
+            </div>
           </div>
         </div>
 
-        <!-- デイリー完全制覇ボーナス -->
-        <div id="dailyBonusArea" class="hidden">
-          <button onclick="claimDailyAllBonus()" class="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 hover:brightness-110 text-white font-black py-2.5 rounded-2xl text-xs shadow-xl transition active:scale-95 animate-bounce flex items-center justify-center gap-1.5">
-            <span>🎁</span><span>3大デイリー完全制覇ボーナスを受け取る！ (💎+50 / +150 EXP)</span>
+        <div id="dailyBonusArea" class="hidden pt-1">
+          <button onclick="claimDailyAllBonus()" class="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white font-black py-2.5 rounded-2xl text-xs shadow-lg glow-gold flex items-center justify-center gap-1.5 transition active:scale-95 animate-bounce">
+            <span>🎁 3大デイリー全制覇ボーナス受取！</span>
+            <span class="bg-[#110a24] text-pink-300 text-[10px] px-2 py-0.5 rounded-full font-bold">+150 EXP / 💎+50</span>
           </button>
         </div>
-        <div id="dailyBonusClaimedArea" class="hidden text-center py-1">
-          <span class="text-[10px] font-bold text-pink-300 bg-pink-950/60 px-3 py-1 rounded-full border border-pink-500/40">🌸 本日のデイリーボーナス獲得済み！</span>
+        <div id="dailyBonusClaimedArea" class="hidden text-center text-[10px] font-bold text-pink-300 pt-1">
+          🌸 本日のデイリーミッション＆全制覇ボーナス獲得済み！また明日挑戦しよう！
         </div>
       </div>
 
-      <!-- ボス討伐 & 通常特訓 -->
-      <div class="grid grid-cols-2 gap-3">
-        <button onclick="openBossSelectModal()" class="bg-gradient-to-b from-purple-900/90 via-[#26164d] to-[#180e33] hover:brightness-110 border-2 border-pink-500/70 p-3.5 rounded-3xl text-left shadow-xl transition active:scale-95 space-y-1">
-          <div class="text-3xl">👑🦄</div>
-          <div class="text-xs font-black text-pink-300">過去問ボス討伐</div>
-          <div id="bossCurrentProgressBadge" class="text-[9.5px] font-bold text-pink-200/80">Lv.1 解放中</div>
-        </button>
-        <button onclick="openNormalQuestSelect('vocab')" class="bg-gradient-to-b from-indigo-900/90 via-[#1f1b4d] to-[#120f33] hover:brightness-110 border-2 border-purple-500/70 p-3.5 rounded-3xl text-left shadow-xl transition active:scale-95 space-y-1">
-          <div class="text-3xl">🪄⚔️</div>
-          <div class="text-xs font-black text-purple-300">通常特訓サイクル</div>
-          <div id="rotationProgressBadge" class="text-[9.5px] font-bold text-purple-200/80">0/3 完了</div>
-        </button>
+      <!-- 通常特訓コース（サイクル制・ローテーション仕様） -->
+      <div class="bg-[#1a123a]/80 border border-purple-500/40 rounded-3xl p-4 space-y-3">
+        <div class="flex justify-between items-baseline px-1">
+          <div>
+            <h3 class="font-black text-xs text-pink-300 flex items-center gap-1">
+              ⚔️ 通常特訓サイクル（各1回 ➔ にがて討伐で復活）
+            </h3>
+            <p class="text-[9.5px] text-purple-200">3分野を1回ずつクリアして「にがて討伐」を解禁しよう！</p>
+          </div>
+          <span id="rotationProgressBadge" class="text-[10px] bg-[#110a24] text-pink-300 font-bold px-2 py-0.5 rounded-full border border-purple-500/40">0/3完了</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <button id="btnRotVocab" onclick="openNormalQuestSelect('vocab')" class="bg-gradient-to-br from-indigo-700/90 to-purple-800/90 p-3 rounded-2xl border border-purple-400/30 text-left shadow transition active:scale-95 relative overflow-hidden">
+            <div class="flex justify-between items-start">
+              <div class="text-xl mb-0.5">📚</div>
+              <span id="badgeRotVocab" class="text-[9px] font-bold bg-[#110a24] text-pink-300 px-1.5 py-0.2 rounded border border-purple-500/40">未挑戦</span>
+            </div>
+            <div class="font-black text-xs text-white">単語・熟語</div>
+            <div class="text-[9px] text-purple-200 mt-0.5">ランダム10問</div>
+          </button>
+
+          <button id="btnRotGrammar" onclick="openNormalQuestSelect('grammar')" class="bg-gradient-to-br from-purple-700/90 to-pink-800/90 p-3 rounded-2xl border border-pink-400/30 text-left shadow transition active:scale-95 relative overflow-hidden">
+            <div class="flex justify-between items-start">
+              <div class="text-xl mb-0.5">🪄</div>
+              <span id="badgeRotGrammar" class="text-[9px] font-bold bg-[#110a24] text-pink-300 px-1.5 py-0.2 rounded border border-purple-500/40">未挑戦</span>
+            </div>
+            <div class="font-black text-xs text-white">文法・語法</div>
+            <div class="text-[9px] text-pink-200 mt-0.5">大問1&2対策 5問</div>
+          </button>
+
+          <button id="btnRotListening" onclick="openNormalQuestSelect('listening')" class="bg-gradient-to-br from-pink-700/90 to-purple-900/90 p-3 rounded-2xl border border-purple-400/30 text-left shadow transition active:scale-95 relative overflow-hidden">
+            <div class="flex justify-between items-start">
+              <div class="text-xl mb-0.5">🎧</div>
+              <span id="badgeRotListening" class="text-[9px] font-bold bg-[#110a24] text-pink-300 px-1.5 py-0.2 rounded border border-purple-500/40">未挑戦</span>
+            </div>
+            <div class="font-black text-xs text-white">リスニング</div>
+            <div class="text-[9px] text-purple-200 mt-0.5">対話・短文 3問</div>
+          </button>
+
+          <button id="btnRotWeakBattle" onclick="startWeakBattle()" class="bg-gradient-to-br from-rose-700/90 to-pink-800/90 p-3 rounded-2xl border border-rose-400/30 text-left shadow transition active:scale-95 relative overflow-hidden">
+            <div class="flex justify-between items-start">
+              <div class="text-xl mb-0.5">👾</div>
+              <span id="badgeRotWeak" class="text-[9px] font-bold bg-rose-950 text-rose-200 px-1.5 py-0.2 rounded border border-rose-600">🔒 ロック中</span>
+            </div>
+            <div class="font-black text-xs text-white">にがて討伐バトル</div>
+            <div class="text-[9px] text-rose-200 mt-0.5">勝つと全特訓リセット！</div>
+          </button>
+        </div>
       </div>
 
-      <!-- 通常特訓サイクルボタン群 -->
-      <div class="bg-[#171133] border border-purple-500/30 p-3.5 rounded-3xl space-y-2.5">
-        <div class="text-[11px] font-black text-purple-200 flex items-center justify-between">
-          <span>💫 特訓サイクル（3種クリアで「にがて討伐」解放）</span>
+    </div>
+
+    <!-- ==================== ⚔️ 通常クエスト難易度選択モーダル ==================== -->
+    <div id="modalNormalSelect" class="hidden fixed inset-0 bg-[#0d0720]/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+      <div class="bg-gradient-to-b from-[#25174f] to-[#140c2b] border-2 border-purple-400/80 rounded-3xl p-4 w-full max-w-md flex flex-col shadow-2xl space-y-3">
+        <div class="flex justify-between items-center border-b border-purple-500/30 pb-2">
+          <div>
+            <h3 id="normalSelectTitle" class="font-black text-sm text-pink-300">
+              ⚔️ 特訓難易度の選択
+            </h3>
+            <p class="text-[10px] text-purple-200">相棒の魔法力に合わせて難易度を選ぼう！</p>
+          </div>
+          <button onclick="closeNormalQuestSelect()" class="text-slate-400 hover:text-white text-lg font-bold px-2 py-0.5 bg-[#110a24] rounded-lg">✕</button>
         </div>
-        <div class="grid grid-cols-3 gap-2">
-          <button id="btnRotVocab" onclick="openNormalQuestSelect('vocab')" class="bg-[#241a4d] border border-purple-500/40 p-2 rounded-2xl text-center space-y-0.5 hover:bg-[#2e2163] transition active:scale-95">
-            <div class="text-lg">📖</div>
-            <div class="text-[10px] font-bold text-white">単語特訓</div>
-            <div id="badgeRotVocab" class="text-[8.5px] font-bold bg-purple-950 text-pink-300 px-1 py-0.2 rounded">未挑戦</div>
+
+        <div class="space-y-2 text-xs" id="normalDifficultyList">
+          <button onclick="startNormalModeWithDiff(1)" class="w-full bg-[#110a24]/80 hover:bg-[#201344] border border-purple-500/40 p-2.5 rounded-2xl flex items-center justify-between transition active:scale-98 text-left">
+            <div>
+              <div class="font-black text-emerald-400">🌟 初級（見習い級・Lv1〜15向け）</div>
+              <div class="text-[10px] text-slate-300">敵HP: 600 / 攻撃: 15（序盤向け・通常クリア可能）</div>
+            </div>
+            <span class="text-xs bg-emerald-950 text-emerald-300 font-bold px-2.5 py-1 rounded-xl border border-emerald-700">出撃</span>
           </button>
-          <button id="btnRotGrammar" onclick="openNormalQuestSelect('grammar')" class="bg-[#241a4d] border border-purple-500/40 p-2 rounded-2xl text-center space-y-0.5 hover:bg-[#2e2163] transition active:scale-95">
-            <div class="text-lg">🪄</div>
-            <div class="text-[10px] font-bold text-white">文法特訓</div>
-            <div id="badgeRotGrammar" class="text-[8.5px] font-bold bg-purple-950 text-pink-300 px-1 py-0.2 rounded">未挑戦</div>
+
+          <button onclick="startNormalModeWithDiff(2)" class="w-full bg-[#110a24]/80 hover:bg-[#201344] border border-purple-500/40 p-2.5 rounded-2xl flex items-center justify-between transition active:scale-98 text-left">
+            <div>
+              <div class="font-black text-blue-400">🔵 中級（魔導士級・Lv20〜35向け）</div>
+              <div class="text-[10px] text-slate-300">敵HP: 4,500 / 攻撃: 60（全問クリティカルで突破可能）</div>
+            </div>
+            <span class="text-xs bg-blue-950 text-blue-300 font-bold px-2.5 py-1 rounded-xl border border-blue-700">出撃</span>
           </button>
-          <button id="btnRotListening" onclick="openNormalQuestSelect('listening')" class="bg-[#241a4d] border border-purple-500/40 p-2 rounded-2xl text-center space-y-0.5 hover:bg-[#2e2163] transition active:scale-95">
-            <div class="text-lg">🎧</div>
-            <div class="text-[10px] font-bold text-white">リスニング</div>
-            <div id="badgeRotListening" class="text-[8.5px] font-bold bg-purple-950 text-pink-300 px-1 py-0.2 rounded">未挑戦</div>
+
+          <button onclick="startNormalModeWithDiff(3)" class="w-full bg-[#110a24]/80 hover:bg-[#201344] border border-purple-500/40 p-2.5 rounded-2xl flex items-center justify-between transition active:scale-98 text-left">
+            <div>
+              <div class="font-black text-purple-400">🟣 上級（賢者級・Lv40〜60向け）</div>
+              <div class="text-[10px] text-slate-300">敵HP: 15,000 / 攻撃: 150（上位装備＆高レベル必須）</div>
+            </div>
+            <span class="text-xs bg-purple-950 text-purple-300 font-bold px-2.5 py-1 rounded-xl border border-purple-700">出撃</span>
+          </button>
+
+          <button onclick="startNormalModeWithDiff(4)" class="w-full bg-[#110a24]/80 hover:bg-[#201344] border border-pink-500/60 p-2.5 rounded-2xl flex items-center justify-between transition active:scale-98 text-left glow-gold">
+            <div>
+              <div class="font-black text-pink-300">👑 覇者級（星詠み神級・Lv70〜）</div>
+              <div class="text-[10px] text-slate-300">敵HP: 45,000 / 攻撃: 350（エンドコンテンツ）</div>
+            </div>
+            <span class="text-xs bg-pink-950 text-pink-300 font-black px-2.5 py-1 rounded-xl border border-pink-500">出撃</span>
           </button>
         </div>
-        <button id="btnRotWeakBattle" onclick="startWeakBattle()" class="w-full bg-gradient-to-r from-rose-600 via-pink-600 to-purple-600 p-2.5 rounded-2xl text-xs font-black text-white flex items-center justify-between shadow opacity-60 transition active:scale-95">
-          <span class="flex items-center gap-1"><span>👾</span><span>にがて討伐バトル (5問)</span></span>
-          <span id="badgeRotWeak" class="text-[9px] bg-purple-950 text-pink-300 px-2 py-0.5 rounded-full border border-pink-500/40">🔒 あと3種クリア</span>
+      </div>
+    </div>
+
+    <!-- ==================== 👑 ボスレベル選択モーダル ==================== -->
+    <div id="modalBossSelect" class="hidden fixed inset-0 bg-[#0d0720]/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+      <div class="bg-gradient-to-b from-[#25174f] to-[#140c2b] border-2 border-pink-500/80 rounded-3xl p-4 w-full max-w-md max-h-[85vh] flex flex-col shadow-2xl space-y-3">
+        <div class="flex justify-between items-center border-b border-purple-500/30 pb-2">
+          <div>
+            <h3 class="font-black text-base text-pink-300 flex items-center gap-1.5">
+              🦄 過去問ボスバトル選択
+            </h3>
+            <p class="text-[10px] text-purple-200">各レベルを撃破してLv.10神獣を目指そう！</p>
+          </div>
+          <button onclick="closeBossSelectModal()" class="text-slate-400 hover:text-white text-lg font-bold px-2 py-0.5 bg-[#110a24] rounded-lg">✕</button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto space-y-2 pr-1" id="bossStageList"></div>
+      </div>
+    </div>
+
+    <!-- ==================== 2. クイズ・バトル画面 ==================== -->
+    <div id="viewQuiz" class="hidden space-y-3">
+      
+      <div class="flex items-center justify-between bg-[#1f1542]/80 p-2.5 rounded-2xl border border-purple-500/30">
+        <button onclick="confirmExitQuiz()" class="text-xs font-bold text-purple-200 hover:text-white px-2.5 py-1 bg-[#110a24] rounded-lg">✕ にげる</button>
+        <div class="text-xs font-bold text-pink-300" id="quizProgress">第 1 / 5 問</div>
+        <div class="flex items-center gap-2">
+          <button id="btnUseHint" onclick="use5050Hint()" class="bg-[#291854] hover:bg-[#382373] border border-pink-400 text-pink-200 text-[10px] font-black px-2.5 py-1 rounded-full shadow transition active:scale-95">
+            💡 ヒント (<span id="hintStockCount">0</span>)
+          </button>
+          <div class="text-xs font-black text-amber-300 bg-amber-500/20 border border-amber-500/40 px-2.5 py-0.5 rounded-full" id="comboCounter">🔥 0 連続</div>
+        </div>
+      </div>
+
+      <div id="feverBanner" class="hidden bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white font-black text-xs py-1.5 px-3 rounded-xl text-center shadow-lg animate-pulse">
+        ✨💖 FEVER TIME 突入！ 獲得EXP & 報酬 2倍！！ 💖✨
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 bg-[#110a24]/90 p-2.5 rounded-2xl border border-purple-500/30 text-xs">
+        <div class="space-y-1">
+          <div class="flex justify-between items-center font-black">
+            <span id="battleHeroName" class="text-pink-300 text-[11px] truncate">ルナ</span>
+            <span id="battleHeroHpText" class="text-[10px] text-pink-300">100/100</span>
+          </div>
+          <div class="w-full bg-[#1e143d] rounded-full h-2 overflow-hidden border border-purple-500/40">
+            <div id="battleHeroHpBar" class="bg-gradient-to-r from-pink-400 to-purple-400 h-full w-full transition-all duration-300"></div>
+          </div>
+        </div>
+        <div class="space-y-1">
+          <div class="flex justify-between items-center font-black">
+            <span id="battleEnemyName" class="text-rose-400 text-[11px] truncate">モンスター</span>
+            <span id="battleEnemyHpText" class="text-[10px] text-rose-300">100/100</span>
+          </div>
+          <div class="w-full bg-[#1e143d] rounded-full h-2 overflow-hidden border border-purple-500/40">
+            <div id="battleEnemyHpBar" class="bg-rose-500 h-full w-full transition-all duration-300"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-b from-[#26174a] to-[#140c2b] border-2 border-purple-500/50 rounded-3xl p-4 shadow-2xl relative overflow-hidden" id="enemyCardBox">
+        <div id="damageEffectArea" class="absolute inset-0 pointer-events-none flex items-center justify-center z-30"></div>
+
+        <div class="flex flex-col items-center justify-center mb-2">
+          <div id="enemyAvatar" class="text-5xl mb-1 animate-bounce-slow">🦄</div>
+          <div class="w-44 bg-[#110a24] rounded-full h-1.5 border border-purple-500/40 mt-1 overflow-hidden">
+            <div id="timerGauge" class="bg-gradient-to-r from-pink-400 to-amber-300 h-full w-full transition-all linear"></div>
+          </div>
+          <span id="timerText" class="text-[9px] text-pink-300 font-bold mt-0.5">🎧 音声を再生中...</span>
+        </div>
+
+        <div class="flex justify-center mb-2" id="audioBtnContainer">
+          <button id="btnPlayAudio" onclick="playCurrentAudio()" class="bg-[#291854] hover:bg-[#382373] border border-pink-400/50 text-pink-200 text-xs font-bold py-1 px-3.5 rounded-full flex items-center gap-1.5 shadow transition active:scale-95">
+            🔊 もう一度きく
+          </button>
+        </div>
+
+        <div class="text-center min-h-[50px] flex items-center justify-center px-2 mb-1.5">
+          <p id="quizQuestion" class="text-base font-black text-white leading-snug whitespace-pre-line"></p>
+        </div>
+        <p id="quizSubText" class="text-center text-xs text-pink-300 font-bold min-h-[16px] bg-[#110a24]/80 p-1.5 rounded-xl border border-purple-500/30 whitespace-pre-line"></p>
+      </div>
+
+      <div id="quizOptions" class="grid grid-cols-1 gap-2"></div>
+
+      <div id="quizFeedback" class="hidden bg-[#24174d] border-2 border-pink-400 p-3.5 rounded-2xl space-y-2 shadow-2xl">
+        <div class="flex items-center gap-2">
+          <span id="feedbackIcon" class="text-2xl">🌸</span>
+          <h4 id="feedbackTitle" class="text-sm font-black text-pink-300"></h4>
+        </div>
+        <p id="feedbackExplain" class="text-xs text-slate-200 leading-relaxed whitespace-pre-line"></p>
+        <button onclick="nextQuestion()" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-black py-2.5 rounded-xl text-sm shadow-lg hover:brightness-110 active:scale-95 transition">
+          つぎへ進む ➔
         </button>
       </div>
 
     </div>
 
-    <!-- 2. バトル画面 -->
-    <div id="viewQuiz" class="hidden space-y-3">
-      <!-- 敵カード -->
-      <div id="enemyCardBox" class="bg-gradient-to-b from-[#2a174a] via-[#1c1236] to-[#120b24] border-2 border-pink-500/70 rounded-3xl p-4 shadow-2xl relative overflow-hidden">
-        <div id="feverBanner" class="hidden absolute top-2.5 right-2.5 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-[9.5px] font-black px-2.5 py-0.5 rounded-full shadow animate-pulse">
-          ✨ FEVER x1.5
+    <!-- ==================== 3. リザルト画面 ==================== -->
+    <div id="viewResult" class="hidden space-y-4 text-center py-4">
+      <div class="bg-gradient-to-b from-[#26174a] to-[#140c2b] border-2 border-pink-400 rounded-3xl p-6 shadow-2xl space-y-4 glow-gold" id="resultCardBox">
+        <div class="text-6xl animate-bounce" id="resultEmoji">🏆✨</div>
+        <div>
+          <span id="resultModeBadge" class="text-[10px] font-black bg-pink-500 text-white px-2.5 py-0.5 rounded-full inline-block mb-1 shadow">修練達成</span>
+          <h3 class="text-xl font-black text-pink-300" id="resultTitle">クエストクリア！</h3>
+          <p id="resultComment" class="text-xs text-purple-200 mt-1">素晴らしい集中力です！</p>
         </div>
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <span id="enemyAvatar" class="text-5xl drop-shadow-md">🦄</span>
-            <div>
-              <div id="battleEnemyName" class="text-sm font-black text-pink-200">星の守護獣</div>
-              <div class="flex items-center gap-2 mt-1">
-                <div class="w-28 bg-[#100a21] h-2.5 rounded-full overflow-hidden border border-pink-500/40">
-                  <div id="battleEnemyHpBar" class="bg-gradient-to-r from-pink-500 via-rose-500 to-red-500 h-full w-full transition-all duration-200"></div>
-                </div>
-                <span id="battleEnemyHpText" class="text-[10px] font-bold text-pink-200">100/100</span>
+
+        <div id="rareDropArea" class="hidden bg-gradient-to-r from-pink-950 via-purple-950 to-indigo-950 border-2 border-pink-400 p-3 rounded-2xl space-y-1">
+          <span class="text-xl">🎁✨</span>
+          <div class="font-black text-xs text-pink-300">ボスからレア宝箱がドロップ！</div>
+          <div id="rareDropItemText" class="font-bold text-xs text-white">【星詠みのティアラ】を手に入れた！</div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 bg-[#110a24]/80 p-3 rounded-2xl border border-purple-500/30 text-xs">
+          <div>
+            <div class="text-purple-300 text-[10px] font-bold">正解数</div>
+            <div id="resultScore" class="font-black text-base text-white">0 / 0</div>
+          </div>
+          <div>
+            <div class="text-purple-300 text-[10px] font-bold">獲得EXP</div>
+            <div id="resultExp" class="font-black text-base text-pink-300">+50</div>
+          </div>
+          <div>
+            <div class="text-purple-300 text-[10px] font-bold">獲得ダイヤ</div>
+            <div id="resultGems" class="font-black text-base text-amber-300">💎+15</div>
+          </div>
+        </div>
+
+        <button onclick="showHome()" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-black py-3 rounded-xl text-sm shadow-lg hover:brightness-110 active:scale-95 transition">
+          拠点（ホーム）にもどる 🏠
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== 4. 📖 準2級 魔法単語図鑑 ==================== -->
+    <div id="viewBook" class="hidden space-y-3">
+      <div class="bg-[#1b143a]/90 border border-purple-500/40 rounded-2xl p-3.5 space-y-2">
+        <div class="flex justify-between items-center">
+          <h3 class="font-black text-xs text-pink-300 flex items-center gap-1.5">
+            📖 準2級 魔法単語図鑑
+          </h3>
+          <span id="bookProgressText" class="text-[10px] bg-[#110a24] px-2 py-0.5 rounded-full border border-purple-500/40 text-pink-300 font-bold">0 / 700 語</span>
+        </div>
+        <div class="w-full bg-[#110a24] rounded-full h-2 border border-purple-500/40 overflow-hidden">
+          <div id="bookProgressBar" class="bg-gradient-to-r from-pink-400 to-purple-400 h-full w-0 transition-all duration-500"></div>
+        </div>
+        <input type="text" id="bookSearchInput" oninput="renderVocabBook()" placeholder="🔍 単語や日本語でけんさく..." class="w-full bg-[#110a24] border border-purple-500/40 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-pink-400">
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 text-xs max-h-[460px] overflow-y-auto pr-1" id="vocabBookList"></div>
+    </div>
+
+    <!-- ==================== 5. 👾 にがて帳（復習・弱点克服専用画面） ==================== -->
+    <div id="viewWeakBook" class="hidden space-y-3">
+      <div class="bg-gradient-to-br from-rose-950 via-[#1b143a] to-[#120d2b] border border-rose-500/60 rounded-2xl p-3.5 space-y-2">
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="font-black text-xs text-rose-300 flex items-center gap-1.5">
+              👾 にがて克服ノート
+            </h3>
+            <p class="text-[9.5px] text-purple-200">過去に間違えた問題一覧。覚えたら削除しよう！</p>
+          </div>
+          <span id="weakBookCountBadge" class="text-[10px] bg-[#110a24] px-2 py-0.5 rounded-full border border-rose-500 text-rose-300 font-bold">0問</span>
+        </div>
+      </div>
+
+      <div class="space-y-2.5 max-h-[480px] overflow-y-auto pr-1" id="weakBookItemList"></div>
+    </div>
+
+    <!-- ==================== 6. 💎 ダイヤショップ画面 ==================== -->
+    <div id="viewShop" class="hidden space-y-4">
+      <div class="bg-[#1b143a]/90 border border-purple-500/40 rounded-2xl p-3.5 space-y-2">
+        <h3 class="font-black text-xs text-pink-300 flex items-center gap-1">
+          💡 バトル補助アイテム
+        </h3>
+        <div class="space-y-2 text-xs">
+          <div class="bg-[#110a24] p-2.5 rounded-xl border border-purple-500/30 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">📜</span>
+              <div>
+                <div class="font-bold text-white">ヒントの書（50:50）</div>
+                <div class="text-[10px] text-purple-200">バトル中に間違いを2つ消去（所持: <span id="shopHintCount">0</span>個）</div>
               </div>
             </div>
+            <button onclick="buyItem('hint', 15)" class="bg-gradient-to-r from-pink-500 to-purple-500 hover:brightness-110 text-white font-black px-3 py-1.5 rounded-lg text-xs transition active:scale-95 shadow">
+              💎 15
+            </button>
           </div>
-        </div>
-        <div id="damageEffectArea" class="relative w-full h-0"></div>
-      </div>
 
-      <!-- プレイヤーHP -->
-      <div class="bg-[#1b143b]/90 px-3.5 py-1.5 rounded-2xl border border-purple-500/30 flex items-center justify-between text-xs">
-        <div class="flex items-center gap-1.5">
-          <span>💖</span>
-          <span id="battleHeroName" class="font-bold text-purple-200">ルナ</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="w-24 bg-[#100a21] h-2 rounded-full overflow-hidden border border-purple-500/40">
-            <div id="battleHeroHpBar" class="bg-gradient-to-r from-pink-400 to-purple-400 h-full w-full transition-all duration-200"></div>
-          </div>
-          <span id="battleHeroHpText" class="text-[10px] font-bold text-pink-300">180/180</span>
-        </div>
-      </div>
-
-      <!-- タイマー -->
-      <div class="space-y-1">
-        <div class="flex justify-between text-[9.5px] font-bold text-purple-200">
-          <span id="quizProgress">第 1 / 5 問</span>
-          <span id="timerText" class="text-pink-300">⚡ 3秒以内即答でクリティカル！</span>
-          <span id="comboCounter" class="text-amber-300 font-black">🔥 0 連続</span>
-        </div>
-        <div class="w-full bg-[#100a21] h-1.5 rounded-full overflow-hidden border border-purple-500/20">
-          <div id="timerGauge" class="bg-gradient-to-r from-pink-400 to-amber-300 h-full w-full transition-all"></div>
-        </div>
-      </div>
-
-      <!-- 問題カード -->
-      <div class="bg-gradient-to-b from-[#211747] to-[#171033] border border-pink-500/30 p-4 rounded-3xl space-y-2.5 shadow-lg">
-        <div class="flex justify-between items-start gap-2">
-          <span id="quizSubText" class="text-[10px] font-black text-pink-300 bg-pink-950/80 px-2.5 py-0.5 rounded-full border border-pink-500/40">短文空所補充</span>
-          <div id="audioBtnContainer">
-            <button onclick="playCurrentAudio()" class="bg-purple-950 hover:bg-purple-900 text-pink-200 border border-pink-500/40 font-bold px-2.5 py-1 rounded-xl text-[10px] flex items-center gap-1 transition">
-              <span>🔊</span><span>もう一度聞く</span>
+          <div class="bg-[#110a24] p-2.5 rounded-xl border border-purple-500/30 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🧪</span>
+              <div>
+                <div class="font-bold text-white">EXPの秘薬</div>
+                <div class="text-[10px] text-purple-200">次の修練で獲得EXPが2倍（所持: <span id="shopPotionCount">0</span>個）</div>
+              </div>
+            </div>
+            <button onclick="buyItem('potion', 30)" class="bg-gradient-to-r from-pink-500 to-purple-500 hover:brightness-110 text-white font-black px-3 py-1.5 rounded-lg text-xs transition active:scale-95 shadow">
+              💎 30
             </button>
           </div>
         </div>
-        <div id="quizQuestion" class="text-sm font-black text-white leading-relaxed whitespace-pre-line min-h-[48px]">
-          問題文
-        </div>
       </div>
 
-      <!-- 選択肢 -->
-      <div id="quizOptions" class="space-y-2"></div>
+      <div class="bg-[#1b143a]/90 border border-purple-500/40 rounded-2xl p-3.5 space-y-3">
+        <div class="flex justify-between items-center">
+          <h3 class="font-black text-xs text-pink-300 flex items-center gap-1">
+            👑 相棒の着せ替え・装備コレクション (ステータスUP!)
+          </h3>
+        </div>
 
-      <!-- 補助ボタン -->
-      <div class="flex justify-between items-center pt-1">
-        <button onclick="use5050Hint()" class="bg-[#1f1642] hover:bg-[#2a1e59] border border-pink-500/30 text-pink-200 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 transition">
-          <span>📜</span><span>ヒントを使う (<span id="hintStockCount">1</span>)</span>
-        </button>
-        <button onclick="confirmExitQuiz()" class="text-slate-400 hover:text-pink-300 text-xs font-bold px-2 py-1 transition">
-          🏳️ ホームへ戻る
-        </button>
+        <div class="flex bg-[#110a24] p-1 rounded-xl border border-purple-500/30 text-[11px] font-bold">
+          <button id="tabEquipHat" onclick="switchEquipTab('hat')" class="flex-1 py-1.5 rounded-lg bg-[#2b1b59] text-pink-300 shadow transition">
+            👑 ティアラ (HP)
+          </button>
+          <button id="tabEquipWeapon" onclick="switchEquipTab('weapon')" class="flex-1 py-1.5 rounded-lg text-purple-200 hover:text-white transition">
+            🪄 ロッド/剣 (攻)
+          </button>
+          <button id="tabEquipAura" onclick="switchEquipTab('aura')" class="flex-1 py-1.5 rounded-lg text-purple-200 hover:text-white transition">
+            ✨ オーラ (速)
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-xs max-h-96 overflow-y-auto pr-1" id="equipShopList"></div>
       </div>
     </div>
 
-    <!-- 3. 解説モーダル -->
-    <div id="quizFeedback" class="hidden fixed inset-0 bg-black/85 z-50 p-4 flex items-center justify-center">
-      <div class="max-w-sm w-full bg-gradient-to-b from-[#24184c] to-[#150e2e] border-2 border-pink-400/80 rounded-3xl p-5 space-y-3.5 shadow-2xl text-left glow-magic">
-        <div class="flex items-center gap-2">
-          <span id="feedbackIcon" class="text-3xl">⭕</span>
-          <h3 id="feedbackTitle" class="text-sm font-black text-pink-300">正解！ Great!</h3>
+    <!-- ==================== 7. 保護者用ダッシュボード ==================== -->
+    <div id="viewParent" class="hidden space-y-4">
+      <div class="bg-[#1b143a]/90 border border-purple-500/40 rounded-2xl p-4 space-y-3">
+        <h3 class="font-bold text-sm text-pink-300 flex items-center gap-1.5 border-b border-purple-500/30 pb-2">
+          📊 学習進捗と合格可能性メーター
+        </h3>
+        
+        <div class="grid grid-cols-2 gap-2.5 text-xs">
+          <div class="bg-[#110a24] p-3 rounded-xl border border-purple-500/30">
+            <span class="text-purple-300 text-[10px] block mb-1">総解答数 / 正解率</span>
+            <span id="statTotalAnswers" class="text-base font-black text-white">0問</span>
+            <span id="statAccuracy" class="text-xs font-bold text-pink-300 ml-1">(0%)</span>
+          </div>
+          <div class="bg-[#110a24] p-3 rounded-xl border border-purple-500/30">
+            <span class="text-purple-300 text-[10px] block mb-1">合格予想判定</span>
+            <span id="statPassRate" class="text-xs font-black text-amber-300 block mt-1">判定中</span>
+          </div>
         </div>
-        <div id="feedbackExplain" class="text-xs text-slate-200 bg-[#100a24] p-3.5 rounded-2xl border border-purple-500/30 leading-relaxed whitespace-pre-line max-h-60 overflow-y-auto font-medium">
-          解説
+
+        <div class="pt-2 border-t border-purple-500/30 space-y-2 text-xs">
+          <span class="text-[10px] text-purple-200 font-bold block">データ管理（バックアップ）</span>
+          <div class="flex gap-2">
+            <button onclick="exportData()" class="flex-1 bg-[#2b1b59] hover:bg-[#392475] text-white font-bold py-2 px-2.5 rounded-lg border border-purple-500/40 transition text-[11px]">📤 バックアップ保存</button>
+            <label class="flex-1 bg-[#2b1b59] hover:bg-[#392475] text-white font-bold py-2 px-2.5 rounded-lg border border-purple-500/40 text-center cursor-pointer transition text-[11px]">
+              📥 データ復元
+              <input type="file" id="importFileInput" onchange="importData(event)" class="hidden">
+            </label>
+          </div>
+          <button onclick="resetAllProgress()" class="w-full text-rose-400 hover:text-rose-300 text-[10px] font-bold py-1 text-center">⚠️ 準2級データを初期化する</button>
         </div>
-        <button onclick="nextQuestion()" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:brightness-110 text-white font-black py-2.5 rounded-xl text-xs shadow-xl transition active:scale-95">
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==================== 🎬 初回撃破限定 フルスクリーンエンディングモーダル ==================== -->
+  <div id="modalEnding" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4 overflow-y-auto">
+    <div id="endingContainer" class="max-w-md w-full text-center space-y-5 py-6">
+      
+      <div id="endingPhase1" class="space-y-4">
+        <div class="text-7xl animate-bounce">👑🦄🌸✨</div>
+        <div class="inline-block bg-gradient-to-r from-pink-500 to-purple-500 text-white font-black text-xs px-3.5 py-1 rounded-full shadow-lg">
+          GAME CLEARED & 合格達成！
+        </div>
+        <h2 class="text-2xl font-black text-pink-300 tracking-wider">
+          創世神獣 討伐完了！
+        </h2>
+        <p class="text-xs text-slate-200 leading-relaxed whitespace-pre-line px-2">
+          すべての準2級過去問の試練を乗り越え、
+          高校英語の全重要知識をマスターしました！
+          
+          あなたの毎日の努力と集中力は本当に素晴らしいです。
+          本番の英検でも、絶対に合格できます！
+        </p>
+
+        <!-- 相棒からのメッセージ -->
+        <div class="bg-[#1b143a]/90 border-2 border-pink-400 p-4 rounded-3xl space-y-2 text-left shadow-2xl">
+          <div class="flex items-center gap-2">
+            <span class="text-3xl" id="endingHeroEmoji">🐱✨</span>
+            <div>
+              <div class="text-[10px] text-pink-300 font-bold">最高の相棒より</div>
+              <div class="text-xs font-black text-white" id="endingHeroName">ルナ</div>
+            </div>
+          </div>
+          <p class="text-xs text-purple-100 leading-relaxed">
+            「ここまで一緒に冒険してくれて本当にありがとう！
+            あなたと一緒に最高の英語マスターになれて、とっても嬉しいよ！」
+          </p>
+        </div>
+
+        <!-- 隠し装備獲得演出 -->
+        <div class="bg-gradient-to-r from-pink-950 via-purple-950 to-indigo-950 border-2 border-pink-500 p-3.5 rounded-3xl space-y-1.5 shadow-2xl">
+          <div class="text-sm font-black text-pink-300">🎁 神獣の遺産（完全隠し装備3種 解放！）</div>
+          <div class="text-[11px] font-bold text-amber-300">
+            👑【創世神の王冠】 / 🗡️【創世神の聖剣】 / ✨【創世神の神光】
+          </div>
+          <p class="text-[9.5px] text-slate-300">ショップの着せ替えに極限の神器が追加されました！(Lv.60〜)</p>
+        </div>
+
+        <!-- 👑 スタッフロール（鄭 聖也（パパ）） -->
+        <div class="bg-[#110a24]/90 border border-purple-500/40 p-3 rounded-2xl text-[10px] space-y-1 text-center font-bold">
+          <div class="text-pink-400 tracking-widest text-[9px] uppercase border-b border-purple-800 pb-1">★ STAFF CREDITS ★</div>
+          <div class="text-purple-200">プロデュース：<span class="text-white font-black">鄭 聖也（パパ）</span></div>
+          <div class="text-purple-200">企画・問題作成：<span class="text-white font-black">鄭 聖也（パパ）</span></div>
+          <div class="text-purple-200">世界で一番の応援サポーター：<span class="text-pink-300 font-black">鄭 聖也（パパ）</span></div>
+        </div>
+
+        <button onclick="triggerEndingTeaser()" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:brightness-110 text-white font-black py-3 rounded-2xl text-xs shadow-xl transition active:scale-95">
           次へ進む ➔
         </button>
       </div>
-    </div>
 
-    <!-- 4. リザルト画面 -->
-    <div id="viewResult" class="hidden space-y-4 text-center">
-      <div class="bg-gradient-to-b from-[#23184a] via-[#1a1138] to-[#120b26] border-2 border-pink-500/40 rounded-3xl p-6 space-y-4 shadow-xl">
-        <div id="resultEmoji" class="text-6xl animate-bounce">🏆✨</div>
-        <div>
-          <span id="resultModeBadge" class="text-[10px] font-black bg-gradient-to-r from-pink-500 to-purple-500 text-white px-3 py-1 rounded-full inline-block mb-1 shadow">修練達成</span>
-          <h2 id="resultTitle" class="text-lg font-black text-white">クエストクリア！</h2>
-          <p id="resultComment" class="text-xs text-pink-200/80 mt-1">素晴らしい集中力です！</p>
+      <!-- 不気味な揺れ＆真・裏ボス ティザー演出 -->
+      <div id="endingPhase2" class="hidden space-y-5">
+        <div class="text-6xl animate-pulse">🌌👁️⌛</div>
+        <h3 class="text-lg font-black text-pink-400 animate-pulse">
+          ……だが、星の彼方に異変が起こる。
+        </h3>
+        <p class="text-xs text-rose-300 leading-relaxed whitespace-pre-line px-2 font-bold">
+          次元の裂け目から、創世神獣をも遥かに凌駕する
+          底知れないプレッシャーが漂ってくる……！
+          
+          「フハハ……よくぞ神獣を解放した。
+          だが我を超えねば、真の覇者とは言えん……」
+        </p>
+
+        <div class="bg-rose-950/80 border-2 border-rose-600 p-4 rounded-3xl space-y-1.5 shadow-2xl">
+          <div class="text-[10px] font-black bg-rose-600 text-white px-2 py-0.5 rounded-full inline-block">EMERGENCY</div>
+          <div class="text-sm font-black text-rose-300">真・裏ボス【Lv.11 虚空の創造主・クロノス】解禁！</div>
+          <p class="text-[10px] text-slate-300 leading-tight">
+            ※最強隠し装備・Lv.100・全クリティカルでのみ勝機あり。
+          </p>
         </div>
-        <div class="grid grid-cols-3 gap-2 bg-[#100a24] p-3 rounded-2xl border border-purple-500/30 text-center">
-          <div>
-            <div class="text-[9px] text-purple-300 font-bold">正解数</div>
-            <div id="resultScore" class="text-sm font-black text-white mt-0.5">5 / 5</div>
-          </div>
-          <div>
-            <div class="text-[9px] text-pink-300 font-bold">獲得EXP</div>
-            <div id="resultExp" class="text-sm font-black text-pink-300 mt-0.5">+100</div>
-          </div>
-          <div>
-            <div class="text-[9px] text-amber-300 font-bold">獲得ダイヤ</div>
-            <div id="resultGems" class="text-sm font-black text-amber-300 mt-0.5">💎+20</div>
-          </div>
-        </div>
-        <div id="rareDropArea" class="hidden bg-gradient-to-r from-pink-950 via-purple-950 to-indigo-950 border border-pink-400 p-2.5 rounded-2xl text-xs font-bold text-pink-300">
-          🎁 <span id="rareDropItemText">レア装備を獲得！</span>
-        </div>
-        <button onclick="showHome()" class="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 hover:brightness-110 text-white font-black py-3 rounded-2xl text-xs shadow-xl transition active:scale-95">
-          ホームへ戻る 🏠
+
+        <button onclick="finishEndingSequence()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:brightness-110 text-white font-black py-3 rounded-2xl text-xs shadow-xl transition active:scale-95">
+          真の挑戦へ向かう ⚔️
         </button>
       </div>
-    </div>
 
-    <!-- 5. ショップ＆装備 -->
-    <div id="viewShop" class="hidden space-y-3">
-      <div class="bg-gradient-to-b from-[#221747] to-[#160f30] border border-pink-500/30 rounded-3xl p-4 space-y-3 shadow-lg">
-        <h2 class="text-xs font-black text-pink-300 flex items-center gap-1">🏪 マジカルブティック & 装備</h2>
-        <div class="grid grid-cols-2 gap-2">
-          <div class="bg-[#100a24] p-2.5 rounded-2xl border border-purple-500/30 flex items-center justify-between">
-            <div>
-              <div class="text-xs font-bold text-white">📜 ヒントの書</div>
-              <div class="text-[9px] text-purple-300">所持: <span id="shopHintCount">0</span>個</div>
-            </div>
-            <button onclick="buyItem('hint', 15)" class="bg-gradient-to-r from-pink-500 to-purple-500 hover:brightness-110 text-white font-black text-[10px] px-2.5 py-1.5 rounded-xl shadow">💎 15</button>
-          </div>
-          <div class="bg-[#100a24] p-2.5 rounded-2xl border border-purple-500/30 flex items-center justify-between">
-            <div>
-              <div class="text-xs font-bold text-white">🧪 EXPの秘薬</div>
-              <div class="text-[9px] text-purple-300">所持: <span id="shopPotionCount">0</span>個</div>
-            </div>
-            <button onclick="buyItem('potion', 30)" class="bg-gradient-to-r from-pink-500 to-purple-500 hover:brightness-110 text-white font-black text-[10px] px-2.5 py-1.5 rounded-xl shadow">💎 30</button>
-          </div>
-        </div>
-        <div class="flex gap-1 bg-[#100a24] p-1 rounded-xl text-xs font-bold text-purple-300">
-          <button id="tabEquipHat" onclick="switchEquipTab('hat')" class="flex-1 py-1 rounded-lg bg-[#27194f] text-pink-300 shadow">ティアラ</button>
-          <button id="tabEquipWeapon" onclick="switchEquipTab('weapon')" class="flex-1 py-1 rounded-lg">ロッド/剣</button>
-          <button id="tabEquipAura" onclick="switchEquipTab('aura')" class="flex-1 py-1 rounded-lg">オーラ</button>
-        </div>
-        <div id="equipShopList" class="grid grid-cols-2 gap-2 max-h-80 overflow-y-auto pr-1"></div>
-      </div>
     </div>
+  </div>
 
-    <!-- 6. にがて帳 -->
-    <div id="viewWeakBook" class="hidden space-y-3">
-      <div class="bg-gradient-to-b from-[#221747] to-[#160f30] border border-pink-500/30 rounded-3xl p-4 space-y-3 shadow-lg">
-        <div class="flex justify-between items-center">
-          <h2 class="text-xs font-black text-rose-300 flex items-center gap-1">📕 にがて克服ノート</h2>
-          <span id="weakBookCountBadge" class="text-[10px] font-bold bg-rose-950 text-rose-300 border border-rose-700/60 px-2 py-0.5 rounded-full">0問</span>
-        </div>
-        <div id="weakBookItemList" class="space-y-2 max-h-96 overflow-y-auto pr-1"></div>
-      </div>
+  <!-- ボトムナビゲーションバー -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-[#160f33]/95 backdrop-blur border-t border-purple-500/30 py-2 z-40">
+    <div class="max-w-md mx-auto grid grid-cols-5 text-[9.5px] font-bold text-center">
+      <button onclick="showHome()" id="navHome" class="flex flex-col items-center gap-0.5 text-pink-300">
+        <span class="text-base">🏠</span>
+        <span>クエスト</span>
+      </button>
+      <button onclick="showBook()" id="navBook" class="flex flex-col items-center gap-0.5 text-purple-300/70 hover:text-purple-200">
+        <span class="text-base">📖</span>
+        <span>図鑑</span>
+      </button>
+      <button onclick="showWeakBook()" id="navWeak" class="flex flex-col items-center gap-0.5 text-purple-300/70 hover:text-purple-200">
+        <span class="text-base">👾</span>
+        <span>にがて帳</span>
+      </button>
+      <button onclick="showShop()" id="navShop" class="flex flex-col items-center gap-0.5 text-purple-300/70 hover:text-purple-200">
+        <span class="text-base">🛒</span>
+        <span>ショップ</span>
+      </button>
+      <button onclick="showParent()" id="navParent" class="flex flex-col items-center gap-0.5 text-purple-300/70 hover:text-purple-200">
+        <span class="text-base">📊</span>
+        <span>保護者</span>
+      </button>
     </div>
-
-    <!-- 7. 単語図鑑 -->
-    <div id="viewBook" class="hidden space-y-3">
-      <div class="bg-gradient-to-b from-[#221747] to-[#160f30] border border-pink-500/30 rounded-3xl p-4 space-y-3 shadow-lg">
-        <div class="flex justify-between items-center">
-          <h2 class="text-xs font-black text-pink-300 flex items-center gap-1">📖 準2級 魔法単語図鑑</h2>
-          <span id="bookProgressText" class="text-[10px] font-bold text-purple-200">0 / 0 語</span>
-        </div>
-        <div class="w-full bg-[#100a24] h-2 rounded-full overflow-hidden border border-purple-500/30">
-          <div id="bookProgressBar" class="bg-gradient-to-r from-pink-400 to-purple-400 h-full w-0"></div>
-        </div>
-        <input id="bookSearchInput" oninput="renderVocabBook()" type="text" placeholder="英単語または日本語で検索..." class="w-full bg-[#100a24] border border-purple-500/40 p-2.5 rounded-xl text-xs text-white outline-none focus:border-pink-400">
-        <div id="vocabBookList" class="grid grid-cols-2 gap-2 max-h-80 overflow-y-auto pr-1"></div>
-      </div>
-    </div>
-
-    <!-- 8. 保護者・データ管理 -->
-    <div id="viewParent" class="hidden space-y-3">
-      <div class="bg-gradient-to-b from-[#221747] to-[#160f30] border border-pink-500/30 rounded-3xl p-4 space-y-3 shadow-lg">
-        <h2 class="text-xs font-black text-purple-200">⚙️ 学習データ & バックアップ</h2>
-        <div class="bg-[#100a24] p-3 rounded-2xl border border-purple-500/30 space-y-1.5 text-xs">
-          <div class="flex justify-between"><span>総解答数:</span><strong id="statTotalAnswers" class="text-white">0問</strong></div>
-          <div class="flex justify-between"><span>正解率:</span><strong id="statAccuracy" class="text-pink-300">0%</strong></div>
-          <div class="flex justify-between"><span>合格判定:</span><strong id="statPassRate" class="text-amber-300">判定中</strong></div>
-        </div>
-        <div class="space-y-2 pt-2">
-          <button onclick="exportData()" class="w-full bg-[#27194f] hover:bg-[#342269] text-pink-200 font-bold py-2 rounded-xl text-xs border border-pink-500/30 transition">
-            💾 セーブデータを保存 (バックアップ)
-          </button>
-          <label class="w-full bg-[#27194f] hover:bg-[#342269] text-pink-200 font-bold py-2 rounded-xl text-xs border border-pink-500/30 block text-center cursor-pointer transition">
-            📂 データを復元
-            <input type="file" accept=".json" onchange="importData(event)" class="hidden">
-          </label>
-          <button onclick="resetAllProgress()" class="w-full bg-rose-950/80 hover:bg-rose-900 text-rose-300 font-bold py-2 rounded-xl text-xs border border-rose-700/60 transition">
-            ⚠️ 準2級データを初期化
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ボス選択モーダル -->
-    <div id="modalBossSelect" class="hidden fixed inset-0 bg-black/85 z-50 p-4 flex items-center justify-center">
-      <div class="max-w-sm w-full bg-gradient-to-b from-[#25174f] to-[#140c2b] border-2 border-pink-400/80 rounded-3xl p-4 space-y-3 shadow-2xl">
-        <div class="flex justify-between items-center">
-          <h3 class="text-xs font-black text-pink-300 flex items-center gap-1"><span>👑</span><span>準2級 過去問ボス選択</span></h3>
-          <button onclick="closeBossSelectModal()" class="text-purple-300 hover:text-white text-sm font-bold">✕</button>
-        </div>
-        <div id="bossStageList" class="space-y-2 max-h-80 overflow-y-auto pr-1"></div>
-      </div>
-    </div>
-
-    <!-- 難易度選択モーダル -->
-    <div id="modalNormalSelect" class="hidden fixed inset-0 bg-black/85 z-50 p-4 flex items-center justify-center">
-      <div class="max-w-sm w-full bg-gradient-to-b from-[#25174f] to-[#140c2b] border-2 border-purple-400/80 rounded-3xl p-5 space-y-4 shadow-2xl text-center">
-        <h3 id="normalSelectTitle" class="text-xs font-black text-pink-300">特訓難易度を選択</h3>
-        <div class="space-y-2">
-          <button onclick="startNormalModeWithDiff(1)" class="w-full bg-[#1b1238] border border-purple-500/40 p-2.5 rounded-2xl hover:bg-[#281b54] text-left flex justify-between items-center transition active:scale-95">
-            <div><div class="text-xs font-bold text-white">⭐ 初級修練</div><div class="text-[9px] text-purple-300">HP: 低め / 通常獲得</div></div>
-            <span class="text-xs font-black text-pink-300">x1.0倍</span>
-          </button>
-          <button onclick="startNormalModeWithDiff(2)" class="w-full bg-[#1b1238] border border-purple-500/40 p-2.5 rounded-2xl hover:bg-[#281b54] text-left flex justify-between items-center transition active:scale-95">
-            <div><div class="text-xs font-bold text-white">⭐⭐ 中級修練</div><div class="text-[9px] text-purple-300">HP: 中 / 経験値アップ</div></div>
-            <span class="text-xs font-black text-pink-300">x1.5倍</span>
-          </button>
-          <button onclick="startNormalModeWithDiff(3)" class="w-full bg-[#1b1238] border border-purple-500/40 p-2.5 rounded-2xl hover:bg-[#281b54] text-left flex justify-between items-center transition active:scale-95">
-            <div><div class="text-xs font-bold text-white">⭐⭐⭐ 上級修練</div><div class="text-[9px] text-purple-300">HP: 高 / 上級者向け</div></div>
-            <span class="text-xs font-black text-purple-300">x2.3倍</span>
-          </button>
-          <button onclick="startNormalModeWithDiff(4)" class="w-full bg-[#1b1238] border border-pink-500/60 p-2.5 rounded-2xl hover:bg-[#281b54] text-left flex justify-between items-center transition active:scale-95">
-            <div><div class="text-xs font-bold text-white">👑 覇者級修練</div><div class="text-[9px] text-pink-300">超高HP / 大量EXP＆ダイヤ</div></div>
-            <span class="text-xs font-black text-pink-400">x3.8倍</span>
-          </button>
-        </div>
-        <button onclick="closeNormalQuestSelect()" class="text-xs text-purple-300 hover:text-white font-bold">キャンセル</button>
-      </div>
-    </div>
-  </main>
-
-  <!-- ナビゲーションバー -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-[#160f33]/95 backdrop-blur border-t border-pink-500/30 py-2 px-4 flex justify-around text-[10px] font-bold z-40 shadow-2xl">
-    <button id="navHome" onclick="showHome()" class="flex flex-col items-center gap-0.5 text-pink-300"><span>🏠</span><span>ホーム</span></button>
-    <button id="navBook" onclick="showBook()" class="flex flex-col items-center gap-0.5 text-purple-300/70 hover:text-purple-200"><span>📖</span><span>図鑑</span></button>
-    <button id="navWeak" onclick="showWeakBook()" class="flex flex-col items-center gap-0.5 text-purple-300/70 hover:text-purple-200"><span>📕</span><span>にがて</span></button>
-    <button id="navShop" onclick="showShop()" class="flex flex-col items-center gap-0.5 text-purple-300/70 hover:text-purple-200"><span>🏪</span><span>ショップ</span></button>
-    <button id="navParent" onclick="showParent()" class="flex flex-col items-center gap-0.5 text-purple-300/70 hover:text-purple-200"><span>⚙️</span><span>設定</span></button>
   </nav>
 
-  <!-- スクリプト -->
+  <!-- 外部JavaScriptファイルの読み込み -->
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
