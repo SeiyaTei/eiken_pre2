@@ -766,7 +766,9 @@ function renderVocabBook() {
   filtered.forEach((item, idx) => {
     const isCollected = userData.vocabBook.includes(item[0]);
     const card = document.createElement('div');
-    card.className = `p-2.5 rounded-xl border flex flex-col justify-between ${isCollected ? 'bg-slate-900 border-emerald-500/60' : 'bg-slate-950 border-slate-900 opacity-60'}`;
+    card.className = `p-2.5 rounded-xl border flex flex-col justify-between ${
+      isCollected ? 'bg-slate-900 border-emerald-500/60' : 'bg-slate-950 border-slate-900 opacity-60'
+    }`;
     card.innerHTML = `
       <div>
         <div class="flex justify-between items-center mb-1">
@@ -1207,6 +1209,7 @@ function handleAnswer(selectedIdx) {
 }
 
 function nextQuestion() {
+  document.getElementById('quizFeedback').classList.add('hidden'); // 🛠️ 解説モーダルを確実に非表示
   currentIndex += 1;
   if (currentIndex < currentQueue.length && playerCurHp > 0 && enemyCurHp > 0) {
     renderQuestion();
@@ -1222,6 +1225,7 @@ function finishSession() {
 }
 
 function proceedFinishSession() {
+  document.getElementById('quizFeedback').classList.add('hidden'); // 🛠️ 解説モーダルを確実に非表示
   document.getElementById('viewQuiz').classList.add('hidden');
   document.getElementById('viewResult').classList.remove('hidden');
   playBGM('result');
@@ -1430,7 +1434,7 @@ function buyItem(type, price) {
 
 // ==================== 画面表示切替 ＆ ナビゲーション ====================
 function hideAllViews() {
-  ['viewHome', 'viewQuiz', 'viewResult', 'viewShop', 'viewParent', 'viewBook', 'viewWeakBook', 'modalBossSelect'].forEach(id => {
+  ['viewHome', 'viewQuiz', 'viewResult', 'viewShop', 'viewParent', 'viewBook', 'viewWeakBook', 'modalBossSelect', 'quizFeedback'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add('hidden');
   });
