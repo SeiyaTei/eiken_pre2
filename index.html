@@ -11,7 +11,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="準2級クエスト">
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3132/3132738.png">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
   
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -134,7 +135,7 @@
           </div>
         </div>
 
-        <!-- 試験までのカウントダウン -->
+        <!-- 2026年10月4日 試験日カウントダウン -->
         <div class="mt-2.5 pt-2 border-t border-purple-500/30 flex justify-between items-center text-[11px]">
           <span class="text-purple-200">🎯 英検準2級 本番(2026/10/4)まで</span>
           <span id="countdownDays" class="font-black text-pink-300 text-xs">-- 日</span>
@@ -347,6 +348,20 @@
       </div>
     </div>
 
+    <!-- ==================== 💬 ボス会話モーダル（静的配置で不具合完全防止） ==================== -->
+    <div id="modalBossDialogue" class="hidden fixed inset-0 bg-black/90 z-50 p-3 flex items-center justify-center">
+      <div class="max-w-sm w-full bg-gradient-to-b from-[#25174f] via-[#1a1038] to-[#120a28] border-2 border-pink-400/80 rounded-3xl p-4 shadow-2xl text-center space-y-3 glow-gold">
+        <div class="text-4xl animate-bounce" id="bossDialogueIcon">🐲</div>
+        <div class="text-xs font-black text-pink-300 tracking-wider truncate" id="bossDialogueTitle">ボス出現！</div>
+        <div class="bg-[#110a24]/90 p-3 rounded-2xl border border-purple-500/30 text-[11px] text-purple-100 leading-relaxed text-left font-medium whitespace-pre-line break-words max-h-48 overflow-y-auto" id="bossDialogueText">
+          会話内容
+        </div>
+        <button id="btnBossDialogueNext" class="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:brightness-110 text-white font-black py-2 rounded-xl text-xs shadow-xl transition active:scale-95">
+          進む 🌸
+        </button>
+      </div>
+    </div>
+
     <!-- ==================== 2. クイズ・バトル画面 ==================== -->
     <div id="viewQuiz" class="hidden space-y-2.5">
       
@@ -479,7 +494,7 @@
       <div class="grid grid-cols-2 gap-1.5 text-xs max-h-[450px] overflow-y-auto pr-1" id="vocabBookList"></div>
     </div>
 
-    <!-- ==================== 5. 👾 にがて帳（復習・弱点克服専用画面） ==================== -->
+    <!-- ==================== 5. 👾 にがて帳 ==================== -->
     <div id="viewWeakBook" class="hidden space-y-2.5">
       <div class="bg-gradient-to-br from-rose-950 via-[#1b143a] to-[#120d2b] border border-rose-500/60 rounded-2xl p-3 space-y-1">
         <div class="flex justify-between items-center">
@@ -587,7 +602,7 @@
 
   </main>
 
-  <!-- ==================== 🎬 初回撃破限定 フルスクリーンエンディングモーダル ==================== -->
+  <!-- ==================== 🎬 フルスクリーン表エンディング ==================== -->
   <div id="modalEnding" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-3 overflow-y-auto">
     <div id="endingContainer" class="max-w-sm w-full text-center space-y-4 py-4">
       
@@ -606,7 +621,6 @@
           あなたの努力は本物です。本番も合格間違いなし！
         </p>
 
-        <!-- 相棒からのメッセージ -->
         <div class="bg-[#1b143a]/90 border-2 border-pink-400 p-3 rounded-2xl space-y-1.5 text-left shadow-2xl">
           <div class="flex items-center gap-2">
             <span class="text-2xl" id="endingHeroEmoji">🐱✨</span>
@@ -621,7 +635,6 @@
           </p>
         </div>
 
-        <!-- 隠し装備獲得演出 -->
         <div class="bg-gradient-to-r from-pink-950 via-purple-950 to-indigo-950 border-2 border-pink-500 p-3 rounded-2xl space-y-1 shadow-2xl text-left">
           <div class="text-xs font-black text-pink-300">🎁 神獣の遺産（完全隠し装備3種 解放！）</div>
           <div class="text-[10px] font-bold text-amber-300">
@@ -630,7 +643,6 @@
           <p class="text-[8.5px] text-slate-300">ショップの着せ替えに極限の神器が追加されました！(Lv.60〜)</p>
         </div>
 
-        <!-- 👑 スタッフロール（鄭 聖也（パパ）） -->
         <div class="bg-[#110a24]/90 border border-purple-500/40 p-2.5 rounded-2xl text-[9.5px] space-y-0.5 text-center font-bold">
           <div class="text-pink-400 tracking-widest text-[8.5px] uppercase border-b border-purple-800 pb-0.5">★ STAFF CREDITS ★</div>
           <div class="text-purple-200">プロデュース：<span class="text-white font-black">鄭 聖也（パパ）</span></div>
@@ -643,7 +655,6 @@
         </button>
       </div>
 
-      <!-- 不気味な揺れ＆真・裏ボス ティザー演出 -->
       <div id="endingPhase2" class="hidden space-y-4">
         <div class="text-5xl animate-pulse">🌌👁️⌛</div>
         <h3 class="text-base font-black text-pink-400 animate-pulse">
