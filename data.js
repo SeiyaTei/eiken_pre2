@@ -3,19 +3,19 @@
 // マスターデータベースファイル (data.js) - パート1
 // ==========================================
 
-// ==================== 1. レベル10ごとの相棒進化ツリー ====================
+// ==================== 1. レベル10ごとの相棒進化ツリー (精密座標切抜) ====================
 const AVATARS = [
-  { minLv: 1, emoji: '🐱✨', rank: '星詠みの見習い生', name: 'ルナ・ステラ' },
-  { minLv: 10, emoji: '🐰🌸', rank: '魔法学園の初等生', name: 'リリィ・メイプル' },
-  { minLv: 20, emoji: '🦉🔮', rank: '星詠みの案内役', name: 'コレット・ノワール' },
-  { minLv: 30, emoji: '🦊🪄', rank: '魔導の探求者', name: 'ミルフィー・フォックス' },
-  { minLv: 40, emoji: '🦄✨', rank: '天星のユニコーン', name: 'ステラ・ペガサス' },
-  { minLv: 50, emoji: '🧝‍♀️🌿', rank: '精霊の聖乙女', name: 'エルフィ・フローラ' },
-  { minLv: 60, emoji: '🧚‍♀️💖', rank: '星華の妖精姫', name: 'ティターニア' },
-  { minLv: 70, emoji: '👸💫', rank: '星穹の魔導姫', name: 'プリンセス・アストラ' },
-  { minLv: 80, emoji: '👑🦚', rank: '天光の聖大公', name: 'セレスティア' },
-  { minLv: 90, emoji: '🌌🕊️', rank: '銀河の守護女神', name: 'ルミナス・アイリス' },
-  { minLv: 100, emoji: '👑🌌✨', rank: '全次元の星詠み神', name: 'ステラ・マリス' }
+  { minLv: 1, pos: "-13px -9px", emoji: '🐭✨', rank: '見習い魔法使い', name: 'ミッキーマウス' },
+  { minLv: 10, pos: "-146px -9px", emoji: '🦆💙', rank: '元気な航海士', name: 'ドナルドダック' },
+  { minLv: 20, pos: "-473px -137px", emoji: '🍯🐻', rank: '100エーカーの森', name: 'くまのプーさん' },
+  { minLv: 30, pos: "-278px -141px", emoji: '👠✨', rank: '夢信じるプリンセス', name: 'シンデレラ' },
+  { minLv: 40, pos: "-13px -396px", emoji: '🌹👑', rank: '眠れる森の聖乙女', name: 'オーロラ姫' },
+  { minLv: 50, pos: "-143px -398px", emoji: '🍎🌸', rank: '純真なるプリンセス', name: '白雪姫' },
+  { minLv: 60, pos: "-143px -332px", emoji: '📖✨', rank: '知性と真実の愛', name: 'ベル' },
+  { minLv: 70, pos: "-13px -138px", emoji: '🧞‍♂️💫', rank: '砂漠のプリンセス', name: 'ジャスミン' },
+  { minLv: 80, pos: "-13px -588px", emoji: '🧜‍♀️🌊', rank: '大海の歌姫', name: 'アリエル' },
+  { minLv: 90, pos: "-140px -797px", emoji: '❄️👑', rank: '氷雪の女王', name: 'エルサ' },
+  { minLv: 100, pos: "-77px -138px", emoji: '🌟🌌', rank: '全次元のランプ魔神', name: 'ジーニー (完全体)' }
 ];
 
 // ==================== 2. マジカルブティック 装備データベース ====================
@@ -62,140 +62,151 @@ const SHOP_EQUIP_DATA = [
   { id: 'aura_genesis_light', name: '創世神の神光', type: 'aura', icon: '🌌✨👑', price: 99999, rank: '🌌 創世神話級', val: 515, desc: '速さ +515 / 時空を超越する絶対神の輝き (Lv.60以上)', reqLv: 60, isSecret: true }
 ];
 
-// ==================== 3. 過去問ボスステージ (全11段階) ====================
+// ==================== 3. 過去問ボスステージ (精密座標切抜) ====================
 const BOSS_STAGES = [
   { 
     lv: 1, 
-    name: "森の案内妖精・ピピ", 
-    icon: "🧚‍♀️", 
+    name: "海賊船長・フック", 
+    pos: "-10px -328px",
+    icon: "🏴‍☠️🐊", 
     hp: 1200, 
     atk: 25, 
     exp: 60, 
     gems: 15, 
-    desc: "魔法の森で迷い人を試す妖精。基礎単語で突破しよう！",
-    introMsg: "Welcome to the magic forest! (魔法の森へようこそ！あなたの英語の力、見せてみてね！)",
-    defeatMsg: "You did it! (すごい！次の試練は月夜の白狐が待っているわ...！)"
+    desc: "ネバーランドの海賊船長。基礎単語で突破しよう！",
+    introMsg: "I'll get you! (ピーターパンめ！お前もまとめて海の藻屑にしてくれる！)",
+    defeatMsg: "The crocodile is coming! (ワニの時計の音が…！次はスミーが相手だ！)"
   },
   { 
     lv: 2, 
-    name: "月光の白狐・ツクヨミ", 
-    icon: "🦊🌙", 
+    name: "海賊水夫長・スミー", 
+    pos: "-78px -330px",
+    icon: "⛵👓", 
     hp: 3500, 
     atk: 50, 
     exp: 90, 
     gems: 20, 
-    desc: "月明かりに舞う幻影の狐。3秒以内クリティカルで仕留めよう！",
-    introMsg: "Can you see through my illusion? (月夜の幻影を見破れるかしら？)",
-    defeatMsg: "My moonlight faded... (月光が晴れていく...！次は天を駆けるペガサスよ！)"
+    desc: "フック船長の頼れる相棒。3秒即答クリティカルで仕留めよう！",
+    introMsg: "Aye aye, Captain! (へい船長！不届き者はこのスミーが懲らしめますよ！)",
+    defeatMsg: "Captain, help me! (船長助けて〜！次は暴れん坊のピートだ！)"
   },
   { 
     lv: 3, 
-    name: "星屑のペガサス", 
-    icon: "🦄⭐", 
+    name: "暴れん坊・ピート", 
+    pos: "-78px -70px",
+    icon: "😼💥", 
     hp: 7000, 
     atk: 85, 
     exp: 130, 
     gems: 28, 
-    desc: "星の海を駆ける聖獣。Lv.20以上＆上位ロッドを装備して挑もう。",
-    introMsg: "Ride on the starlight! (星屑のスピードについてこられるかな！)",
-    defeatMsg: "Splendid light... (美しい光だ...！だが虹の彼方のグリフォンは手強いぞ！)"
+    desc: "いつも悪巧みをする大男。Lv.20以上＆上位装備で挑もう。",
+    introMsg: "Outta my way, shrimp! (邪魔だどきなチビ共！俺様のパワーを見せてやる！)",
+    defeatMsg: "You got lucky! (覚えてやがれ〜！次はワンダーランドのハートの女王だ！)"
   },
   { 
     lv: 4, 
-    name: "虹彩のグリフォン", 
-    icon: "🦅🌈", 
+    name: "ワンダーランド・ハートの女王", 
+    pos: "-470px -595px",
+    icon: "👑🂱", 
     hp: 12000, 
     atk: 120, 
     exp: 180, 
     gems: 35, 
-    desc: "七色の翼を持つ怪鳥。高校文法の知識で風を切り裂こう！",
-    introMsg: "Feel the colorful storm! (虹色の嵐に耐えられるかな！)",
-    defeatMsg: "The sky cleared... (嵐が晴れた...！次は冷気漂う氷龍の神殿だ！)"
+    desc: "不思議の国のわがまま女王。高校文法の知識で切り裂こう！",
+    introMsg: "Off with their heads! (あやつの首をはねておしまい！)",
+    defeatMsg: "Who painted the roses red?! (誰がバラを赤く塗ったの…！次は野獣の城よ！)"
   },
   { 
     lv: 5, 
-    name: "水晶の氷龍・グラシア", 
-    icon: "🐲❄️", 
+    name: "呪われし野獣・ビースト", 
+    pos: "-210px -334px",
+    icon: "🦁🥀", 
     hp: 18000, 
     atk: 165, 
     exp: 240, 
     gems: 45, 
-    desc: "【中ボス】美しく凍てつく氷龍。ミスを減らして挑もう！",
-    introMsg: "Freeze in my crystal sanctuary! (水晶の冷気に耐えきれるかしら！)",
-    defeatMsg: "My ice is melting... (氷が溶けていく...！だが宵闇の魔導姫はお前を惑わすぞ！)"
+    desc: "【中ボス】怒りに満ちた城の主。ミスを減らして挑もう！",
+    introMsg: "Get out of my castle! (我が城から今すぐ立ち去れぇぇ！！)",
+    defeatMsg: "The rose petals... (バラの花びらが…！カリブのキャプテンがお前を試すぞ！)"
   },
   { 
     lv: 6, 
-    name: "宵闇の魔導姫・リリス", 
-    icon: "🧝‍♀️🔮", 
+    name: "キャプテン・ジャック・スパロウ", 
+    pos: "-340px -266px",
+    icon: "🏴‍☠️🧭", 
     hp: 26000, 
     atk: 210, 
     exp: 310, 
     gems: 55, 
-    desc: "夜を司る妖艶な魔導士。装備を整えて挑もう。",
-    introMsg: "Welcome to the eternal night. (永遠の夜へようこそ。あなたの魔法を見せてちょうだい。)",
-    defeatMsg: "Such bright light... (なんて眩しい光...！鳳凰の炎がお前を試すわ！)"
+    desc: "予測不能な海賊船長。装備を整えて挑もう。",
+    introMsg: "This is the day you will always remember! (お前がキャプテン・ジャック・スパロウを捕まえ損ねた日として記憶されるのだ！)",
+    defeatMsg: "Where's my rum?! (ラム酒はどこだ…？！海の王トリトンがお前を待っているぞ！)"
   },
   { 
     lv: 7, 
-    name: "烈火の鳳凰・フェニックス", 
-    icon: "🔥🦅", 
+    name: "七つの海の覇王・トリトン王", 
+    pos: "-205px -586px",
+    icon: "🔱🌊", 
     hp: 36000, 
     atk: 265, 
     exp: 400, 
     gems: 68, 
-    desc: "不滅の炎を纏う神鳥。素早さと会心が勝利の鍵！",
-    introMsg: "My flame burns forever! (我が不滅の炎、知識の力で鎮めてみせよ！)",
-    defeatMsg: "Extinguished... (炎が鎮まった...！妖精王タイタニアが待っているぞ！)"
+    desc: "三叉槍を操る海の神。素早さと会心が勝利の鍵！",
+    introMsg: "I am the King of the Ocean! (我が名は海の王トリトン！陸の知識で我を超えてみせよ！)",
+    defeatMsg: "Such powerful spirit... (見事な知識の力だ…！ハロウィンタウンへ向かうがよい！)"
   },
   { 
     lv: 8, 
-    name: "聖霊王・タイタニア", 
-    icon: "👑🌸✨", 
+    name: "パンプキン・キング・ジャック", 
+    pos: "-275px -458px",
+    icon: "🎃💀", 
     hp: 48000, 
     atk: 330, 
     exp: 500, 
     gems: 80, 
-    desc: "妖精界の支配者。上級ティアラとロッドが必須！",
-    introMsg: "Show me the true harmony of words! (言葉の真なる調和を示してみせなさい！)",
-    defeatMsg: "Truly magnificent... (見事です...！天星龍の試練を超えてゆきなさい！)"
+    desc: "ハロウィンタウンの王。上級ティアラとロッドが必須！",
+    introMsg: "Boys and girls of every age! (あらゆる年代の少年少女よ！最高の恐怖をお見せしよう！)",
+    defeatMsg: "What a splendid fright! (なんて素晴らしいひらめきだ！シュガー・ラッシュのラルフが待っているぞ！)"
   },
   { 
     lv: 9, 
-    name: "銀河の天星龍・アストライア", 
-    icon: "🐉🌌", 
+    name: "破壊神・ラルフ", 
+    pos: "-140px -668px",
+    icon: "🕹️🧱", 
     hp: 62000, 
     atk: 400, 
     exp: 650, 
     gems: 100, 
-    desc: "星穹を支配する巨大龍。最高峰のステータスが必要！",
-    introMsg: "Gaze upon the galaxy! (銀河の星々を統べる我が力を超えられるか！)",
-    defeatMsg: "The stars align for you... (星々がお前を導いている...！エターナル・ユニコーン様の元へ！)"
+    desc: "すべてを粉砕する怪力巨人。最高峰のステータスが必要！",
+    introMsg: "I'm gonna wreck it! (オレが全部ぶっ壊してやる！！)",
+    defeatMsg: "I'm good... and that's not bad. (オレはヒーローになれたんだ…！女王エルサの元へ進め！)"
   },
   { 
     lv: 10, 
-    name: "創世神獣・エターナル・ユニコーン", 
-    icon: "👑🦄💖✨", 
+    name: "雪と氷の絶対女王・エルサ", 
+    pos: "-140px -797px",
+    icon: "❄️👑✨", 
     hp: 80000, 
     atk: 500, 
     exp: 850, 
     gems: 150, 
-    desc: "【表ラスボス】準2級の頂点に君臨する純白の創世神獣！",
-    introMsg: "I am the light of all dreams! (我が名はエターナル・ユニコーン！あなたの全知全能の英語力を解き放ちなさい！)",
-    defeatMsg: "Incredible... You are the true grand master! (素晴らしい...！あなたこそが真の英語の覇者です！)"
+    desc: "【表ラスボス】真実の愛と極限の魔法を操る氷の女王！",
+    introMsg: "Show yourself! (あなたの真なる英語の力を、今ここで解き放ちなさい！)",
+    defeatMsg: "You are the true Master! (見事です…！あなたこそがすべての魔法を極めし真の覇者です！)"
   },
   { 
     lv: 11, 
-    name: "虚空の創造主・クロノス・ステラ", 
-    icon: "🌌👁️⌛✨", 
+    name: "虚空の創造主・クロノス", 
+    pos: "-13px -9px",
+    icon: "🌌👁️⌛", 
     hp: 160000, 
     atk: 9999, 
     exp: 2000, 
     gems: 300, 
     desc: "【真・隠し裏ボス】Lv.100＆創世神装備＆全問クリティカルでのみ勝てる究極神！", 
     isSecret: true,
-    introMsg: "Time and space bow before me... (時空の果てへようこそ。神話の装備を纏いし乙女よ、限界を超えてみせよ！)",
-    defeatMsg: "Eternal starlight shines forever... (永遠の星光が満ちた...。全次元の覇者よ、その栄光は不滅なり...！)"
+    introMsg: "Time and space bow before me... (時空の彼方へようこそ。神話の力を宿した者よ、限界を超えてみよ！)",
+    defeatMsg: "Eternal starlight shines forever... (永遠の光が宇宙を満たした…！その栄光は不滅なり…！)"
   }
 ];
 
