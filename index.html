@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>英検準2級 マジカルクエスト 〜星詠みの魔法学園〜</title>
+  <title>英検準2級 マジカルクエスト 〜星詠みのファンタジア〜</title>
   
   <!-- PWA / ホーム画面アプリ化設定 -->
   <link rel="manifest" href="manifest.json">
@@ -25,7 +25,7 @@
       display: inline-block;
       border-radius: 12px;
     }
-    
+
     @keyframes bounce-slow {
       0%, 100% { transform: translateY(-3%); }
       50% { transform: translateY(3%); }
@@ -113,19 +113,19 @@
       <div class="bg-gradient-to-br from-[#2b1b59] via-[#1f1542] to-[#160d33] border border-pink-400/50 rounded-3xl p-3.5 shadow-xl relative overflow-hidden glow-gold">
         <div class="flex items-center gap-3">
           <div class="relative flex-shrink-0">
-            <div id="heroAvatarContainer" class="w-20 h-20 rounded-2xl bg-[#110a24]/80 border-2 border-pink-400 flex items-center justify-center text-3xl shadow-inner animate-bounce-slow relative overflow-visible">
+            <div id="heroAvatarContainer" class="w-20 h-20 rounded-2xl bg-[#110a24]/80 border-2 border-pink-400 flex items-center justify-center shadow-inner animate-bounce-slow relative overflow-visible">
               <span id="equipAuraIcon" class="absolute inset-0 flex items-center justify-center text-4xl opacity-75 pointer-events-none scale-125 z-0"></span>
               <span id="equipHatIcon" class="absolute -top-3 z-20 text-xl drop-shadow"></span>
-              <span id="heroAvatar" class="z-10 text-3xl">🐱✨</span>
+              <div id="heroAvatar" class="z-10 flex items-center justify-center">🐭✨</div>
               <span id="equipWeaponIcon" class="absolute -right-2 bottom-0 z-20 text-xl drop-shadow"></span>
             </div>
             <span id="heroRank" class="absolute -bottom-2 -right-1 text-[8px] font-black bg-gradient-to-r from-pink-500 to-purple-500 text-white px-2 py-0.5 rounded-full shadow z-30 whitespace-nowrap max-w-[100px] truncate">
-              星詠みの見習い生
+              見習い魔法使い
             </span>
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex justify-between items-baseline mb-0.5">
-              <h2 id="heroName" class="font-black text-sm text-white truncate">ルナ・ステラ</h2>
+              <h2 id="heroName" class="font-black text-sm text-white truncate">ソーサラー・ミッキー</h2>
               <span id="levelLabel" class="text-xs font-black text-pink-300 flex-shrink-0 ml-1">Lv.1</span>
             </div>
             <div class="w-full bg-[#110a24] rounded-full h-2.5 border border-purple-500/40 overflow-hidden mb-1">
@@ -161,12 +161,12 @@
               <span id="bossCurrentProgressBadge" class="text-[8.5px] font-black bg-gradient-to-r from-pink-400 to-purple-400 text-purple-950 px-1.5 py-0.2 rounded-full">Lv.1 解放中</span>
             </div>
             <h3 class="text-sm font-black text-pink-300 mt-0.5 flex items-center gap-1 truncate">
-              👑 準2級 過去問ボス討伐
+              👑 ディズニー 過去問ボス討伐
             </h3>
-            <p class="text-[9.5px] text-purple-200 mt-0.5 leading-tight">本番過去問10問で討伐！Lv.10神獣を目指そう！</p>
+            <p class="text-[9.5px] text-purple-200 mt-0.5 leading-tight">本番過去問10問で討伐！Lv.10女王エルサを目指そう！</p>
           </div>
           <button onclick="openBossSelectModal()" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:brightness-110 text-white font-black px-3 py-2.5 rounded-2xl text-[11px] shadow-lg transition active:scale-95 flex flex-col items-center flex-shrink-0">
-            <span class="text-lg">🦄</span>
+            <span class="text-lg">🏰</span>
             <span class="whitespace-nowrap">ボス選択</span>
           </button>
         </div>
@@ -347,9 +347,9 @@
         <div class="flex justify-between items-center border-b border-purple-500/30 pb-2">
           <div>
             <h3 class="font-black text-sm text-pink-300 flex items-center gap-1">
-              🦄 過去問ボスバトル選択
+              🏰 ディズニーボスバトル選択
             </h3>
-            <p class="text-[9px] text-purple-200">各レベルを撃破してLv.10神獣を目指そう！</p>
+            <p class="text-[9px] text-purple-200">各レベルを撃破してLv.10女王エルサを目指そう！</p>
           </div>
           <button onclick="closeBossSelectModal()" class="text-slate-400 hover:text-white text-base font-bold px-2 py-0.5 bg-[#110a24] rounded-lg">✕</button>
         </div>
@@ -358,10 +358,10 @@
       </div>
     </div>
 
-    <!-- ==================== 💬 ボス会話モーダル（静的配置で不具合完全防止） ==================== -->
+    <!-- ==================== 💬 ボス会話モーダル ==================== -->
     <div id="modalBossDialogue" class="hidden fixed inset-0 bg-black/90 z-50 p-3 flex items-center justify-center">
       <div class="max-w-sm w-full bg-gradient-to-b from-[#25174f] via-[#1a1038] to-[#120a28] border-2 border-pink-400/80 rounded-3xl p-4 shadow-2xl text-center space-y-3 glow-gold">
-        <div class="text-4xl animate-bounce" id="bossDialogueIcon">🐲</div>
+        <div class="flex justify-center" id="bossDialogueIcon">🐲</div>
         <div class="text-xs font-black text-pink-300 tracking-wider truncate" id="bossDialogueTitle">ボス出現！</div>
         <div class="bg-[#110a24]/90 p-3 rounded-2xl border border-purple-500/30 text-[11px] text-purple-100 leading-relaxed text-left font-medium whitespace-pre-line break-words max-h-48 overflow-y-auto" id="bossDialogueText">
           会話内容
@@ -380,7 +380,7 @@
         <div class="text-[11px] font-bold text-pink-300" id="quizProgress">第 1 / 5 問</div>
         <div class="flex items-center gap-1.5">
           <button id="btnUseHint" onclick="use5050Hint()" class="bg-[#291854] hover:bg-[#382373] border border-pink-400 text-pink-200 text-[9.5px] font-black px-2 py-0.5 rounded-full shadow transition active:scale-95">
-            💡 ヒント (<span id="hintStockCount">0</span>)
+            🪞 鏡 (<span id="hintStockCount">0</span>)
           </button>
           <div class="text-[10px] font-black text-amber-300 bg-amber-500/20 border border-amber-500/40 px-2 py-0.5 rounded-full" id="comboCounter">🔥 0 連続</div>
         </div>
@@ -393,7 +393,7 @@
       <div class="grid grid-cols-2 gap-2 bg-[#110a24]/90 p-2 rounded-2xl border border-purple-500/30 text-xs">
         <div class="space-y-0.5">
           <div class="flex justify-between items-center font-black text-[10px]">
-            <span id="battleHeroName" class="text-pink-300 truncate max-w-[80px]">ルナ</span>
+            <span id="battleHeroName" class="text-pink-300 truncate max-w-[80px]">ミッキー</span>
             <span id="battleHeroHpText" class="text-pink-300 text-[9.5px]">100/100</span>
           </div>
           <div class="w-full bg-[#1e143d] rounded-full h-2 overflow-hidden border border-purple-500/40">
@@ -402,7 +402,7 @@
         </div>
         <div class="space-y-0.5">
           <div class="flex justify-between items-center font-black text-[10px]">
-            <span id="battleEnemyName" class="text-rose-400 truncate max-w-[80px]">モンスター</span>
+            <span id="battleEnemyName" class="text-rose-400 truncate max-w-[80px]">ピート</span>
             <span id="battleEnemyHpText" class="text-rose-300 text-[9.5px]">100/100</span>
           </div>
           <div class="w-full bg-[#1e143d] rounded-full h-2 overflow-hidden border border-purple-500/40">
@@ -415,7 +415,7 @@
         <div id="damageEffectArea" class="absolute inset-0 pointer-events-none flex items-center justify-center z-30"></div>
 
         <div class="flex flex-col items-center justify-center mb-1.5">
-          <div id="enemyAvatar" class="text-4xl mb-0.5 animate-bounce-slow">🦄</div>
+          <div id="enemyAvatar" class="w-14 h-14 flex items-center justify-center mb-0.5 animate-bounce-slow"></div>
           <div class="w-36 bg-[#110a24] rounded-full h-1.5 border border-purple-500/40 overflow-hidden">
             <div id="timerGauge" class="bg-gradient-to-r from-pink-400 to-amber-300 h-full w-full transition-all linear"></div>
           </div>
@@ -462,7 +462,7 @@
         <div id="rareDropArea" class="hidden bg-gradient-to-r from-pink-950 via-purple-950 to-indigo-950 border-2 border-pink-400 p-2.5 rounded-2xl space-y-0.5">
           <span class="text-lg">🎁✨</span>
           <div class="font-black text-[10px] text-pink-300">ボスからレア宝箱がドロップ！</div>
-          <div id="rareDropItemText" class="font-bold text-[11px] text-white truncate">【星光の聖冠】を手に入れた！</div>
+          <div id="rareDropItemText" class="font-bold text-[11px] text-white truncate">【竜王の冠】を手に入れた！</div>
         </div>
 
         <div class="grid grid-cols-3 gap-1.5 bg-[#110a24]/80 p-2.5 rounded-2xl border border-purple-500/30 text-xs">
@@ -525,14 +525,14 @@
     <div id="viewShop" class="hidden space-y-3">
       <div class="bg-[#1b143a]/90 border border-purple-500/40 rounded-2xl p-3 space-y-2">
         <h3 class="font-black text-xs text-pink-300 flex items-center gap-1">
-          💡 バトル補助アイテム
+          💡 ディズニー魔法アイテム
         </h3>
         <div class="space-y-1.5 text-xs">
           <div class="bg-[#110a24] p-2 rounded-xl border border-purple-500/30 flex items-center justify-between gap-2">
             <div class="flex items-center gap-2 min-w-0">
-              <span class="text-xl flex-shrink-0">📜</span>
+              <span class="text-xl flex-shrink-0">🪞</span>
               <div class="min-w-0">
-                <div class="font-bold text-[11px] text-white truncate">ヒントの書（50:50）</div>
+                <div class="font-bold text-[11px] text-white truncate">魔法の鏡（マジックミラー）</div>
                 <div class="text-[9px] text-purple-200">2択消去 (所持: <span id="shopHintCount">0</span>個)</div>
               </div>
             </div>
@@ -545,7 +545,7 @@
             <div class="flex items-center gap-2 min-w-0">
               <span class="text-xl flex-shrink-0">🧪</span>
               <div class="min-w-0">
-                <div class="font-bold text-[11px] text-white truncate">EXPの秘薬</div>
+                <div class="font-bold text-[11px] text-white truncate">ピクシーダストのエリクサー</div>
                 <div class="text-[9px] text-purple-200">次回EXP 2倍 (所持: <span id="shopPotionCount">0</span>個)</div>
               </div>
             </div>
@@ -558,7 +558,7 @@
 
       <div class="bg-[#1b143a]/90 border border-purple-500/40 rounded-2xl p-3 space-y-2">
         <h3 class="font-black text-xs text-pink-300 flex items-center gap-1">
-          👑 着せ替え・装備コレクション
+          👑 相棒のディズニー装備コレクション
         </h3>
 
         <div class="flex bg-[#110a24] p-1 rounded-xl border border-purple-500/30 text-[10px] font-bold">
@@ -566,7 +566,7 @@
             👑 ティアラ (HP)
           </button>
           <button id="tabEquipWeapon" onclick="switchEquipTab('weapon')" class="flex-1 py-1 rounded-lg text-purple-200 hover:text-white transition">
-            🪄 ロッド (攻)
+            🪄 ぶき (攻)
           </button>
           <button id="tabEquipAura" onclick="switchEquipTab('aura')" class="flex-1 py-1 rounded-lg text-purple-200 hover:text-white transition">
             ✨ オーラ (速)
@@ -617,15 +617,15 @@
     <div id="endingContainer" class="max-w-sm w-full text-center space-y-4 py-4">
       
       <div id="endingPhase1" class="space-y-3">
-        <div class="text-6xl animate-bounce">👑🦄🌸✨</div>
+        <div class="text-6xl animate-bounce">👑🏰🌸✨</div>
         <div class="inline-block bg-gradient-to-r from-pink-500 to-purple-500 text-white font-black text-[11px] px-3 py-0.5 rounded-full shadow-lg">
           GAME CLEARED & 合格達成！
         </div>
         <h2 class="text-xl font-black text-pink-300 tracking-wider">
-          創世神獣 討伐完了！
+          氷雪の女王エルサ 討伐完了！
         </h2>
         <p class="text-[11px] text-slate-200 leading-relaxed whitespace-pre-line px-1">
-          すべての準2級過去問の試練を乗り越え、
+          すべてのディズニーヴィランズの試練を乗り越え、
           高校英語の全重要知識をマスターしました！
           
           あなたの努力は本物です。本番も合格間違いなし！
@@ -633,22 +633,22 @@
 
         <div class="bg-[#1b143a]/90 border-2 border-pink-400 p-3 rounded-2xl space-y-1.5 text-left shadow-2xl">
           <div class="flex items-center gap-2">
-            <span class="text-2xl" id="endingHeroEmoji">🐱✨</span>
+            <div id="endingHeroEmoji" class="w-12 h-12 flex items-center justify-center">🐭✨</div>
             <div>
               <div class="text-[9px] text-pink-300 font-bold">最高の相棒より</div>
-              <div class="text-[11px] font-black text-white" id="endingHeroName">ルナ</div>
+              <div class="text-[11px] font-black text-white" id="endingHeroName">ミッキーマウス</div>
             </div>
           </div>
           <p class="text-[10.5px] text-purple-100 leading-relaxed">
             「ここまで一緒に冒険してくれて本当にありがとう！
-            あなたと一緒に最高の英語マスターになれて、とっても嬉しいよ！」
+            ハハッ！君と一緒に最高のファンタジアマスターになれて、とっても嬉しいよ！」
           </p>
         </div>
 
         <div class="bg-gradient-to-r from-pink-950 via-purple-950 to-indigo-950 border-2 border-pink-500 p-3 rounded-2xl space-y-1 shadow-2xl text-left">
           <div class="text-xs font-black text-pink-300">🎁 神獣の遺産（完全隠し装備3種 解放！）</div>
           <div class="text-[10px] font-bold text-amber-300">
-            👑【創世神の王冠】 / 🗡️【創世神の聖剣】 / ✨【創世神の神光】
+            👑【ファンタジアの大魔導冠】 / 🗡️【マスターソード・ファンタジア】 / ✨【ファンタジア・コズミックオーラ】
           </div>
           <p class="text-[8.5px] text-slate-300">ショップの着せ替えに極限の神器が追加されました！(Lv.60〜)</p>
         </div>
@@ -671,10 +671,10 @@
           ……だが、星の彼方に異変が起こる。
         </h3>
         <p class="text-[11px] text-rose-300 leading-relaxed whitespace-pre-line px-1 font-bold">
-          次元の裂け目から、創世神獣をも遥かに凌駕する
+          次元の裂け目から、女王エルサをも遥かに凌駕する
           底知れないプレッシャーが漂ってくる……！
           
-          「フハハ……よくぞ神獣を解放した。
+          「フハハ……よくぞ試練を乗り越えた。
           だが我を超えねば、真の覇者とは言えん……」
         </p>
 
