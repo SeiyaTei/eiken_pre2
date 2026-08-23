@@ -1,7 +1,15 @@
 // ==========================================
 // 英検準2級 マジカルクエスト 〜星詠みの魔法学園〜
-// ゲーム進行・ロジックファイル (app.js) - デイリー動的難易度調整版
+// ゲーム進行・ロジックファイル (app.js) - ディズニー画像スプライト対応版
 // ==========================================
+
+// ==================== スプライト描画ヘルパー ====================
+function getSpriteIconHtml(itemObj, fallbackEmoji) {
+  if (itemObj && itemObj.pos) {
+    return `<div class="disney-sprite" style="background-position: ${itemObj.pos};"></div>`;
+  }
+  return fallbackEmoji || '✨';
+}
 
 // ==================== 音声読み上げエンジン ====================
 let voiceSpeed = 0.85;
@@ -387,7 +395,7 @@ function addExp(amount) {
   }
   if (leveledUp) {
     playSE('levelup');
-    const currentAvatar = (typeof AVATARS !== 'undefined') ? ([...AVATARS].reverse().find(a => userData.level >= a.minLv) || AVATARS[0]) : { name: "ルナ", rank: "星詠み生" };
+    const currentAvatar = (typeof AVATARS !== 'undefined') ? ([...AVATARS].reverse().find(a => userData.level >= a.minLv) || AVATARS[0]) : { name: "ミッキーマウス", rank: "見習い魔法使い" };
     alert(`🎉 レベルアップ！ Lv.${userData.level} に到達しました！\n相棒の姿：【${currentAvatar.rank}】${currentAvatar.name}`);
   }
   saveData();
@@ -424,9 +432,13 @@ function updateUiState() {
 
   if (typeof AVATARS !== 'undefined') {
     const currentAvatar = [...AVATARS].reverse().find(a => userData.level >= a.minLv) || AVATARS[0];
-    setText('heroAvatar', currentAvatar.emoji);
+    
+    // スプライト画像を表示
+    const heroAvatarEl = document.getElementById('heroAvatar');
+    if (heroAvatarEl) heroAvatarEl.innerHTML = getSpriteIconHtml(currentAvatar, currentAvatar.emoji);
+
     if (userData.hasSeenTrueEnding) {
-      setText('heroRank', '🌌 全次元の星詠み神');
+      setText('heroRank', '🌌 全次元のランプ魔神');
       setText('heroName', `${currentAvatar.name} (完全体)`);
     } else {
       setText('heroRank', currentAvatar.rank);
@@ -443,6 +455,7 @@ function updateUiState() {
     setText('equipAuraIcon', auraEquip ? auraEquip.icon : '');
   }
 
+  // 🎯 2026年10月4日 試験日カウントダウン
   try {
     const examDate = new Date(2026, 9, 4);
     const today = new Date();
@@ -734,7 +747,9 @@ function openBossSelectModal() {
     if (isUnlocked) {
       card.innerHTML = `
         <div class="flex items-center gap-2 min-w-0 flex-1">
-          <span class="text-2xl flex-shrink-0">${stage.icon}</span>
+          <div class="flex-shrink-0 flex items-center justify-center w-12 h-12 bg-[#110a24] rounded-xl border border-purple-500/40 overflow-hidden">
+            ${getSpriteIconHtml(stage, stage.icon)}
+          </div>
           <div class="min-w-0 flex-1">
             <div class="flex items-center gap-1 flex-wrap">
               <span class="text-[11px] font-black ${stage.isSecret ? 'text-pink-300' : 'text-purple-200'} truncate">Lv.${stage.lv} ${stage.name}</span>
@@ -946,7 +961,7 @@ function renderVocabBook() {
   });
 }
 
-// ==================== バトルセッション管理（デイリー動的難易度調整） ====================
+// ==================== バトルセッション管理 ====================
 let currentQueue = [];
 let currentIndex = 0;
 let currentMode = '';
@@ -1088,7 +1103,7 @@ function startSession() {
     enemyCurHp = currentBossStage.hp;
     enemyAtk = currentBossStage.atk;
   } else if (isDailyCurrentSession) {
-    // ⚔️ デイリーミッション動的難易度調整（問数・攻撃力・最大HPに応じてなんとか倒せる絶妙バランスに設定）
+    // ⚔️ デイリーミッション動的難易度調整
     const qCount = currentQueue.length || (currentMode === 'vocab' ? 5 : 3);
     enemyMaxHp = Math.round(pStats.atk * qCount * 1.25);
     enemyAtk = Math.max(15, Math.round(playerMaxHp * 0.38));
@@ -1118,7 +1133,6 @@ function startSession() {
     enemyCurHp = enemyMaxHp;
   }
 
-  // 画面の確実な切り替え
   hideAllViews();
   document.getElementById('viewQuiz').classList.remove('hidden');
 
@@ -1191,12 +1205,14 @@ function renderQuestion() {
     document.getElementById('enemyCardBox').classList.remove('fever-active');
   }
   
-  if (isBossMode) {
-    document.getElementById('enemyAvatar').innerText = currentBossStage.icon;
+  // ボス画像スプライト描画
+  const enemyAvatarEl = document.getElementById('enemyAvatar');
+  if (isBossMode && currentBossStage) {
+    enemyAvatarEl.innerHTML = getSpriteIconHtml(currentBossStage, currentBossStage.icon);
   } else if (currentMode === 'weakBattle' || currentMode === 'weakRetry') {
-    document.getElementById('enemyAvatar').innerText = '👾';
+    enemyAvatarEl.innerText = '👾';
   } else {
-    document.getElementById('enemyAvatar').innerText = MONSTERS[currentIndex % MONSTERS.length];
+    enemyAvatarEl.innerText = MONSTERS[currentIndex % MONSTERS.length];
   }
 
   document.getElementById('quizQuestion').innerText = q.q;
@@ -1510,7 +1526,7 @@ function proceedFinishSession() {
 
     document.getElementById('resultModeBadge').innerText = `👑 Lv.${currentBossStage.lv} BOSS 討伐完全勝利！`;
     document.getElementById('resultModeBadge').className = 'text-[9px] font-black bg-pink-600 text-white px-2 py-0.5 rounded-full inline-block mb-1 shadow';
-    document.getElementById('resultEmoji').innerText = currentBossStage.icon;
+    document.getElementById('resultEmoji').innerHTML = getSpriteIconHtml(currentBossStage, currentBossStage.icon);
     document.getElementById('resultTitle').innerText = `【${currentBossStage.name}】を撃破！`;
     document.getElementById('resultComment').innerText = (currentBossStage.lv === 11) 
       ? '信じられない快挙！真・裏ボスを討伐し全次元を制覇しました！'
@@ -1619,7 +1635,7 @@ function showEndingModal() {
   const avatarObj = [...AVATARS].reverse().find(a => userData.level >= a.minLv) || AVATARS[0];
   const heroEmojiEl = document.getElementById('endingHeroEmoji');
   const heroNameEl = document.getElementById('endingHeroName');
-  if (heroEmojiEl) heroEmojiEl.innerText = avatarObj.emoji;
+  if (heroEmojiEl) heroEmojiEl.innerHTML = getSpriteIconHtml(avatarObj, avatarObj.emoji);
   if (heroNameEl) heroNameEl.innerText = avatarObj.name;
 
   const phase1 = document.getElementById('endingPhase1');
@@ -1678,7 +1694,7 @@ function showTrueEndingModal() {
       
       <div class="bg-[#110a24]/90 p-3 rounded-2xl border border-purple-500/40 text-[10.5px] text-purple-100 leading-relaxed text-left space-y-1.5 break-words">
         <p>虚無の創造主【クロノス】は満たされ、宇宙の全てに永遠の美しい光が灯りました。</p>
-        <p class="text-pink-300 font-bold">ルナ：「信じられないよ……！あなたは全700語、全高校英文法、リスニングの全てを極めた、本物の【英語の女神】になったんだね！！」</p>
+        <p class="text-pink-300 font-bold">相棒：「信じられないよ……！あなたは全700語、全高校英文法、リスニングの全てを極めた、本物の【英語の女神】になったんだね！！」</p>
       </div>
 
       <div class="bg-gradient-to-r from-pink-950 via-purple-950 to-indigo-950 border-2 border-pink-400 p-2.5 rounded-2xl text-center space-y-1 shadow-2xl">
