@@ -1,65 +1,32 @@
 // ==========================================
-// 英検準2級 マジカルクエスト 〜星詠みの魔法学園〜
-// マスターデータベースファイル (data.js) - パート1
+// 英検準2級 マジカルクエスト 〜星詠みのファンタジア〜
+// ディズニー完全統一データファイル (data.js)
 // ==========================================
 
 // ==================== 1. レベル10ごとの相棒進化ツリー (精密座標切抜) ====================
 const AVATARS = [
-  { minLv: 1, pos: "-13px -9px", emoji: '🐭✨', rank: '見習い魔法使い', name: 'ミッキーマウス' },
+  { minLv: 1, pos: "-13px -9px", emoji: '🐭✨', rank: '見習い魔法使い', name: 'ソーサラー・ミッキー' },
   { minLv: 10, pos: "-146px -9px", emoji: '🦆💙', rank: '元気な航海士', name: 'ドナルドダック' },
-  { minLv: 20, pos: "-473px -137px", emoji: '🍯🐻', rank: '100エーカーの森', name: 'くまのプーさん' },
+  { minLv: 20, pos: "-473px -137px", emoji: '🍯🐻', rank: '100エーカーの森の主', name: 'くまのプーさん' },
   { minLv: 30, pos: "-278px -141px", emoji: '👠✨', rank: '夢信じるプリンセス', name: 'シンデレラ' },
   { minLv: 40, pos: "-13px -396px", emoji: '🌹👑', rank: '眠れる森の聖乙女', name: 'オーロラ姫' },
   { minLv: 50, pos: "-143px -398px", emoji: '🍎🌸', rank: '純真なるプリンセス', name: '白雪姫' },
   { minLv: 60, pos: "-143px -332px", emoji: '📖✨', rank: '知性と真実の愛', name: 'ベル' },
   { minLv: 70, pos: "-13px -138px", emoji: '🧞‍♂️💫', rank: '砂漠のプリンセス', name: 'ジャスミン' },
   { minLv: 80, pos: "-13px -588px", emoji: '🧜‍♀️🌊', rank: '大海の歌姫', name: 'アリエル' },
-  { minLv: 90, pos: "-140px -797px", emoji: '❄️👑', rank: '氷雪の女王', name: 'エルサ' },
-  { minLv: 100, pos: "-77px -138px", emoji: '🌟🌌', rank: '全次元のランプ魔神', name: 'ジーニー (完全体)' }
+  { minLv: 90, pos: "-140px -797px", emoji: '❄️👑', rank: '氷雪の絶対女王', name: 'エルサ' },
+  { minLv: 100, pos: "-77px -138px", emoji: '🌟🌌', rank: '全次元の魔導王', name: 'ジーニー (完全覚醒)' }
 ];
 
-// ==================== 2. マジカルブティック 装備データベース ====================
-const SHOP_EQUIP_DATA = [
-  // --- 頭防具・ティアラ (HP強化) ---
-  { id: 'hat_ribbon_pink', name: 'ピンクリボン', type: 'hat', icon: '🎀', price: 25, rank: '🌟 ノーマル', val: 50, desc: 'HP +50 / かわいい魔法の第一歩' },
-  { id: 'hat_cat_ears', name: 'にゃんこカチューシャ', type: 'hat', icon: '🐱', price: 45, rank: '🌟 ノーマル', val: 120, desc: 'HP +120 / 直感力UP' },
-  { id: 'hat_witch_hat', name: '見習い魔女のハット', type: 'hat', icon: '🧙‍♀️', price: 80, rank: '🔵 レア', val: 300, desc: 'HP +300 / 魔法の集中力UP' },
-  { id: 'hat_star_barrette', name: '星屑のバレッタ', type: 'hat', icon: '⭐', price: 130, rank: '🔵 レア', val: 600, desc: 'HP +600 / きらめく知性' },
-  { id: 'hat_flower_crown', name: '妖精の花冠', type: 'hat', icon: '🌸', price: 220, rank: '🟣 スーパーレア', val: 1200, desc: 'HP +1200 / 自然の祝福' },
-  { id: 'hat_moon_tiara', name: '月影のティアラ', type: 'hat', icon: '🌙', price: 320, rank: '🟣 スーパーレア', val: 2000, desc: 'HP +2000 / 静かな精神集中' },
-  { id: 'hat_starlight_crown', name: '星詠みのプリンセス冠', type: 'hat', icon: '👑', price: 550, rank: '🟡 レジェンド', val: 3500, desc: 'HP +3500 / 学園の優等生' },
-  { id: 'hat_aurora_veil', name: '極光のヴェール', type: 'hat', icon: '🧕', price: 800, rank: '🟡 レジェンド', val: 5000, desc: 'HP +5000 / 天空の守護' },
-  { id: 'hat_crystal_tiara', name: '神話のダイヤティアラ', type: 'hat', icon: '💎', price: 1200, rank: '🌈 ゴッド', val: 8000, desc: 'HP +8000 / 準2級完全制覇' },
-  { id: 'hat_dragon_crown', name: '星光の聖冠', type: 'hat', icon: '🦄👑', price: 9999, rank: '🎁 ボス限定ドロップ', val: 12000, desc: 'HP +12000 / 神獣の加護 (Lv.60以上)', reqLv: 60 },
-  // 👑 完全隠し最強頭装備
-  { id: 'hat_genesis_crown', name: '創世神の王冠', type: 'hat', icon: '👑✨🌌', price: 99999, rank: '🌌 創世神話級', val: 25000, desc: 'HP +25000 / 全次元を統べる神の王冠 (Lv.60以上)', reqLv: 60, isSecret: true },
-
-  // --- 武器・ロッド (攻撃力強化) ---
-  { id: 'wp_quill', name: '星のフェザーペン', type: 'weapon', icon: '✒️', price: 20, rank: '🌟 ノーマル', val: 20, desc: '攻撃 +20 / 単語を記すペン' },
-  { id: 'wp_wand_apprentice', name: '見習いのマジカルワンド', type: 'weapon', icon: '🪄', price: 50, rank: '🌟 ノーマル', val: 45, desc: '攻撃 +45 / 小さな魔法弾' },
-  { id: 'wp_ribbon_wand', name: 'リボンステッキ', type: 'weapon', icon: '🎀🪄', price: 90, rank: '🔵 レア', val: 100, desc: '攻撃 +100 / 正解を華麗に射抜く' },
-  { id: 'wp_moon_rod', name: 'ムーンライトロッド', type: 'weapon', icon: '🌙杖', price: 150, rank: '🔵 レア', val: 180, desc: '攻撃 +180 / 月光の魔力' },
-  { id: 'wp_starlight_wand', name: '星屑のステッキ', type: 'weapon', icon: '⭐🪄', price: 240, rank: '🟣 スーパーレア', val: 300, desc: '攻撃 +300 / リズムよく詠唱' },
-  { id: 'wp_crystal_sword', name: '水晶のレイピア', type: 'weapon', icon: '🗡️✨', price: 350, rank: '🟣 スーパーレア', val: 480, desc: '攻撃 +480 / 難問を一閃' },
-  { id: 'wp_pegasus_bow', name: '天馬のルミナスボウ', type: 'weapon', icon: '🏹', price: 600, rank: '🟡 レジェンド', val: 750, desc: '攻撃 +750 / 光の矢で射抜く' },
-  { id: 'wp_galaxy_rod', name: '銀河のセレスティアルロッド', type: 'weapon', icon: '🌌杖', price: 850, rank: '🟡 レジェンド', val: 1100, desc: '攻撃 +1100 / 星々の輝き' },
-  { id: 'wp_holy_wand', name: '聖女のスターライトロッド', type: 'weapon', icon: '⚜️✨', price: 1500, rank: '🌈 ゴッド', val: 1700, desc: '攻撃 +1700 / 絶対合格の聖杖' },
-  { id: 'wp_dark_blade', name: '宵闇の魔導杖', type: 'weapon', icon: '🔮🖤', price: 9999, rank: '🎁 ボス限定ドロップ', val: 2400, desc: '攻撃 +2400 / ボス討伐の覇気 (Lv.60以上)', reqLv: 60 },
-  // 👑 完全隠し最強武器
-  { id: 'wp_genesis_blade', name: '創世神の聖剣', type: 'weapon', icon: '⚔️🌟🔥', price: 99999, rank: '🌌 創世神話級', val: 4000, desc: '攻撃 +4000 / 万物を創造し消滅させる究極剣 (Lv.60以上)', reqLv: 60, isSecret: true },
-
-  // --- オーラ (すばやさ・会心強化) ---
-  { id: 'aura_sparkle', name: 'きらめく星屑', type: 'aura', icon: '✨', price: 30, rank: '🌟 ノーマル', val: 5, desc: '速さ +5 / ささやかな輝き' },
-  { id: 'aura_sakura', name: '桜の花吹雪', type: 'aura', icon: '🌸', price: 80, rank: '🔵 レア', val: 15, desc: '速さ +15 / 合格の桜吹雪' },
-  { id: 'aura_fairy_wings', name: '妖精の羽', type: 'aura', icon: '🧚‍♀️', price: 180, rank: '🔵 レア', val: 30, desc: '速さ +30 / 軽やかに舞う' },
-  { id: 'aura_butterfly', name: '幻光のパピヨン', type: 'aura', icon: '🦋', price: 280, rank: '🟣 スーパーレア', val: 55, desc: '速さ +55 / 華麗な直感' },
-  { id: 'aura_rainbow', name: '虹色の星雲', type: 'aura', icon: '🌈', price: 450, rank: '🟣 スーパーレア', val: 85, desc: '速さ +85 / 電光石火の閃き' },
-  { id: 'aura_starlight', name: '星詠みのオーラ', type: 'aura', icon: '💫', price: 700, rank: '🟡 レジェンド', val: 120, desc: '速さ +120 / 純粋な情熱' },
-  { id: 'aura_aurora', name: '奇跡のオーロラ', type: 'aura', icon: '🌌', price: 950, rank: '🟡 レジェンド', val: 180, desc: '速さ +180 / 満点の架け橋' },
-  { id: 'aura_cosmic', name: 'コズミックステラ', type: 'aura', icon: '🌟', price: 1500, rank: '🌈 ゴッド', val: 260, desc: '速さ +260 / 宇宙の叡智' },
-  { id: 'aura_dragon_light', name: '神龍の天光', type: 'aura', icon: '🦄✨', price: 9999, rank: '🎁 ボス限定ドロップ', val: 365, desc: '速さ +365 / 神獣の加護。極限の素早さを宿す光 (Lv.60以上)', reqLv: 60 },
-  // 👑 完全隠し最強オーラ
-  { id: 'aura_genesis_light', name: '創世神の神光', type: 'aura', icon: '🌌✨👑', price: 99999, rank: '🌌 創世神話級', val: 515, desc: '速さ +515 / 時空を超越する絶対神の輝き (Lv.60以上)', reqLv: 60, isSecret: true }
+// ==================== 2. 通常クエスト・雑魚敵リスト (精密座標切抜) ====================
+const NORMAL_ENEMIES = [
+  { name: "いたずらピート", pos: "-78px -70px", icon: "😼" },
+  { name: "海賊スミー", pos: "-78px -330px", icon: "⛵" },
+  { name: "トランプ兵", pos: "-78px -266px", icon: "🃏" },
+  { name: "チェシャ猫", pos: "-470px -200px", icon: "🐱" },
+  { name: "白ウサギ", pos: "-400px -200px", icon: "🐰" },
+  { name: "怒りんぼ小人", pos: "-275px -398px", icon: "⛏️" },
+  { name: "ガントゥ警部", pos: "-340px -525px", icon: "👽" }
 ];
 
 // ==================== 3. 過去問ボスステージ (精密座標切抜) ====================
@@ -208,6 +175,33 @@ const BOSS_STAGES = [
     introMsg: "Time and space bow before me... (時空の彼方へようこそ。神話の力を宿した者よ、限界を超えてみよ！)",
     defeatMsg: "Eternal starlight shines forever... (永遠の光が宇宙を満たした…！その栄光は不滅なり…！)"
   }
+];
+
+// ==================== 4. ディズニー装備コレクション ====================
+const SHOP_EQUIP_DATA = [
+  // --- 👑 あたま / ティアラ (HP) ---
+  { id: 'hat_mickey_ears', type: 'hat', name: 'ミッキーの魔法帽子', rank: '★1 初級', icon: '🎩✨', val: 50, price: 15, desc: '星と三日月が輝くソーサラーハット (HP+50)' },
+  { id: 'hat_cinderella_tiara', type: 'hat', name: 'ガラスのティアラ', rank: '★2 中級', icon: '👑💎', val: 180, price: 35, desc: '12時を過ぎても消えない魔法 (HP+180)' },
+  { id: 'hat_aurora_crown', type: 'hat', name: 'オーロラ姫の金冠', rank: '★3 上級', icon: '👑🌹', val: 450, price: 70, desc: '真実の愛の輝き (HP+450)' },
+  { id: 'hat_elsa_crystal', type: 'hat', name: 'エルサの氷晶冠', rank: '★4 覇級', icon: '❄️👑', val: 1200, price: 120, desc: '決して溶けないアレンデールの至宝 (HP+1200)' },
+  { id: 'hat_dragon_crown', type: 'hat', name: '竜王の冠', rank: '★4 BOSS', icon: '🐲👑', val: 1800, price: 9999, isSecret: true, desc: 'ボスドロップ限定神器 (HP+1800)' },
+  { id: 'hat_genesis_crown', type: 'hat', name: 'ファンタジアの大魔導冠', rank: '★5 神話', icon: '🌌👑', val: 4000, price: 9999, reqLv: 60, isSecret: true, desc: '全次元を統べる究極の王冠 (HP+4000)' },
+
+  // --- 🪄 ぶき / ロッド (攻撃力) ---
+  { id: 'wp_fairy_wand', type: 'weapon', name: 'フェアリーの杖', rank: '★1 初級', icon: '🪄✨', val: 20, price: 15, desc: 'ビビディ・バビディ・ブーの奇跡 (攻+20)' },
+  { id: 'wp_beast_rose', type: 'weapon', name: '野獣の魔法のバラ', rank: '★2 中級', icon: '🥀✨', val: 65, price: 35, desc: '愛の力で怪力を宿す魔法の花 (攻+65)' },
+  { id: 'wp_genie_lamp', type: 'weapon', name: 'ジーニーの魔法ランプ', rank: '★3 上級', icon: '🪔💫', val: 160, price: 70, desc: '宇宙のパワーを秘めたランプ (攻+160)' },
+  { id: 'wp_triton_trident', type: 'weapon', name: 'トリトンの三叉槍', rank: '★4 覇級', icon: '🔱🌊', val: 400, price: 120, desc: '七つの海を支配する神槍 (攻+400)' },
+  { id: 'wp_dark_blade', type: 'weapon', name: '冥王の魔導剣', rank: '★4 BOSS', icon: '🗡️🔥', val: 650, price: 9999, isSecret: true, desc: 'ボスドロップ限定神器 (攻+650)' },
+  { id: 'wp_genesis_blade', type: 'weapon', name: 'マスターソード・ファンタジア', rank: '★5 神話', icon: '🌟🗡️', val: 1500, price: 9999, reqLv: 60, isSecret: true, desc: '光と魔法を切り拓く伝説の聖剣 (攻+1500)' },
+
+  // --- ✨ オーラ (素早さ / クリティカル率) ---
+  { id: 'aura_pixie_dust', type: 'aura', name: 'ピクシーダストの輝き', rank: '★1 初級', icon: '🧚‍♀️✨', val: 15, price: 15, desc: '妖精の粉で空をかけるスピード (速+15)' },
+  { id: 'aura_magic_carpet', type: 'aura', name: '魔法のじゅうたんの風', rank: '★2 中級', icon: '🧞‍♂️💨', val: 40, price: 35, desc: '空を舞う疾風の力 (速+40)' },
+  { id: 'aura_snow_flurry', type: 'aura', name: 'アレンデールの粉雪', rank: '★3 上級', icon: '❄️🌀', val: 90, price: 70, desc: '氷の結晶が舞い散る神秘の気 (速+90)' },
+  { id: 'aura_castle_light', type: 'aura', name: 'シンデレラ城の祝祭光', rank: '★4 覇級', icon: '🏰🎆', val: 220, price: 120, desc: '夢が叶う瞬間のきらめき (速+220)' },
+  { id: 'aura_dragon_light', type: 'aura', name: '覇王の竜光', rank: '★4 BOSS', icon: '🐉⚡', val: 350, price: 9999, isSecret: true, desc: 'ボスドロップ限定神器 (速+350)' },
+  { id: 'aura_genesis_light', type: 'aura', name: 'ファンタジア・コズミックオーラ', rank: '★5 神話', icon: '🌌✨', val: 800, price: 9999, reqLv: 60, isSecret: true, desc: '星々の誕生と宇宙の波動 (速+800)' }
 ];
 
 // ==================== 4. 準2級 必須単語・熟語 (厳選700語 Part 1) ====================
