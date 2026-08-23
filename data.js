@@ -177,37 +177,45 @@ const BOSS_STAGES = [
   }
 ];
 
-// ==================== 4. ディズニー装備コレクション (全24種・フルボリューム版) ====================
+// ==================== 4. ディズニー装備コレクション (4級完全同等・全33種) ====================
 const SHOP_EQUIP_DATA = [
   // --- 👑 あたま / ティアラ (HP) ---
-  { id: 'hat_mickey_ears', type: 'hat', name: 'ミッキーの魔法帽子', rank: '★1 初級', icon: '🎩✨', val: 30, price: 10, desc: '星と三日月が輝くソーサラーハット (HP+30)' },
-  { id: 'hat_alice_ribbon', type: 'hat', name: 'アリスの不思議なリボン', rank: '★2 中級', icon: '🎀✨', val: 80, price: 25, desc: 'ワンダーランドの好奇心を宿す (HP+80)' },
-  { id: 'hat_cinderella_tiara', type: 'hat', name: 'ガラスのティアラ', rank: '★3 上級', icon: '👑💎', val: 200, price: 50, desc: '12時を過ぎても消えない魔法 (HP+200)' },
-  { id: 'hat_aurora_crown', type: 'hat', name: 'オーロラ姫の金色の冠', rank: '★4 熟練', icon: '👑🌹', val: 400, price: 90, desc: '真実の愛の輝きを秘めた王冠 (HP+400)' },
-  { id: 'hat_jasmine_tiara', type: 'hat', name: '砂漠のターコイズ冠', rank: '★5 名人', icon: '👑🪔', val: 800, price: 150, desc: 'アラビアンナイトの栄光 (HP+800)' },
-  { id: 'hat_elsa_crystal', type: 'hat', name: 'エルサの氷晶クラウン', rank: '★6 覇者', icon: '❄️👑', val: 1500, price: 250, desc: '決して溶けないアレンデールの至宝 (HP+1500)' },
-  { id: 'hat_dragon_crown', type: 'hat', name: '竜王マレフィセントの冠', rank: '★4 BOSS', icon: '🐲👑', val: 2500, price: 9999, isSecret: true, desc: 'ボスドロップ限定神器 (HP+2500)' },
-  { id: 'hat_genesis_crown', type: 'hat', name: 'ファンタジアの大魔導冠', rank: '★5 神話', icon: '🌌👑', val: 5000, price: 9999, reqLv: 60, isSecret: true, desc: '全次元を統べる究極の王冠 (HP+5000)' },
+  { id: 'hat_grad', name: 'ソーサラー・ハット', type: 'hat', icon: '🎩✨', price: 25, rank: '🌟 ノーマル', val: 50, desc: 'HP +50 / 星と三日月の魔法帽子' },
+  { id: 'hat_cap', name: 'ドナルドのセーラー帽', type: 'hat', icon: '🧢💙', price: 45, rank: '🌟 ノーマル', val: 120, desc: 'HP +120 / 元気いっぱい' },
+  { id: 'hat_ribbon', name: 'アリスの青いリボン', type: 'hat', icon: '🎀✨', price: 80, rank: '🔵 レア', val: 300, desc: 'HP +300 / 好奇心UP' },
+  { id: 'hat_cat', name: 'チェシャ猫のイヤー', type: 'hat', icon: '🐱💜', price: 130, rank: '🔵 レア', val: 600, desc: 'HP +600 / 集中力UP' },
+  { id: 'hat_wizard', name: 'マーリンの大魔導帽', type: 'hat', icon: '🧙‍♂️💫', price: 220, rank: '🟣 スーパーレア', val: 1200, desc: 'HP +1200 / 知性の魔力' },
+  { id: 'hat_fox', name: '白雪姫のリボンティアラ', type: 'hat', icon: '🍎👑', price: 320, rank: '🟣 スーパーレア', val: 2000, desc: 'HP +2000 / 純真な祈り' },
+  { id: 'hat_crown', name: 'シンデレラのガラス冠', type: 'hat', icon: '👑💎', price: 550, rank: '🟡 レジェンド', val: 3500, desc: 'HP +3500 / 夢信じる力' },
+  { id: 'hat_space', name: 'オーロラ姫の金冠', type: 'hat', icon: '👑🌹', price: 800, rank: '🟡 レジェンド', val: 5000, desc: 'HP +5000 / 真実の愛の輝き' },
+  { id: 'hat_tiara', name: 'エルサの氷晶クラウン', type: 'hat', icon: '❄️👑', price: 1200, rank: '🌈 ゴッド', val: 8000, desc: 'HP +8000 / アレンデールの至宝' },
+  { id: 'hat_dragon_crown', name: '竜王マレフィセントの冠', type: 'hat', icon: '🐉👑', price: 9999, rank: '🎁 ボス限定ドロップ', val: 12000, desc: 'HP +12000 / 漆黒竜の加護 (Lv.60以上)', reqLv: 60 },
+  { id: 'hat_genesis_crown', name: 'ファンタジアの大魔導冠', type: 'hat', icon: '🌌👑', price: 99999, rank: '🌌 創世神話級', val: 25000, desc: 'HP +25000 / 全次元を統べる究極の王冠 (Lv.60以上)', reqLv: 60, isSecret: true },
 
   // --- 🪄 ぶき / ロッド (攻撃力) ---
-  { id: 'wp_fairy_wand', type: 'weapon', name: 'フェアリーの魔法の杖', rank: '★1 初級', icon: '🪄✨', val: 10, price: 10, desc: 'ビビディ・バビディ・ブーの奇跡 (攻+10)' },
-  { id: 'wp_peter_dagger', type: 'weapon', name: 'ネバーランドの短剣', rank: '★2 中級', icon: '🗡️🍃', val: 25, price: 25, desc: 'ピーターパンの勇気を宿す刃 (攻+25)' },
-  { id: 'wp_beast_rose', type: 'weapon', name: '野獣の魔法のバラ', rank: '★3 上級', icon: '🥀✨', val: 60, price: 50, desc: '愛の力で怪力を宿す魔法の花 (攻+60)' },
-  { id: 'wp_genie_lamp', type: 'weapon', name: 'ジーニーの魔法ランプ', rank: '★4 熟練', icon: '🪔💫', val: 120, price: 90, desc: '宇宙のパワーを秘めたランプ (攻+120)' },
-  { id: 'wp_rapunzel_frypan', type: 'weapon', name: '太陽の黄金フライパン', rank: '★5 名人', icon: '🍳☀️', val: 250, price: 150, desc: 'ラプンツェルの最強の武器 (攻+250)' },
-  { id: 'wp_triton_trident', type: 'weapon', name: 'トリトン王のトライデント', rank: '★6 覇者', icon: '🔱🌊', val: 500, price: 250, desc: '七つの海を支配する神槍 (攻+500)' },
-  { id: 'wp_dark_blade', type: 'weapon', name: '冥王ハデスの魔導剣', rank: '★4 BOSS', icon: '🗡️🔥', val: 800, price: 9999, isSecret: true, desc: 'ボスドロップ限定神器 (攻+800)' },
-  { id: 'wp_genesis_blade', type: 'weapon', name: 'マスターソード・ファンタジア', rank: '★5 神話', icon: '🌟🗡️', val: 1800, price: 9999, reqLv: 60, isSecret: true, desc: '光と魔法を切り拓く伝説の聖剣 (攻+1800)' },
+  { id: 'wp_pencil', name: '巨大えんぴつロッド', type: 'weapon', icon: '✏️✨', price: 20, rank: '🌟 ノーマル', val: 20, desc: '攻撃 +20 / マークシート用' },
+  { id: 'wp_wand', name: 'フェアリーの魔法杖', type: 'weapon', icon: '🪄✨', price: 50, rank: '🌟 ノーマル', val: 45, desc: '攻撃 +45 / ビビディ・バビディ・ブー' },
+  { id: 'wp_bow', name: 'ピーターパンの短剣', type: 'weapon', icon: '🗡️🍃', price: 90, rank: '🔵 レア', val: 100, desc: '攻撃 +100 / ネバーランドの勇気' },
+  { id: 'wp_sword', name: '野獣の魔法のバラ', type: 'weapon', icon: '🥀✨', price: 150, rank: '🔵 レア', val: 180, desc: '攻撃 +180 / 難問を断ち切る' },
+  { id: 'wp_guitar', name: 'ジーニーの魔法ランプ', type: 'weapon', icon: '🪔💫', price: 240, rank: '🟣 スーパーレア', val: 300, desc: '攻撃 +300 / 驚異のパワー' },
+  { id: 'wp_axe', name: '太陽のフライパン', type: 'weapon', icon: '🍳☀️', price: 350, rank: '🟣 スーパーレア', val: 480, desc: '攻撃 +480 / ラプンツェルの鉄槌' },
+  { id: 'wp_trident', name: 'トリトン王の三叉槍', type: 'weapon', icon: '🔱🌊', price: 600, rank: '🟡 レジェンド', val: 750, desc: '攻撃 +750 / 海を支配する神槍' },
+  { id: 'wp_saber', name: 'ジャックの骨のステッキ', type: 'weapon', icon: '🎃🦯', price: 850, rank: '🟡 レジェンド', val: 1100, desc: '攻撃 +1100 / ハロウィンの怪力' },
+  { id: 'wp_excalibur', name: '聖剣エクスカリバー', type: 'weapon', icon: '⚜️🗡️', price: 1500, rank: '🌈 ゴッド', val: 1700, desc: '攻撃 +1700 / 絶対合格の聖剣' },
+  { id: 'wp_dark_blade', name: '冥王ハデスの魔導剣', type: 'weapon', icon: '🗡️🔥', price: 9999, rank: '🎁 ボス限定ドロップ', val: 2400, desc: '攻撃 +2400 / 冥界の青い業火 (Lv.60以上)', reqLv: 60 },
+  { id: 'wp_genesis_blade', name: 'マスターソード・ファンタジア', type: 'weapon', icon: '⚔️🌟🔥', price: 99999, rank: '🌌 創世神話級', val: 4000, desc: '攻撃 +4000 / 光と魔法を切り拓く伝説の聖剣 (Lv.60以上)', reqLv: 60, isSecret: true },
 
   // --- ✨ オーラ (素早さ / クリティカル率) ---
-  { id: 'aura_pixie_dust', type: 'aura', name: 'ピクシーダストの輝き', rank: '★1 初級', icon: '🧚‍♀️✨', val: 8, price: 10, desc: '妖精の粉で空をかけるスピード (速+8)' },
-  { id: 'aura_magic_carpet', type: 'aura', name: '魔法のじゅうたんの風', rank: '★2 中級', icon: '🧞‍♂️💨', val: 20, price: 25, desc: '夜空を舞う疾風の力 (速+20)' },
-  { id: 'aura_wonderland', type: 'aura', name: 'ワンダーランドの怪気', rank: '★3 上級', icon: '🐇🌀', val: 45, price: 50, desc: '時間を歪める不思議なオーラ (速+45)' },
-  { id: 'aura_snow_flurry', type: 'aura', name: 'アレンデールの粉雪', rank: '★4 熟練', icon: '❄️✨', val: 90, price: 90, desc: '氷の結晶が舞い散る神秘の気 (速+90)' },
-  { id: 'aura_castle_light', type: 'aura', name: 'シンデレラ城の祝祭光', rank: '★5 名人', icon: '🏰🎆', val: 180, price: 150, desc: '夢が叶う瞬間のきらめき (速+180)' },
-  { id: 'aura_sun_radiance', type: 'aura', name: 'コロナ王国の太陽光', rank: '★6 覇者', icon: '☀️🌈', val: 350, price: 250, desc: '輝く太陽のランタンオーラ (速+350)' },
-  { id: 'aura_dragon_light', type: 'aura', name: '漆黒の覇竜オーラ', rank: '★4 BOSS', icon: '🐉⚡', val: 500, price: 9999, isSecret: true, desc: 'ボスドロップ限定神器 (速+500)' },
-  { id: 'aura_genesis_light', type: 'aura', name: 'ファンタジア・コズミックオーラ', rank: '★5 神話', icon: '🌌✨', val: 1000, price: 9999, reqLv: 60, isSecret: true, desc: '星々の誕生と宇宙の波動 (速+1000)' }
+  { id: 'aura_wind', name: '若葉のそよ風', type: 'aura', icon: '🍃', price: 30, rank: '🌟 ノーマル', val: 5, desc: '速さ +5 / 爽やかな風' },
+  { id: 'aura_sakura', name: 'ピクシーダストの輝き', type: 'aura', icon: '🧚‍♀️✨', price: 80, rank: '🔵 レア', val: 15, desc: '速さ +15 / 妖精のきらめき' },
+  { id: 'aura_angel', name: '魔法のじゅうたんの風', type: 'aura', icon: '🧞‍♂️💨', price: 180, rank: '🔵 レア', val: 30, desc: '速さ +30 / 夜空を舞うスピード' },
+  { id: 'aura_devil', name: 'ワンダーランドの怪気', type: 'aura', icon: '🐇🌀', price: 280, rank: '🟣 スーパーレア', val: 55, desc: '速さ +55 / 不思議の国の歪み' },
+  { id: 'aura_thunder', name: 'アレンデールの粉雪', type: 'aura', icon: '❄️✨', price: 450, rank: '🟣 スーパーレア', val: 85, desc: '速さ +85 / 氷雪のオーラ' },
+  { id: 'aura_fire', name: 'シンデレラ城の祝祭光', type: 'aura', icon: '🏰🎆', price: 700, rank: '🟡 レジェンド', val: 120, desc: '速さ +120 / 夢叶う瞬間の光' },
+  { id: 'aura_rainbow', name: 'コロナ王国の太陽光', type: 'aura', icon: '☀️🌈', price: 950, rank: '🟡 レジェンド', val: 180, desc: '速さ +180 / 満点の架け橋' },
+  { id: 'aura_cosmic', name: 'ファンタジア・スターライト', type: 'aura', icon: '🌟🌌', price: 1500, rank: '🌈 ゴッド', val: 260, desc: '速さ +260 / 全宇宙の叡智' },
+  { id: 'aura_dragon_light', name: '漆黒の覇竜オーラ', type: 'aura', icon: '🐉✨', price: 9999, rank: '🎁 ボス限定ドロップ', val: 365, desc: '速さ +365 / 極限の素早さを宿す光 (Lv.60以上)', reqLv: 60 },
+  { id: 'aura_genesis_light', name: 'ファンタジア・コズミックオーラ', type: 'aura', icon: '🌌✨👑', price: 99999, rank: '🌌 創世神話級', val: 515, desc: '速さ +515 / 時空を超越する絶対神の輝き (Lv.60以上)', reqLv: 60, isSecret: true }
 ];
 
 // ==================== 4. 準2級 必須単語・熟語 (厳選700語 Part 1) ====================
