@@ -1,6 +1,6 @@
 // ==========================================
-// 英検準2級 マジカルクエスト 〜星詠みの魔法学園〜
-// ゲーム進行・ロジックファイル (app.js) - ディズニー画像スプライト対応版
+// 英検準2級 マジカルクエスト 〜星詠みのファンタジア〜
+// ゲーム進行・ロジックファイル (app.js) - ディズニー完全統一版
 // ==========================================
 
 // ==================== スプライト描画ヘルパー ====================
@@ -395,7 +395,7 @@ function addExp(amount) {
   }
   if (leveledUp) {
     playSE('levelup');
-    const currentAvatar = (typeof AVATARS !== 'undefined') ? ([...AVATARS].reverse().find(a => userData.level >= a.minLv) || AVATARS[0]) : { name: "ミッキーマウス", rank: "見習い魔法使い" };
+    const currentAvatar = (typeof AVATARS !== 'undefined') ? ([...AVATARS].reverse().find(a => userData.level >= a.minLv) || AVATARS[0]) : { name: "ソーサラー・ミッキー", rank: "見習い魔法使い" };
     alert(`🎉 レベルアップ！ Lv.${userData.level} に到達しました！\n相棒の姿：【${currentAvatar.rank}】${currentAvatar.name}`);
   }
   saveData();
@@ -438,8 +438,8 @@ function updateUiState() {
     if (heroAvatarEl) heroAvatarEl.innerHTML = getSpriteIconHtml(currentAvatar, currentAvatar.emoji);
 
     if (userData.hasSeenTrueEnding) {
-      setText('heroRank', '🌌 全次元のランプ魔神');
-      setText('heroName', `${currentAvatar.name} (完全体)`);
+      setText('heroRank', '🌌 全次元のファンタジアマスター');
+      setText('heroName', `${currentAvatar.name} (完全覚醒)`);
     } else {
       setText('heroRank', currentAvatar.rank);
       setText('heroName', currentAvatar.name);
@@ -705,7 +705,13 @@ function showBossDialogueModal(title, icon, text, onConfirm) {
   const btn = document.getElementById('btnBossDialogueNext');
 
   if (titleEl) titleEl.innerText = title;
-  if (iconEl) iconEl.innerText = icon;
+  if (iconEl) {
+    if (typeof icon === 'object' && icon.pos) {
+      iconEl.innerHTML = getSpriteIconHtml(icon, '🐲');
+    } else {
+      iconEl.innerHTML = `<span class="text-4xl animate-bounce">${icon || '🐲'}</span>`;
+    }
+  }
   if (textEl) textEl.innerText = text;
 
   if (modal) modal.classList.remove('hidden');
@@ -828,7 +834,7 @@ function startBossBattleWithStage(lv) {
   if (!userData.bossSeenIntros.includes(stage.lv) && stage.introMsg) {
     userData.bossSeenIntros.push(stage.lv);
     saveData();
-    showBossDialogueModal(`【Lv.${stage.lv} ${stage.name}】出現！`, stage.icon, stage.introMsg, () => {
+    showBossDialogueModal(`【Lv.${stage.lv} ${stage.name}】出現！`, stage, stage.introMsg, () => {
       startSession();
     });
   } else {
@@ -978,8 +984,6 @@ let enemyCurHp = 100;
 let enemyAtk = 20;
 let questionStartTime = 0;
 let timerGaugeInterval = null;
-
-const MONSTERS = ['🦄', '🧚‍♀️', '🦚', '🐰', '🌟'];
 
 function shuffleArray(array) {
   const arr = [...array];
@@ -1133,6 +1137,7 @@ function startSession() {
     enemyCurHp = enemyMaxHp;
   }
 
+  // 画面の確実な切り替え
   hideAllViews();
   document.getElementById('viewQuiz').classList.remove('hidden');
 
@@ -1149,7 +1154,8 @@ function startSession() {
   } else {
     playBGM('battle');
     document.getElementById('enemyCardBox').className = "bg-gradient-to-b from-[#221747] to-[#160f30] border border-purple-500 rounded-3xl p-3 shadow-2xl relative overflow-hidden";
-    document.getElementById('battleEnemyName').innerText = "英語モンスター";
+    const normalEnemy = NORMAL_ENEMIES[currentIndex % NORMAL_ENEMIES.length];
+    document.getElementById('battleEnemyName').innerText = normalEnemy.name;
   }
 
   const avatarObj = [...AVATARS].reverse().find(a => userData.level >= a.minLv) || AVATARS[0];
@@ -1205,14 +1211,16 @@ function renderQuestion() {
     document.getElementById('enemyCardBox').classList.remove('fever-active');
   }
   
-  // ボス画像スプライト描画
+  // 敵の画像スプライト描画
   const enemyAvatarEl = document.getElementById('enemyAvatar');
   if (isBossMode && currentBossStage) {
     enemyAvatarEl.innerHTML = getSpriteIconHtml(currentBossStage, currentBossStage.icon);
   } else if (currentMode === 'weakBattle' || currentMode === 'weakRetry') {
-    enemyAvatarEl.innerText = '👾';
+    enemyAvatarEl.innerHTML = getSpriteIconHtml({ pos: "-78px -70px" }, '👾');
   } else {
-    enemyAvatarEl.innerText = MONSTERS[currentIndex % MONSTERS.length];
+    const normalEnemy = NORMAL_ENEMIES[currentIndex % NORMAL_ENEMIES.length];
+    enemyAvatarEl.innerHTML = getSpriteIconHtml(normalEnemy, normalEnemy.icon);
+    document.getElementById('battleEnemyName').innerText = normalEnemy.name;
   }
 
   document.getElementById('quizQuestion').innerText = q.q;
@@ -1282,7 +1290,7 @@ function showDamagePopup(text, isCritical, isEnemyDamage) {
 function use5050Hint() {
   if (isAnswered) return;
   if (userData.inventory.hint <= 0) {
-    alert('ヒントの書がありません！ショップで購入できます。');
+    alert('魔法の鏡がありません！ショップで購入できます。');
     return;
   }
   userData.inventory.hint--;
@@ -1428,7 +1436,7 @@ function finishSession() {
   const isEnemyDefeated = (enemyCurHp <= 0);
 
   if (isBossMode && isEnemyDefeated && !userData.bossClearedLevels.includes(currentBossStage.lv) && currentBossStage.defeatMsg) {
-    showBossDialogueModal(`【Lv.${currentBossStage.lv} ${currentBossStage.name}】撃破！`, currentBossStage.icon, currentBossStage.defeatMsg, () => {
+    showBossDialogueModal(`【Lv.${currentBossStage.lv} ${currentBossStage.name}】撃破！`, currentBossStage, currentBossStage.defeatMsg, () => {
       proceedFinishSession();
     });
   } else {
@@ -1694,7 +1702,7 @@ function showTrueEndingModal() {
       
       <div class="bg-[#110a24]/90 p-3 rounded-2xl border border-purple-500/40 text-[10.5px] text-purple-100 leading-relaxed text-left space-y-1.5 break-words">
         <p>虚無の創造主【クロノス】は満たされ、宇宙の全てに永遠の美しい光が灯りました。</p>
-        <p class="text-pink-300 font-bold">相棒：「信じられないよ……！あなたは全700語、全高校英文法、リスニングの全てを極めた、本物の【英語の女神】になったんだね！！」</p>
+        <p class="text-pink-300 font-bold">ジーニー：「信じられないぜ……！君は全700語、全高校英文法、リスニングの全てを極めた、本物の【ディズニー・ファンタジアマスター】になったんだ！！」</p>
       </div>
 
       <div class="bg-gradient-to-r from-pink-950 via-purple-950 to-indigo-950 border-2 border-pink-400 p-2.5 rounded-2xl text-center space-y-1 shadow-2xl">
@@ -1705,7 +1713,7 @@ function showTrueEndingModal() {
           <div>討伐数: <strong class="text-amber-300 block text-[11px]">全11体</strong></div>
         </div>
         <div class="text-[9.5px] text-pink-300 font-black pt-0.5">
-          称号【🌌 全次元の星詠み神】授与！
+          称号【🌌 全次元のファンタジアマスター】授与！
         </div>
       </div>
 
